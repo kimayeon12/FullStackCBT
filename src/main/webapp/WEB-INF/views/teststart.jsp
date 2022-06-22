@@ -4,12 +4,13 @@
 <h3>응시하고 싶은 과목을 선택해 주세요</h3>
     <p>시험은 랜덤으로 총 10문제 출제되며, 제한시간(10분)이 초과되면 자동 제출됩니다.</p>
     
-    <form action="testStart.do" method="get" onsubmit="return checkSubject()"> 
+   
+    <form action="test.do" method="post" onsubmit="return checkSubject()"> <!-- 클릭이나 엔터했을 때  -->
         <select name="subjectSelect"> <!--파라메터를 name으로 받는대-->
             <option value="">응시과목선택</option>
-            <option value="JAVA">JAVA</option>
-            <option value="js/jQuery">js/jQuery</option>
-            <option value="MariaDB(MySQL)">MariaDB(MySQL)</option>
+            <c:forEach items="${subjectList}" var="subjectList">
+            <option value="${subjectList}">${subjectList}</option>
+            </c:forEach>
         </select>
         <input type="submit" value="시험시작"/> 
     </form>
@@ -21,7 +22,7 @@
 			if($subjectSelect.val() == ""){
 				alert("과목을 선택해 주세요");
 				$subjectSelect.focus();
-				return false;
+				return false; //이걸 해줘야 false 를 반환
 			}
 		}
 	</script>

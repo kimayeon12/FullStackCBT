@@ -15,7 +15,7 @@ public class TestController {
 	
 	@RequestMapping(value = "/testStart.go", method = RequestMethod.GET)
 	public String testStart() {
-		//logger.info("선택된 과목 : " + subjectSelect);
+		
 		return "testStart"; //시험보는 페이지로 
 	}
 }

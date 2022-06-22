@@ -13,12 +13,6 @@ public class TestController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
-		
-		return "teststart";
-	}
-	
 	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
 	public String test(Model model, @RequestParam String selectbox) {
 		logger.info("선택된 과목 : " + selectbox);

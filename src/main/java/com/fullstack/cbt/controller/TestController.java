@@ -16,6 +16,6 @@ public class TestController {
 	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
 	public String test(Model model, @RequestParam String selectbox) {
 		logger.info("선택된 과목 : " + selectbox);
-		return "teststart"; //시험보는 페이지로 
+		return "testStart"; //시험보는 페이지로 
 	}
 }

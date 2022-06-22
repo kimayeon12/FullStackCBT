@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>풀스택(Full-Stack) CBT</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<style type="text/css">
           .tg  {border-collapse:collapse;border-spacing:0;}
           .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -45,7 +46,7 @@
                <td class="tg-lqy6">222명</td>
                <td class="tg-lqy6">333회</td>
                <td class="tg-baqh">O</td>
-               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice.go'">과목수정</button></td>
+               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice'">과목수정</button></td>
              </tr>
              <tr>
                <td class="tg-i81m">2</td>
@@ -55,7 +56,7 @@
                <td class="tg-lqy6">333명</td>
                <td class="tg-lqy6">444회</td>
                <td class="tg-baqh">O</td>
-               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice.go'">과목수정</button></td>
+               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice'">과목수정</button></td>
              </tr>
              <tr>
                <td class="tg-i81m">1</td>
@@ -65,10 +66,17 @@
                <td class="tg-lqy6">444명</td>
                <td class="tg-lqy6">555회</td>
                <td class="tg-baqh">X</td>
-               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice.go'">과목수정</button></td>
+               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice'">과목수정</button></td>
              </tr>
            </tbody>
            </table>
-       <button onclick="location.href='adminSubjectManagement.go'">과목등록</button>
+       <button onclick="location.href='adminSubjectManagementRegister'">과목등록</button>
 </body>
+<script>
+	var msg = "${msg}";
+	
+	if(msg != ""){
+		alert(msg);
+	}
+</script>
 </html>

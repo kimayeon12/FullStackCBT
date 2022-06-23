@@ -22,6 +22,7 @@ public class TestController {
 	
 	@RequestMapping(value = "/testStart.do", method = RequestMethod.GET)
 	public String testStart(Model model) {
+		
 		logger.info("등록된 과목 가져오기");
 		 ArrayList<String> subjectList =service.subjectList(); //arraylist 로 가져와보자
 		  
@@ -29,7 +30,8 @@ public class TestController {
 		  if(subjectList.size() > 0) {
 			  logger.info("등록된 과목 :" +subjectList);
 			  model.addAttribute("subjectList", subjectList);
-		  } 
+		  }
+		  
 		  return "testStart"; 
 	}	
 	

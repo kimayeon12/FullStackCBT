@@ -20,21 +20,21 @@
           	<tr>
               	<th>과목명</th>
                   <td>
-                  	<select id="select_main">
-                      	<option value="" selected>과목명</option>
-                          <option value="JAVA">JAVA</option>
-                          <option value="js/jQuery">js/jQuery</option>
-                          <option value="MariaDB">MariaDB(MySQL)</option>
-                       </select>
-                   </td>
-               </tr>
+                  	<select name="subjectList" id="subjectList">
+                    	<option value="" selected>과목명</option>
+                   		<c:forEach items="${subjectList}" var="subjectList">
+                   			<option value="${subjectList}">${subjectList}</option>                   		
+                   		</c:forEach>       
+                   </select>
+                 </td>
+            </tr>
                <tr>
                    <th>과목단원명</th>
-                       <td>
-                       	<select id="select_sub">
+                      <td>
+                       	<select name="subject_chapList">
                            	<option value="" selected>과목단원명</option>
-                          </select>
-                       </td>
+                         </select>
+                      </td>
                </tr>
                <tr>
                     <th>문제</th>
@@ -79,5 +79,46 @@
              </table>
         </form>
 </body>
-<script></script>
+<script>
+
+$("select[name='subjectList']").on("change", function(){
+	
+	console.log("ajax 전송");
+	
+	var subject = $("#subjectList option:selected").val();
+	
+	$.ajax({
+		type:"post",
+		url:"subject_chapList.ajax", 
+		data:{
+			'subject' : subject
+		}, 
+		dataType:"JSON",
+		success:function(data){
+			console.log(data);
+			
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+	
+	
+	
+});
+
+
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+

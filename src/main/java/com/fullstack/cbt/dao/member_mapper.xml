@@ -6,6 +6,8 @@
 	SELECT mb_id FROM cbt_member
 			WHERE  mb_id = #{param1} AND mb_pw = PASSWORD(#{param2})
 </select>
-	
-
+<insert id="join">
+		INSERT INTO cbt_member(mb_id,mb_pw,,mb_pw2,mb_name,mb_email)
+			VALUES(#{param1},#{param2},#{param3},#{param4},#{param5})	
+	</insert>
 </mapper>

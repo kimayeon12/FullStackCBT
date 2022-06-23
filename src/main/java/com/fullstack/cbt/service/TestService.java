@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fullstack.cbt.dao.TestDAO;
+import com.fullstack.cbt.dto.SubjectDTO;
 
 @Service
 public class TestService {
@@ -16,10 +17,9 @@ public class TestService {
 	
 	@Autowired TestDAO dao;
 	
-	public ArrayList<String> subjectList() {
+	public ArrayList<SubjectDTO> subjectList() {
 		logger.info("등록된 과목 가져오기 서비스 요청");
-		ArrayList<String> subject = dao.subjectList();
-		return subject;
+		return dao.subjectList();
 	}
 
 	

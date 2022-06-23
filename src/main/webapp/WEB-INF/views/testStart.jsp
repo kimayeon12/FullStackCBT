@@ -15,15 +15,15 @@
         <input type="submit" value="시험시작"/> 
     </form>
 <%@ include file="../../resources/inc/footer.jsp" %>
-	<script>
-		function checkSubject() {
-	    	var $subjectSelect = $('select[name="subjectSelect"]');
-	    	
-			if($subjectSelect.val() == ""){
-				alert("과목을 선택해 주세요");
-				$subjectSelect.focus();
-				return false; //이걸 해줘야 false 를 반환
-			}
-		}
-	</script>
+   <script>
+      function checkSubject() {
+          var $subjectSelect = $('select[name="subjectSelect"]');
+          
+         if($subjectSelect.val() == ""){
+            alert("과목을 선택해 주세요");
+            $subjectSelect.focus();
+            return false; //이걸 해줘야 false 를 반환
+         }
+      }
+   </script>
 </html>

@@ -10,9 +10,6 @@ public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/")
-	public String main() {
-		return "adminSubjectManagement";
-	}
+	
 	
 }

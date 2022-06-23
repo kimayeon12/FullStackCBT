@@ -38,39 +38,21 @@
              </tr>
            </thead>
            <tbody>
-             <tr>
-               <td class="tg-i81m">3</td>
-               <td class="tg-baqh">JAVA</td>
-               <td class="tg-baqh">4</td>
-               <td class="tg-lqy6">100</td>
-               <td class="tg-lqy6">222명</td>
-               <td class="tg-lqy6">333회</td>
-               <td class="tg-baqh">O</td>
-               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice'">과목수정</button></td>
-             </tr>
-             <tr>
-               <td class="tg-i81m">2</td>
-               <td class="tg-baqh">MariaDB(MySQL)</td>
-               <td class="tg-baqh">5</td>
-               <td class="tg-lqy6">100</td>
-               <td class="tg-lqy6">333명</td>
-               <td class="tg-lqy6">444회</td>
-               <td class="tg-baqh">O</td>
-               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice'">과목수정</button></td>
-             </tr>
-             <tr>
-               <td class="tg-i81m">1</td>
-               <td class="tg-baqh">js/jQuery</td>
-               <td class="tg-baqh">5</td>
-               <td class="tg-lqy6">100</td>
-               <td class="tg-lqy6">444명</td>
-               <td class="tg-lqy6">555회</td>
-               <td class="tg-baqh">X</td>
-               <td class="tg-0lax"><button onclick="location.href='adminSubjectRevice'">과목수정</button></td>
-             </tr>
+    			<c:forEach items="${list}" var="dto">       
+	             	<tr>
+		               <td class="tg-i81m">${dto.su_idx}</td>
+		               <td class="tg-baqh">${dto.su_name}</td>
+		               <td class="tg-baqh"></td>
+		               <td class="tg-lqy6"></td>
+		               <td class="tg-lqy6"></td>
+		               <td class="tg-lqy6"></td>
+		               <td class="tg-baqh">${dto.su_is_blind}</td>
+		               <td class="tg-0lax"><button onclick="location.href='adminSubjectManagementRevice.go'">과목수정</button></td>
+	             	</tr>
+             	</c:forEach>
            </tbody>
            </table>
-       <button onclick="location.href='adminSubjectManagementRegister'">과목등록</button>
+       <button onclick="location.href='adminSubjectManagementRegister.go'">과목등록</button>
 </body>
 <script>
 	var msg = "${msg}";

@@ -7,7 +7,7 @@
 		SELECT su_name FROM cbt_subject WHERE su_is_blind = 0
 	</select>
 	
-	<select id="chapList" resultType="String">
+	<select id="subjectChapList" resultType="String">
 		SELECT sc_name FROM cbt_subject_chapter WHERE su_idx = #{param1}
 	</select>
 

@@ -2,10 +2,12 @@ package com.fullstack.cbt.dao;
 
 import java.util.ArrayList;
 
+import com.fullstack.cbt.dto.ProblemDTO;
+
 public interface ProblemDAO {
 
-	ArrayList<String> subjectList();
+	ArrayList<ProblemDTO> subjectList();
 
-	ArrayList<String> chapList(String subject);
+	ArrayList<String> subjectChapList(String subject);
 
 }

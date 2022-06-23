@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.service.ProblemService;
 
 @Controller
@@ -26,7 +27,7 @@ public class ProblemController {
 	public String problemgo(Model model) {
 		
 		logger.info("등록된 과목 가져오기");
-		ArrayList<String> subjectList = service.subjectList();
+		ArrayList<ProblemDTO> subjectList = service.subjectList();
 		
 		if(subjectList.size() > 0) {
 			logger.info("등록된 과목 : "+subjectList);
@@ -36,21 +37,19 @@ public class ProblemController {
 		return "adminProblemWrite"; 
 	}
 	
-	@RequestMapping("/subject_chapList.ajax")
+	@RequestMapping(value = "/subjectChapList.ajax", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, Object> chpList(Model model, @RequestParam String subject) {
+	public String subjectChapterList(Model model, @RequestParam String subject) {
 		
 		logger.info("과목 단원 리스트 요청:"+subject);
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		ArrayList<String> subject_chapList = service.chapList(subject);				
+		ArrayList<String> subjectChapList = service.subjectChapList(subject);				
 		
-		if(subject_chapList.size() > 0) {
-			logger.info("등록된 과목 단원"+subject_chapList);
-			map.put("subject_chapList", subject_chapList);
+		if(subjectChapList.size() > 0) {
+			logger.info("등록된 과목 단원"+subjectChapList);
 		}
 		
-		return map;
+		return "";
 	}
 	
 	

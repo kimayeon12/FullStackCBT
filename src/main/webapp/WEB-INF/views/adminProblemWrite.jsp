@@ -7,10 +7,10 @@
           	<tr>
               	<th>과목명</th>
                   <td>
-                  	<select name="su_name" id="subjectList">
+                  	<select name="su_idx" id="subjectList">
                     	<option value="">과목명</option>
                    		<c:forEach items="${subjectList}" var="subjectList">
-                   			<option value="${subjectList}">${subjectList}</option>                   		
+                   			<option value="${subjectList.su_idx}">${subjectList.su_name}</option>                   		
                    		</c:forEach>       
                    </select>
                  </td>
@@ -18,8 +18,9 @@
                <tr>
                    <th>과목단원명</th>
                       <td>
-                       	<select name="sc_name">
+                       	<select name="sc_idx" id="subjectChapList">
                            	<option value="">과목단원명</option>
+                           	  	
                          </select>
                       </td>
                </tr>
@@ -68,10 +69,9 @@
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 
-$("select[name='su_name']").on("change", function(){
+$("select[name='su_idx']").on("change", function(){
 	
 	console.log("ajax 전송");
-	
 	var subject = $("#subjectList option:selected").val();
 	
 	$.ajax({
@@ -82,19 +82,34 @@ $("select[name='su_name']").on("change", function(){
 		}, 
 		dataType:"JSON",
 		success:function(data){
-			console.log(data);
+			console.log("세부과목 가져오기 : "+data.subjectChapList);
 			
-			
+			if(data.subjectChapList != null) {
+				drawSubjectChapList(data.subjectChapList);							
+			}else{
+				alert("세부과목을 등록해 주세요");
+				//세부 과목 등록 페이지로 변경
+				location.href='/';
+			}
 		},
-		error:function(e){
-			console.log(e);
+		error:function(error){
+			console.log(error);
 		}
 	});
 	
-	
-	
 });
 
+function drawSubjectChapList(subjectChapList){
+	var content = '';
+	console.log(subjectChapList);
+	
+	subjectChapList.forEach(function(subjectChapList){
+		content += '<option value="'+subjectChapList.sc_idx+'">'+subjectChapList.sc_name+'</option>';
+	});
+	$("#subjectChapList").empty();
+	$("#subjectChapList").append(content);
+	
+}
 
 </script>
 </html>

@@ -6,10 +6,10 @@
     
    
     <form action="test.do" method="post" onsubmit="return checkSubject()"> <!-- 클릭이나 엔터했을 때  -->
-        <select name="subjectSelect"> <!--파라메터를 name으로 받는대-->
+        <select name="su_idx"> <!--파라메터를 name으로 받는대-->
             <option value="">응시과목선택</option>
             <c:forEach items="${subjectList}" var="subjectList">
-            <option value="${subjectList}">${subjectList}</option>
+            <option value="${subjectList.su_idx}">${subjectList.su_name}</option>
             </c:forEach>
         </select>
         <input type="submit" value="시험시작"/> 

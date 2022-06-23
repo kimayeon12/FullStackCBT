@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullstack.cbt.dto.SubjectDTO;
 import com.fullstack.cbt.service.TestService;
 
 @Controller
@@ -18,27 +19,25 @@ public class TestController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-@Autowired TestService service;
+	@Autowired TestService service;
 	
 	@RequestMapping(value = "/testStart.do", method = RequestMethod.GET)
 	public String testStart(Model model) {
-		
 		logger.info("등록된 과목 가져오기");
-		 ArrayList<String> subjectList =service.subjectList(); //arraylist 로 가져와보자
+		ArrayList<SubjectDTO> subjectList =service.subjectList();
+		logger.info("등록된 과목 :" +subjectList.size());
 		  
-		
-		  if(subjectList.size() > 0) {
-			  logger.info("등록된 과목 :" +subjectList);
-			  model.addAttribute("subjectList", subjectList);
-		  }
+		if(subjectList.size() > 0) {
+			 model.addAttribute("subjectList", subjectList);
+		}
 		  
-		  return "testStart"; 
+		return "testStart"; 
 	}	
 	
 	@RequestMapping(value = "/test.do", method = RequestMethod.POST)
-	public String test(Model model, @RequestParam String subjectSelect) {
+	public String test(Model model, @RequestParam String su_idx) {
 		logger.info("과목 선택하기");
-		logger.info("선택한 과목 : " + subjectSelect);
+		logger.info("선택한 과목 고유번호 : " + su_idx);
 		return "test"; 
 	}	
 	

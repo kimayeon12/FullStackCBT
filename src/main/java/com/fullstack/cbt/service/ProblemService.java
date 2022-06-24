@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fullstack.cbt.dao.ProblemDAO;
+import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
 
@@ -34,6 +35,11 @@ public class ProblemService {
 		logger.info("문제등록 서비스 요청");
 		int success = dao.problemWrite(params);//성공 여부를 내부적으로 확인하려고 한다.
 		logger.info("문제 등록 성공 여부 : "+ success);		
+	}
+
+	public ArrayList<ProblemDTO> problemList() {
+		logger.info("문제 리스트 요청");
+		return dao.problemList();
 	}
 
 }

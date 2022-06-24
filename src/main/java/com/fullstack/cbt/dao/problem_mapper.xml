@@ -21,5 +21,10 @@
 		,#{pc_problem},#{pc_answer},#{pc_answer1},#{pc_answer2}
 		,#{pc_answer3},#{pc_answer4},#{pc_explan},#{pc_difficulty})
 	</insert>
+	
+	<select id="problemList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date
+			FROM cbt_problem_create
+	</select>
 
 </mapper>

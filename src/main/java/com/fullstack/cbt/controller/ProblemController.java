@@ -83,19 +83,19 @@ public class ProblemController {
 	public String problemListdo(Model model) {
 		
 		logger.info("문제 리스트 요청");
-		ArrayList<SubjectDTO> subjectList = service.subjectList();
+		ArrayList<ProblemDTO> problemList = service.problemList();
 		
-		if(subjectList.size() > 0) {
-			logger.info("등록된 과목 : "+subjectList);
-			model.addAttribute("subjectList", subjectList);
+		if(problemList.size() > 0) {
+			logger.info("list size : "+problemList.size());
+			model.addAttribute("problemList", problemList);
 		}
 		
-		return "adminProblemWrite"; 
+		return "adminProblemList"; 
 	}
 	
 	
 	
-	
+	/*
 	
 	@RequestMapping("/problemList.ajax")
 	@ResponseBody
@@ -110,7 +110,7 @@ public class ProblemController {
 		return map;
 	}
 	
-	
+	*/
 	
 	
 }

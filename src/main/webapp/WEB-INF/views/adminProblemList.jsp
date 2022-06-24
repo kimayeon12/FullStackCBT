@@ -37,20 +37,19 @@
 					<th>수정하기</th>
 				</tr>
 			</thead>
-			<tbody id="problemList">
-			<!-- 내일 여기서 부터  홈페이지 주소 요청 들어왔을 때 처음 리스트 보여주기!!!-->
-				<c:forEach items="" var="">
+			<tbody>
+				<c:forEach items="${problemList}" var="problemList">
 					<tr>
+						<td>${problemList.pc_idx}</td>
+						<td>${problemList.su_name}</td>
+						<td>${problemList.sc_name}</td>
+						<td>${problemList.pc_problem}</td>
+						<td>${problemList.pc_difficulty}</td>
 						<td></td>
 						<td></td>
+						<td>${problemList.pc_date}</td>
 						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>수정하기</td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -13,18 +13,22 @@
 	
 	<insert id="problemWrite" parameterType="hashmap">
 		INSERT INTO cbt_problem_create(
-			su_idx, sc_idx
-			,pc_problem,pc_answer,pc_answer1,pc_answer2
+			su_idx, sc_idx, pc_problem,pc_answer,pc_answer1,pc_answer2
 			,pc_answer3,pc_answer4,pc_explan,pc_difficulty
 			) VALUES
-		(#{su_idx}, #{sc_idx}
-		,#{pc_problem},#{pc_answer},#{pc_answer1},#{pc_answer2}
+		(#{su_idx}, #{sc_idx}, #{pc_problem},#{pc_answer},#{pc_answer1},#{pc_answer2}
 		,#{pc_answer3},#{pc_answer4},#{pc_explan},#{pc_difficulty})
 	</insert>
 	
 	<select id="problemList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
-		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date
-			FROM cbt_problem_create
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name
+			FROM 
+			cbt_problem_create 
+				NATURAL JOIN 
+			cbt_subject 
+				NATURAL JOIN 
+			cbt_subject_chapter
 	</select>
+	
 
 </mapper>

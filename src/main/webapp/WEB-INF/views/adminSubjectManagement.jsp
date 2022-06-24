@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>풀스택(Full-Stack) CBT</title>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style type="text/css">
           .tg  {border-collapse:collapse;border-spacing:0;}
           .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -47,7 +47,7 @@
 		               <td class="tg-lqy6"></td>
 		               <td class="tg-lqy6"></td>
 		               <td class="tg-baqh">${dto.su_is_blind}</td>
-		               <td class="tg-0lax"><button onclick="location.href='adminSubjectManagementRevice.go'">과목수정</button></td>
+		               <td class="tg-0lax"><button onclick="location.href='adminSubjectManagementRevice.do?su_idx=${dto.su_idx}'">과목수정</button></td>
 	             	</tr>
              	</c:forEach>
            </tbody>
@@ -55,10 +55,6 @@
        <button onclick="location.href='adminSubjectManagementRegister.go'">과목등록</button>
 </body>
 <script>
-	var msg = "${msg}";
 	
-	if(msg != ""){
-		alert(msg);
-	}
 </script>
 </html>

@@ -22,28 +22,30 @@ import com.fullstack.cbt.service.SubjectService;
 @Controller
 public class SubjectController {
 
-	private static final String X = null;
-
-	private static final String O = null;
-
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired SubjectService service;
 	
-	//adminSubjectManagementList.do로 바꾸고 아이디 세션 확인 추가할 것
+	
+
 	@RequestMapping(value = "/")
+	public String page() {
+		logger.info("과목 리스트 페이지 이동요청");
+		return "redirect:/adminSubjectManagement.do";
+	}
+	
+	@RequestMapping(value = "/adminSubjectManagement.do")
 	public String smList(Model model, HttpSession session) {
 		
 		//String page = "login"; 로그인 페이지로 돌아가는 것 로그인 완성된후 주석해제 할 것
-
+		String page = "adminSubjectManagement";
 		logger.info("과목 리스트 요청");
 		ArrayList<SubjectDTO> list = service.list();
 		logger.info("list 갯수 : "+list.size());
 		model.addAttribute("list",list);
 		
-		return "adminSubjectManagement";
+		return page;
 	}
-	
 	
 	@RequestMapping(value = "/adminSubjectManagementRegister.go")
 	public String regpage() {
@@ -51,14 +53,25 @@ public class SubjectController {
 		return "adminSubjectManagementRegister";
 	}
 	
-	@RequestMapping(value = "/overlay.ajax")
+	@RequestMapping(value = "/subOverlay.ajax")
 	@ResponseBody
-	public HashMap<String, Object> chksub(@RequestParam String chkSub) {
-		logger.info("과목명 중복체크 요청"+chkSub);
-		return service.overlay(chkSub);
+	public HashMap<String, Object> suboverlay(@RequestParam String chkSub) {
+		logger.info("과목명 중복체크 요청: "+chkSub);
+		return service.suboverlay(chkSub);
 	}
 	
-	
+	@RequestMapping(value = "/subReg.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subreg(@RequestParam String subject, String check) {
+		logger.info("과목 등록 요청 : "+subject);
+		logger.info("노출 여부 : "+check);
+		int chk = 0;
+		
+		if(check == null) {
+			chk = 1;
+		}
+		return service.subreg(subject, chk);
+	}
 	
 	@RequestMapping(value = "/adminSubjectManagement.go")
 	public String list() {
@@ -66,24 +79,31 @@ public class SubjectController {
 		return "adminSubjectManagement";
 	}
 	
-	@RequestMapping(value = "/registerReg", method = RequestMethod.POST)
-	public String reg(Model model, @RequestParam String subject, String check) {
-		logger.info("과목 등록 요청");
+	@RequestMapping(value = "/adminSubjectManagementRevice.do")
+	public String reviceform(Model model, HttpSession session,
+			@RequestParam String su_idx) {
 		
-		int chk = 0;
+		//추후 아이디 유효성 검사 추가할 것
+		String page = "adminSubjectManagementRevice";
+		logger.info("과목 관리 수정 상세 페이지 이동요청 : "+su_idx);
+		SubjectDTO dto = service.subdetail(su_idx);
+			if(dto != null) {
+				model.addAttribute("dto",dto);
+				page = "adminSubjectManagementRevice";
+			}
 		
-		if(check == null) {
-			chk = 1;
-		}
-		
-		logger.info("등록할 과목명 : "+subject+",노출여부 : "+chk);
-		
-		
-		String msg = service.reg(subject,chk);
-		logger.info(msg);
-		model.addAttribute("msg",msg);
-		return "adminSubjectManagement";
+		return page;
 	}
+	
+	@RequestMapping(value = "/subjectUpdate.do")
+	public String subupdate(Model model,
+			@RequestParam String subject, String check, String su_idx) {
+		logger.info("수정 요청");
+		logger.info("subject : "+subject+"노출,비노출 : "+check+"과목 고유 번호 : "+su_idx);
+		service.subupdate(subject,check,su_idx);
+		return "redirect:/adminSubjectManagement.do";
+	}
+	
 	
 	
 }

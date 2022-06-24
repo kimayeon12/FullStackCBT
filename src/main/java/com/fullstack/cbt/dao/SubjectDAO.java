@@ -20,4 +20,6 @@ public interface SubjectDAO {
 
 	int update(String subject, String check, String su_idx);
 
+	ArrayList<SubjectDTO> subjectlist();
+
 }

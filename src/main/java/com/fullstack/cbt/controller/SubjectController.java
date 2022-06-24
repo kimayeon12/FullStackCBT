@@ -3,7 +3,6 @@ package com.fullstack.cbt.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -102,6 +100,33 @@ public class SubjectController {
 		logger.info("subject : "+subject+"노출,비노출 : "+check+"과목 고유 번호 : "+su_idx);
 		service.subupdate(subject,check,su_idx);
 		return "redirect:/adminSubjectManagement.do";
+	}
+	
+	
+	
+	//과목 단원 페이지
+	@RequestMapping(value = "/adminSubjectChapterManagement")
+	public String chappage() {
+		logger.info("과목 단원 리스트 페이지 이동요청");
+		return "adminSubjectChapterManagement";
+	}
+	
+	@RequestMapping(value = "/adminSubjectChapterManagementRegister.go")
+	public String chapregpage() {
+		logger.info("과목 단원 등록 페이지 이동요청");
+		return "adminSubjectChapterManagementRegister";
+	}
+	
+	@RequestMapping(value = "/adminSubjectChapterManagementRegister.do")
+	public String chapregList(Model model, HttpSession session) {
+		
+		String page = "adminSubjectChapterManagementRegister";
+		logger.info("과목 리스트 요청");
+		ArrayList<SubjectDTO> subjectlist = service.subjectlist();
+		logger.info("list 갯수 : "+subjectlist.size());
+		model.addAttribute("subjectlist",subjectlist);
+		
+		return page;
 	}
 	
 	

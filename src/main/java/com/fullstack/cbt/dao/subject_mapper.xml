@@ -29,5 +29,9 @@
 		WHERE su_idx = ${param3}
 	</update>
 	
+	<select id="subjectlist" resultType="com.fullstack.cbt.dto.SubjectDTO">
+		SELECT su_name,su_idx FROM cbt_subject WHERE su_is_blind = 0
+	</select>
+	
 
 </mapper>

@@ -75,6 +75,11 @@ public class SubjectService {
 		logger.info("수정된 과목명 데이터 수 : "+row);
 	}
 
+	public ArrayList<SubjectDTO> subjectlist() {
+		logger.info("과목 리스트 서비스 요청");
+		return dao.subjectlist();
+	}
+
 	
 
 

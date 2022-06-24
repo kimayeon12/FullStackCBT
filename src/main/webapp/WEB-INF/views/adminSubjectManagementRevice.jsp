@@ -108,15 +108,11 @@
 				console.log(e);
 				alert("과목 등록에 실패 했습니다.");
 			}
-		});
-			
+		});	
 		} else if($subject.val()=="") {
 			alert("과목명을 입력해 주세요");
-		}
-	
-			else{
+		}else{
 			alert("중복체크를 진행해 주세요");
-
 		}
 	}
 

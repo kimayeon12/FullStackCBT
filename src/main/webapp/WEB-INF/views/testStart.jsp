@@ -17,7 +17,7 @@
 <%@ include file="../../resources/inc/footer.jsp" %>
    <script>
       function checkSubject() {
-          var $subjectSelect = $('select[name="subjectSelect"]');
+          var $subjectSelect = $('select[name="su_idx"]');
           
          if($subjectSelect.val() == ""){
             alert("과목을 선택해 주세요");

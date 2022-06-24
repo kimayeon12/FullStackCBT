@@ -1,11 +1,20 @@
 package com.fullstack.cbt.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.fullstack.cbt.dto.ProblemDTO;
+import com.fullstack.cbt.dto.SubjectChapterDTO;
+import com.fullstack.cbt.dto.SubjectDTO;
 
 public interface ProblemDAO {
 
-	ArrayList<String> subjectList();
+	ArrayList<SubjectDTO> subjectList();
 
-	ArrayList<String> chapList(String subject);
+	ArrayList<SubjectChapterDTO> subjectChapList(String subject);
+
+	int problemWrite(HashMap<String, Object> params);
+
+	ArrayList<ProblemDTO> problemList();
 
 }

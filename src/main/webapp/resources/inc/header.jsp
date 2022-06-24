@@ -9,6 +9,12 @@
         <link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
         <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
     </head>
+<!-- 틀 확인하려고 내가 만든 것, 나중에 지울 예정 -->
+<style>
+	table, th, td{
+        border: 1px solid black;
+    }
+</style>
     <body>
         <div id="wrap">
             <nav>

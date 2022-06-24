@@ -1,22 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<%@ include file="../../resources/inc/footer.jsp" %>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>문제출제관리</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-	table, th, td{
-        border: 1px solid black;
-    }
-</style>
-</head>
-<body>
 	<div>문제 출제 관리</div>
 	<div>총 문제수 : </div>
-		<form action="method" class="search">
+		<form action="" class="search">
 			<select id="select_main">
 				<option value="" selected>과목명</option>
 				<option value="JAVA">JAVA</option>
@@ -38,23 +25,101 @@
 		<table>
 			<thead>
 				<tr>
-					<td>번호</td>
-					<td>과목명</td>
-					<td>단원명</td>
-					<td>문제</td>
-					<td>난이도</td>
-					<td>정답률</td>
-					<td>출제자 아이디</td>
-					<td>출제일</td>
-					<td>문제보관사용자수</td>
-					<td>수정하기</td>
+					<th>번호</th>
+					<th>과목명</th>
+					<th>단원명</th>
+					<th>문제</th>
+					<th>난이도</th>
+					<th>정답률</th>
+					<th>출제자 아이디</th>
+					<th>출제일</th>
+					<th>문제보관사용자수</th>
+					<th>수정하기</th>
 				</tr>
 			</thead>
-			<tbody id="list">
-					
+			<tbody id="problemList">
+			<!-- 내일 여기서 부터  홈페이지 주소 요청 들어왔을 때 처음 리스트 보여주기!!!-->
+				<c:forEach items="" var="">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	<input type="button" value="새로운 문제 출제" onclick="location.href='adminProblemWrite.go'"/>
-</body>
-<script></script>
+<%@ include file="../../resources/inc/footer.jsp" %>
+<script>
+
+
+
+/* select option으로 보여줄 때 ajax를 사용할 예정
+
+problemListCall();
+
+function problemListCall(){
+
+	$.ajax({
+		type:'get',
+		url:'problemList.ajax',
+		data:{},
+		dataType:'json',
+		success:function(data){
+			//console.log(data);
+		
+			console.log('테이블 그리기');
+			drawProblemList(data.problemList);
+		},
+		error:function(error){
+			console.log(error);
+		}
+		
+	});
+	
+}
+
+function drawProblemList(problemList){
+	var content = '';
+	
+	problemList.forEach(function(problemList){
+		console.log(problemList);
+		content += '<tr>';
+		content += '<td>'+problemList.pc_idx+'</td>';
+		content += '<td>'+problemList.su_idx+'</td>';
+		content += '<td>'+problemList.sc_idx+'</td>';
+		content += '<td>'+problemList.pc_problem+'</td>';
+		content += '<td>'+problemList.pc_difficulty+'</td>';
+		content += '<td></td>';
+		content += '<td></td>';
+		content += '<td id="'+problemList.pc_date+'"></td>';
+		content += '<td></td>';
+		content += '<td></td>';
+		content += '</tr>';
+	});
+	$("#problemList").empty();
+	$("#problemList").append(content);	
+}
+
+*/
+
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+

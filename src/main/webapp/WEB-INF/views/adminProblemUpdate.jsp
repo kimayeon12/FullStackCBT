@@ -1,19 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<%@ include file="../../resources/inc/footer.jsp" %>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>문제출제관리 - 수정</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-	table, th, td{
-        border: 1px solid black;
-    }
-</style>
-</head>
-<body>
 <div>문제 출제 관리 - 수정</div>
 	<form action="problemUpdate.do" method="post">
 	<table>
@@ -78,6 +65,18 @@
 		</tr>
 	</table>
 	</form>
-</body>
-<script></script>
+<%@ include file="../../resources/inc/footer.jsp" %>
+<script>
+
+
+</script>
 </html>
+
+
+
+
+
+
+
+
+

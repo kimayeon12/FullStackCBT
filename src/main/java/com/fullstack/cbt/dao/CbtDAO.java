@@ -10,4 +10,6 @@ public interface CbtDAO {
 	ArrayList<TestDTO> testlist();
 	
 	ArrayList<SubjectDTO> subjectList();
+	
+	ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String mb_id);
 }

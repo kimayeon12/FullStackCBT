@@ -28,4 +28,8 @@ public class CbtService {
 		return dao.subjectList();
 	}
 
+	public ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String mb_id) {
+		logger.info("선택된 값에 따른 리스트 서비스 요청");
+		return dao.selectedList(su_idx,tt_status,mb_id);
+	}
 }

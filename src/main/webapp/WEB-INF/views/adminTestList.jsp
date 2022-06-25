@@ -15,7 +15,7 @@ th,td {
 </style>
 
 <p>총 시험 수 : ${listCnt} 건</p>
-<form action="cbtForm.do" method="get" id="form"> <!-- get으로  -->
+<form action="cbtFormList.do" method="get" id="form"> <!-- get으로  -->
 	  <select name="su_idx"> 
 		    <option value="">과목선택</option>
 			    <c:forEach items="${subjectList}" var="subjectList">

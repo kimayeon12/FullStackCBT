@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
+import com.fullstack.cbt.dto.TestDTO;
 import com.fullstack.cbt.service.TestService;
 
 @Controller
@@ -229,7 +230,25 @@ public class TestController {
 			model.addAttribute("tt_idx", tt_idx);
 		}
 		
-		return "testResult";
+		return "redirect:/testResult.do";
 	}
+	
+	
+	//결과 
+		// 아마 이 형태로 파라메터를 가지고 올게 될 것..근데  model에 담았네 뷰에 눌렀을 때 번호 줄수있남 
+		@RequestMapping(value = "/testResult.do")
+		public String testResult(Model model, @RequestParam String tt_idx) {  
+			
+			logger.info("시험 결과 페이지 이동");
+			logger.info("시험 고유번호 : " + tt_idx );
+			
+			//ArrayList<TestDTO> testResultList = service.testResultList(tt_idx);
+			//TestDTO testResult = service.testResultList(tt_idx);
+			//if(testResult != null) {
+			//	model.addAttribute("testResult", testResult);
+			//}
+			
+			return "testResult";
+		}	
 	
 }

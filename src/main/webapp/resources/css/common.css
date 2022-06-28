@@ -38,3 +38,134 @@ body {
     text-decoration: none;
     color: #333;
 }
+
+ul.answer {margin-top: 0.6em; padding: 0; position: relative;}
+.answer li {margin: 0.4em 0; list-style: none; position: relative;}
+#questionBox > li:not(:first-of-type), #btnPrev {display: none;}
+
+.answer li > input[type="radio"],
+table > tbody > tr > td > input[type="checkbox"] {
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+}
+
+.answer li > input[type="radio"]:before,
+.answer li > input[type="radio"]:checked:before {
+	top: 0px;
+	border: 1px solid #000;
+}
+
+table > tbody > tr > td > input[type="checkbox"]:before,
+table > tbody > tr > td > input[type="checkbox"]:checked:before {
+	top: 5px;
+	border: 1px solid #0000ff;
+}
+
+.answer li > input[type="radio"]:before,
+.answer li > input[type="radio"]:checked:before,
+table > tbody > tr > td > input[type="checkbox"]:before,
+table > tbody > tr > td > input[type="checkbox"]:checked:before {
+	position: absolute;
+	text-align: center;
+	cursor: pointer;
+	width: 1.2em;
+	height: 1.2em;
+	line-height: 1.2em;
+	border-radius: 50%;
+}
+
+table > tbody > tr > td > input[type="checkbox"]:before,
+table > tbody > tr > td > input[type="checkbox"]:checked:before {
+	color: #0000ff;
+	border: 1px solid #0000ff;
+}
+
+.answer li > input[type="radio"]:before,
+table > tbody > tr > td > input[type="checkbox"]:before {
+	content: attr(value);
+}
+
+.answer li > input[type="radio"]:checked:before {
+	color: #fff;
+	background-color: #000;
+}
+
+table > tbody > tr > td > input[type="checkbox"]:checked:before {
+	background-color: #0000ff;
+}
+
+.answer li > input[type="radio"]:checked:before,
+table > tbody > tr > td > input[type="checkbox"]:checked:before {
+	content: attr(value);
+}
+
+.answer li > input[type="radio"] + label {
+	position: absolute;
+	cursor: pointer;
+	top: -0.2em;
+	left: 1.6em;
+}
+
+.answer li > input[type="radio"]:checked + label {
+	color: #0000ff;
+}
+
+ol#questionBox > li {
+	list-style: none;
+}
+
+#answerBox {
+	position: fixed;
+	top: 5%;
+	right: 5%;
+}
+
+#answerBox > p {
+	margin: 0;
+	text-align: center;
+	background-color: #ececec;
+}
+
+#answerBox > div {
+	overflow-y: scroll;
+	width: 180px;
+	max-height: 180px;
+	border: 1px solid #000;
+}
+
+#noProblem {
+	position: fixed;
+	top: 1%;
+	right: 5%;
+}
+
+#noProblem > em {
+	color: #ff0000;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+#answerBox > div > table > thead > tr > th {
+	background-color: #c8c8c8;
+}
+
+#answerBox > div > table > tbody > tr > th {
+	height: 1.8em;
+}
+
+#answerBox > div > table > tbody > tr > td {
+	position: relative;
+	width: 1.2em;
+}
+
+#answerBox > div > table > tbody > tr > th > a {
+	color: #0000ff;
+	text-decoration: none;
+}
+
+#answerBox > div > table > tbody > tr > th > a:hover {
+	text-decoration: underline;
+}

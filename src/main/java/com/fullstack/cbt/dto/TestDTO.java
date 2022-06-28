@@ -1,14 +1,14 @@
 package com.fullstack.cbt.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class TestDTO {
 
 	private int tt_idx;
 	private byte tt_times;
 	private byte tt_score;
-	private Date tt_start_date;
-	private Date tt_end_date;
+	private Timestamp tt_start_date;
+	private Timestamp tt_end_date;
 	private String tt_status;
 	private String mb_id;
 	private int su_idx;
@@ -40,16 +40,16 @@ public class TestDTO {
 	public void setTt_score(byte tt_score) {
 		this.tt_score = tt_score;
 	}
-	public Date getTt_start_date() {
+	public Timestamp getTt_start_date() {
 		return tt_start_date;
 	}
-	public void setTt_start_date(Date tt_start_date) {
+	public void setTt_start_date(Timestamp tt_start_date) {
 		this.tt_start_date = tt_start_date;
 	}
-	public Date getTt_end_date() {
+	public Timestamp getTt_end_date() {
 		return tt_end_date;
 	}
-	public void setTt_end_date(Date tt_end_date) {
+	public void setTt_end_date(Timestamp tt_end_date) {
 		this.tt_end_date = tt_end_date;
 	}
 	public String getTt_status() {

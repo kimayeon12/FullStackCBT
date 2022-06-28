@@ -17,7 +17,28 @@ public class ProblemDTO {
 	private int su_idx;
 	private int sc_idx;
 	private String mb_id;
+	private byte ta_choice_no;
+	private char ta_is_answer;
+	private byte ta_problem_no;
 	
+	public byte getTa_choice_no() {
+		return ta_choice_no;
+	}
+	public void setTa_choice_no(byte ta_choice_no) {
+		this.ta_choice_no = ta_choice_no;
+	}
+	public char getTa_is_answer() {
+		return ta_is_answer;
+	}
+	public void setTa_is_answer(char ta_is_answer) {
+		this.ta_is_answer = ta_is_answer;
+	}
+	public byte getTa_problem_no() {
+		return ta_problem_no;
+	}
+	public void setTa_problem_no(byte ta_problem_no) {
+		this.ta_problem_no = ta_problem_no;
+	}
 	//과목명 가져오기 테스트
 	private String su_name;
 	

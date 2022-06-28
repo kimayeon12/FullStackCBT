@@ -12,17 +12,16 @@ public class TestDTO {
 	private String tt_status;
 	private String mb_id;
 	private int su_idx;
+	private String su_name;
+	private String mb_name;
+	
 	public String getMb_name() {
 		return mb_name;
 	}
 	public void setMb_name(String mb_name) {
 		this.mb_name = mb_name;
 	}
-	private String su_name;
-	private String mb_name;
 	
-	
-
 	public String getSu_name() {
 		return su_name;
 	}

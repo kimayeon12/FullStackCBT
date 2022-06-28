@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
 import com.fullstack.cbt.service.SubjectService;
 
@@ -73,7 +74,7 @@ public class SubjectController {
 	
 	@RequestMapping(value = "/adminSubjectManagement.go")
 	public String list() {
-		logger.info("과목 리스트 관리 페이지 이동요청");
+		logger.info("과목 관리 리스트 페이지 이동요청");
 		return "adminSubjectManagement";
 	}
 	
@@ -105,26 +106,96 @@ public class SubjectController {
 	
 	
 	//과목 단원 페이지
-	@RequestMapping(value = "/adminSubjectChapterManagement")
+	@RequestMapping(value = "/adminSubjectChapterManagement.go")
 	public String chappage() {
 		logger.info("과목 단원 리스트 페이지 이동요청");
-		return "adminSubjectChapterManagement";
+		return "redirect:/adminSubjectChapterManagement.do";
+	}
+	
+	@RequestMapping(value = "/adminSubjectChapterManagement.do")
+	public String chapList(Model model, HttpSession session) {
+		
+	
+		
+		logger.info("과목단원명 리스트 요청");
+		ArrayList<SubjectChapterDTO> chapList = service.chapList();
+		
+		if(chapList.size() > 0) {
+			logger.info("과목단원관리 리스트 갯수 : "+chapList.size());
+			model.addAttribute("chapList",chapList);
+		}
+		
+		ArrayList<SubjectChapterDTO> subList = service.subList();
+		
+		if(subList.size() > 0) {
+			logger.info("과목단원관리 리스트 갯수 : "+subList.size());
+			model.addAttribute("subList",subList);
+		}
+		
+		
+		String page = "adminSubjectChapterManagement";
+		return page;
 	}
 	
 	@RequestMapping(value = "/adminSubjectChapterManagementRegister.go")
 	public String chapregpage() {
 		logger.info("과목 단원 등록 페이지 이동요청");
-		return "adminSubjectChapterManagementRegister";
+		return "redirect:/adminSubjectChapterManagementRegister.do";
 	}
 	
 	@RequestMapping(value = "/adminSubjectChapterManagementRegister.do")
 	public String chapregList(Model model, HttpSession session) {
 		
-		String page = "adminSubjectChapterManagementRegister";
 		logger.info("과목 리스트 요청");
-		ArrayList<SubjectDTO> subjectlist = service.subjectlist();
-		logger.info("list 갯수 : "+subjectlist.size());
-		model.addAttribute("subjectlist",subjectlist);
+		ArrayList<SubjectDTO> subjectList = service.subjectList();
+		String page = "adminSubjectChapterManagementRegister";
+		if(subjectList.size() > 0) {
+			logger.info("등록된 과목 : "+subjectList);
+			model.addAttribute("subjectList",subjectList);
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value = "/subChapOverlay.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subChapOverlay(@RequestParam String chksubChap) {
+		logger.info("과목단원명 중복체크 요청: "+chksubChap);
+		return service.subChapOverlay(chksubChap);
+	}
+	
+	@RequestMapping(value = "/subChapReg.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subChapReg(@RequestParam String subject, String chapter) {
+		logger.info(subject+" 과목의 "+chapter+" 과목단원 등록 요청");
+		return service.subChapReg(subject, chapter);
+	}
+	
+	/*
+	@RequestMapping(value = "/adminSubjectChapterManagementRevice.go")
+	public String subChapRevicePage() {
+		logger.info("과목단원 수정 페이지 이동요청");
+		return "adminSubjectChapterManagementRevice";
+	}
+	*/
+	
+	@RequestMapping(value = "/adminSubjectChapterManagementRevice.do")
+	public String subChapRevice(Model model, HttpSession session, String sc_idx
+			) {
+		
+		String page = "adminSubjectChapterManagementRevice";
+		logger.info("과목단원 수정 상세 페이지 요청");
+		SubjectChapterDTO chapdto = service.subChapRevice(sc_idx);
+		if(chapdto !=null) {
+			model.addAttribute("chapdto",chapdto);
+			page = "adminSubjectChapterManagementRevice";
+		}
+		
+		ArrayList<SubjectDTO> subjectList = service.subjectList();
+		if(subjectList.size() > 0) {
+			logger.info("등록된 과목 : "+subjectList);
+			model.addAttribute("subjectList",subjectList);
+		}
 		
 		return page;
 	}

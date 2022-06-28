@@ -1,8 +1,8 @@
 package com.fullstack.cbt.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
 
 public interface SubjectDAO {
@@ -20,6 +20,20 @@ public interface SubjectDAO {
 
 	int update(String subject, String check, String su_idx);
 
-	ArrayList<SubjectDTO> subjectlist();
+	ArrayList<SubjectDTO> subjectList();
+
+	String subChapOverlay(String chksubChap);
+
+	int subChapReg(String subject, String chapter);
+
+	ArrayList<SubjectChapterDTO> chapList();
+	
+	ArrayList<SubjectChapterDTO> subList();
+
+	SubjectChapterDTO subChapRevice(String sc_idx);
+
+	
+
+	
 
 }

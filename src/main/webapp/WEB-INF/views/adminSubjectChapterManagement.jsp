@@ -21,60 +21,35 @@
 </head>
 <body>
 <h2>과목 단원 관리</h2>
-	<button onclick="location.href='adminSubjectChapterManagementRegister.go'">과목단원등록</button>
-	<h3>JAVA</h3>
+	<button onclick="location.href='adminSubjectChapterManagementRegister.do'">과목단원등록</button>
+	
+	<c:forEach items="${chapList}" var="chapList">
+		<h3>${chapList.su_name}</h3>
+	
 	<table class="tg">
-	    <thead>
-      		<tr>
-		        <th class="tg-zlqz">과목 단원명</th>
-		        <th class="tg-zlqz">등록된 문제수</th>
-		        <th class="tg-zlqz">관리</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-		     <tr>
-			       <td class="tg-3xi5">클래스</td>
-			       <td class="tg-c3ow">40</td>
-			       <td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagement.go'"/></td>
-		     </tr>
-		      <tr>
-			        <td class="tg-3xi5">메소드</td>
-			        <td class="tg-c3ow">30</td>
-			        <td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagement.go'"/></td>
-		      </tr>
-		      <tr>
-			        <td class="tg-3xi5">필드</td>
-			        <td class="tg-c3ow">10</td>
-			        <td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagement.go'"/></td>
-		      </tr>
-	    </tbody>
-	</table>
-	<h3>js/jQuery</h3>
-	<table class="tg">
-	    <thead>
-		      <tr>
+		    <thead>
+	      		<tr>
 			        <th class="tg-zlqz">과목 단원명</th>
-			        <th class="tg-zlqz">등록된 문제수</th>
+			        <th class="tg-zlqz">등록된 문제수(${chapList.subCnt})</th>
 			        <th class="tg-zlqz">관리</th>
 		      </tr>
 		    </thead>
-		    <tbody>
-		      <tr>
-			        <td class="tg-3xi5">DML</td>
-			        <td class="tg-c3ow">10</td>
-			        <td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagement.go'"/></td>
-		      </tr>
-		      <tr>
-			        <td class="tg-3xi5">DCL</td>
-			        <td class="tg-c3ow">10</td>
-			        <td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagement.go'"/></td>
-		      </tr>
-		      <tr>
-			        <td class="tg-3xi5">DDL</td>
-			        <td class="tg-c3ow">10</td>
-			        <td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagement.go'"/></td>
-		      </tr>
-    	</tbody>
+	
+	    <tbody>
+	    	<c:forEach items="${subList}" var="subList">
+		     	<tr>
+		     		<c:if test="${chapList.su_idx eq subList.su_idx}">
+		       		<td class="tg-3xi5">${subList.sc_name}</td>
+	       			<td class="tg-c3ow">${subList.chapCnt}</td>
+	       			<td class="tg-c3ow"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagementRevice.do?sc_idx=${subList.sc_idx}'"/></td>
+		     		</c:if>
+		     	</tr>
+		     </c:forEach>
+	    </tbody>
 	</table>
+	</c:forEach>
+	
+	
+	
 </body>
 </html>

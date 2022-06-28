@@ -29,9 +29,35 @@
 		WHERE su_idx = ${param3}
 	</update>
 	
-	<select id="subjectlist" resultType="com.fullstack.cbt.dto.SubjectDTO">
+	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">
 		SELECT su_name,su_idx FROM cbt_subject WHERE su_is_blind = 0
 	</select>
+	
+	<select id="subChapOverlay" parameterType="String" resultType="String">
+		SELECT sc_name FROM cbt_subject_chapter WHERE sc_name = #{chkSubChap}
+	</select>
+	
+	<insert id="subChapReg">
+		INSERT INTO cbt_subject_chapter(su_idx,sc_name)
+			VALUES(#{param1},#{param2})
+	</insert>
+	
+	<select id="chapList"  parameterType="String" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT su_idx, su_name, (select count(pc_idx) FROM cbt_problem_create WHERE su_idx = cbt_subject.su_idx) as subCnt 
+			FROM cbt_subject ORDER BY su_idx asc;
+	</select>
+	
+	<select id="subList"  parameterType="String" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT sc_idx, sc_name, su_idx, (select count(pc_idx) FROM cbt_problem_create where sc_idx = cbt_subject_chapter.sc_idx) as chapcnt 
+			FROM cbt_subject_chapter ORDER BY sc_idx asc;
+	</select>
+	
+	<select id="subChapRevice" parameterType="String" 
+		resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT * FROM cbt_subject_chapter WHERE sc_idx = #{sc_idx}	
+	</select>
+	
+	
 	
 
 </mapper>

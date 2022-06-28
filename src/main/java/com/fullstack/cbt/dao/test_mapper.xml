@@ -4,7 +4,74 @@
 <mapper namespace="com.fullstack.cbt.dao.TestDAO">
 
 	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">
-		SELECT su_idx, su_name FROM cbt_subject WHERE su_is_blind = 0
+		SELECT a.su_idx, a.su_name, COUNT(a.su_idx) FROM cbt_subject a JOIN cbt_problem_create b ON a.su_idx = b.su_idx WHERE su_is_blind <![CDATA[ < ]]> 1 GROUP BY a.su_idx HAVING COUNT(a.su_idx) <![CDATA[ > ]]> 10
 	</select>
- 
+	
+	<select id="subjectChapterList" parameterType="String" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT a.sc_idx FROM cbt_subject_chapter a JOIN cbt_problem_create b ON a.sc_idx = b.sc_idx WHERE a.su_idx = #{su_idx} GROUP BY a.sc_idx ORDER BY RAND()
+	</select>
+	
+	<select id="getCurrentTimestamp" resultType="String">
+   		SELECT CURRENT_TIMESTAMP()
+	</select>
+	
+	<select id="getUnixTimestamp" resultType="String">
+   		SELECT UNIX_TIMESTAMP()
+	</select>
+	
+	<select id="getProblem" parameterType="hashmap" resultType="com.fullstack.cbt.dto.ProblemDTO">
+		SELECT 
+			pc_idx, 
+			pc_problem, 
+			pc_answer1, 
+			pc_answer2, 
+			pc_answer3, 
+			pc_answer4, 
+			su_idx 
+		
+		FROM 
+			cbt_problem_create 
+		
+		WHERE 1 
+			<if test="problemList.size != 0">
+			AND pc_idx NOT IN 
+			<foreach collection="problemList" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach> 
+			</if>
+			AND su_idx = #{su_idx} 
+		<if test='sc_idx gt 0'>
+			AND sc_idx = #{sc_idx} 
+		</if>
+		<if test='pc_difficulty != null'>
+			AND pc_difficulty = #{pc_difficulty} 
+		</if>
+		
+		ORDER BY 
+			RAND() 
+
+		LIMIT 1 
+		OFFSET 0 
+	</select>
+	
+	<select id="isBeforeProblem" resultType="int">
+		SELECT COUNT(a.tt_idx) FROM cbt_test a JOIN cbt_test_answer b ON a.tt_idx = b.tt_idx WHERE b.pc_idx = #{param1} AND a.mb_id = #{param2}
+	</select>
+	
+	<select id="getTestTimes" resultType="int">
+		SELECT MAX(tt_times) + 1 FROM cbt_test WHERE su_idx = #{param1} AND mb_id = #{param2} AND LEFT(tt_start_date, 4) = LEFT(CURDATE(), 4)
+	</select>
+	
+	<select id="getProblemAnswer" parameterType="int" resultType="int">
+		SELECT pc_answer FROM cbt_problem_create WHERE pc_idx = #{pc_idx}
+	</select>
+	
+	<insert id="testReg" useGeneratedKeys="true" keyColumn="tt_idx" keyProperty="tt_idx" parameterType="com.fullstack.cbt.dto.TestDTO">
+		INSERT INTO cbt_test (tt_times, tt_score, tt_start_date, tt_status, mb_id, su_idx) VALUES(#{tt_times}, #{tt_score}, #{tt_start_date}, #{tt_status}, #{mb_id}, #{su_idx})
+	</insert>
+	
+	<insert id="testAnswerReg" parameterType="hashmap">
+		INSERT INTO cbt_test_answer (ta_problem_no, ta_choice_no, ta_is_answer, pc_idx, tt_idx) VALUES(#{ta_problem_no}, #{ta_choice_no}, #{ta_is_answer}, #{pc_idx}, #{tt_idx})
+	</insert>
+
 </mapper>

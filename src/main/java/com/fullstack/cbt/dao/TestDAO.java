@@ -29,4 +29,6 @@ public interface TestDAO {
 	int testReg(TestDTO dto);
 
 	boolean testAnswerReg(HashMap<String, Object> map);
+
+	TestDTO testResult(String tt_idx);
 }

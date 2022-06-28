@@ -97,6 +97,11 @@ public class TestService {
 		return dao.testAnswerReg(map);
 	}
 
+	public TestDTO testResult(String tt_idx) {
+		logger.info("테스트 결과 서비스 요청"  + tt_idx);
+		return dao.testResult(tt_idx);
+	}
+
 	
 	
 }

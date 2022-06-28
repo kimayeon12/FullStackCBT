@@ -38,10 +38,10 @@ public class CbtController {
 		//뷰 전체에 시험리스트 뿌려줌 
 		ArrayList<TestDTO> testdto = service.testlist();
 		logger.info("시험 리스트 가져오기 : " + testdto.size());
+		model.addAttribute("listCnt", testdto.size());
 
 			if(testdto.size()>0) {
 				model.addAttribute("testdto", testdto);
-				model.addAttribute("listCnt", testdto.size());
 			} 
 		
 		 return "adminTestList"; 
@@ -76,10 +76,10 @@ public class CbtController {
 		
 		ArrayList<TestDTO> practiceList = service.selectedList(su_idx,tt_status,mb_id);
 		logger.info("선택된 리스트 수 : "  + practiceList.size());
+		model.addAttribute("listCnt", practiceList.size());
 		
 		if(practiceList.size()>0) {
 			model.addAttribute("testdto", practiceList);
-			model.addAttribute("listCnt", practiceList.size());
 		}
 
 		return "adminTestList";

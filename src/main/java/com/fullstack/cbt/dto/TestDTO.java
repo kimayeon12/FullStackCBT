@@ -12,7 +12,23 @@ public class TestDTO {
 	private String tt_status;
 	private String mb_id;
 	private int su_idx;
+	public String getMb_name() {
+		return mb_name;
+	}
+	public void setMb_name(String mb_name) {
+		this.mb_name = mb_name;
+	}
+	private String su_name;
+	private String mb_name;
 	
+	
+
+	public String getSu_name() {
+		return su_name;
+	}
+	public void setSu_name(String su_name) {
+		this.su_name = su_name;
+	}
 	public int getTt_idx() {
 		return tt_idx;
 	}

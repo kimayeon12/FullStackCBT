@@ -3,4 +3,36 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.CbtDAO">
 
+
+	<select id="testlist" resultType="com.fullstack.cbt.dto.TestDTO">
+		SELECT su_idx, su_name, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
+		FROM cbt_subject NATURAL JOIN cbt_test
+	</select>
+	
+	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">
+		SELECT su_idx, su_name FROM cbt_subject WHERE su_is_blind = 0
+	</select>
+	
+	<select id="selectedList" resultType="com.fullstack.cbt.dto.TestDTO">
+		SELECT su_idx, su_name, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
+		FROM cbt_subject NATURAL JOIN cbt_test 
+		<include refid="practiceSql"></include>
+	</select>
+	
+	<sql id="practiceSql">
+		<trim prefix="where" suffixOverrides="and">
+			<if test = "!param1.equals('')">
+				su_idx = #{param1} and
+			</if>
+		
+			<if test = "!param2.equals('')">
+				tt_status = #{param2} and 
+			</if>
+		
+			<if test = "!param3.equals('')">
+				mb_id = #{param3} and 
+			</if>
+		</trim>
+	</sql>
+	
 </mapper>

@@ -74,4 +74,10 @@
 		INSERT INTO cbt_test_answer (ta_problem_no, ta_choice_no, ta_is_answer, pc_idx, tt_idx) VALUES(#{ta_problem_no}, #{ta_choice_no}, #{ta_is_answer}, #{pc_idx}, #{tt_idx})
 	</insert>
 
+
+	<select id="testResult" resultType="com.fullstack.cbt.dto.TestDTO" parameterType="String">
+		SELECT su_name, tt_idx, tt_times, tt_score, mb_id,mb_name
+		FROM cbt_test NATURAL JOIN cbt_subject NATURAL JOIN cbt_member
+		WHERE tt_idx = #{tt_idx}
+	</select>
 </mapper>

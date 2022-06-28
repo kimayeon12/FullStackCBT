@@ -38,7 +38,6 @@ th,td {
   <table>
     <thead>
         <tr>
-        	<th style="display:none">과목고유번호</th>
             <th>과목명</th>
             <th>회차</th>
             <th>회원아이디</th>
@@ -53,8 +52,7 @@ th,td {
 	     <c:when test="${testdto.size() >0}">
 		 	<c:forEach items="${testdto}" var="testdto">
 		        <tr>
-		            <td style="display:none">${testdto.su_idx}</td>
-		            <td>${testdto.su_name}</td>
+		            <td><a href="cbtTestDetail.do?tt_idx=${testdto.tt_idx}">${testdto.su_name}</a></td>
 		            <td>${testdto.tt_times}</td>
 		            <td>${testdto.mb_id}</td>
 		            <td>${testdto.tt_end_date}</td>

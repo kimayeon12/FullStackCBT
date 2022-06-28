@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
 import com.fullstack.cbt.dto.TestDTO;
 import com.fullstack.cbt.service.CbtService;
@@ -85,5 +86,24 @@ public class CbtController {
 		return "adminTestList";
 	}
 	
+		//상세보기 
+		@RequestMapping(value = "/cbtTestDetail.do")
+		public String cbtTestDetail(Model model, @RequestParam String tt_idx) {
+			logger.info("시험 고유번호 : " +tt_idx);
+			
+			//시험고유번호가 1인 과목명, 회차, 시험시작일자,제출일자, 점수, 상태 
+			TestDTO testInfo = service.testInfo(tt_idx);
+			if(testInfo != null) {
+				model.addAttribute("testInfo", testInfo);
+			}
+			
+			//시험고유번호가 1인 문제출제고유번호, 문제1~10, 사용자답안1~10, 정답오답여부10개 , 문제출제 고유번호에 따른 정답(10개)과 각 사지선다 문항(10)
+			ArrayList<ProblemDTO> testDetail = service.testDetail(tt_idx); 
+			logger.info("데이터 개수 : " + testDetail.size());
+			if(testDetail.size()>0) {
+				model.addAttribute("testDetail", testDetail);
+			}
+			return "adminTestDetail";
+		}
 	
 }

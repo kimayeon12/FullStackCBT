@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fullstack.cbt.dao.CbtDAO;
+import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
 import com.fullstack.cbt.dto.TestDTO;
 
@@ -31,5 +32,15 @@ public class CbtService {
 	public ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String mb_id) {
 		logger.info("선택된 값에 따른 리스트 서비스 요청");
 		return dao.selectedList(su_idx,tt_status,mb_id);
+	}
+
+	public TestDTO testInfo(String tt_idx) {
+		logger.info("시험 정보 서비스 요청");
+		return dao.testInfo(tt_idx);
+	}
+
+	public ArrayList<ProblemDTO> testDetail(String tt_idx) {
+		logger.info("상세보기 서비스 요청");
+		return dao.testDetail(tt_idx);
 	}
 }

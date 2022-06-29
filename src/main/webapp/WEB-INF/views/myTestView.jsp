@@ -67,6 +67,7 @@
 		<span ${testDetail.ta_choice_no == '3'? 'style="color:red"' : ''}>3</span> ${testDetail.pc_answer3}<br/>
 		<span ${testDetail.ta_choice_no == '4'? 'style="color:red"' : ''}>4</span> ${testDetail.pc_answer4}
 	</div>
+	<button onclick="location.href='/objection.do?pc_idx=${testDetail.pc_idx}&tt_idx=${testDetail.tt_idx}'">이의제기</button>
 </c:forEach>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>

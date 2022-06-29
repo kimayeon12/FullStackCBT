@@ -3,6 +3,9 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.ObjectionDAO">
 
-	
+<select id="problemDto" resultType="com.fullstack.cbt.dto.ProblemDTO">
+	select pc_idx, pc_problem, pc_answer, pc_answer1,pc_answer2,pc_answer3, pc_answer4
+	from cbt_problem_create where pc_idx=#{param1}
+</select>
 
 </mapper>

@@ -249,6 +249,7 @@ public class TestController {
 		return "testResult";
 	}	
 	
+	//내가 응시한 시험 
 	@RequestMapping(value = "/myTestList.do")
 	public String myTestList(Model model, HttpSession session) {
 		logger.info("내가 응시한 시험 페이지");
@@ -273,6 +274,7 @@ public class TestController {
 		
 		return "myTestList";
 	}
+	
 	
 	//선택한 값에 따른 리스트 가져오기 
 	@RequestMapping(value = "/myTestSearch.do")

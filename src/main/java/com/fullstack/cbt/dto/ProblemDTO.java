@@ -20,7 +20,15 @@ public class ProblemDTO {
 	private byte ta_choice_no;
 	private char ta_is_answer;
 	private byte ta_problem_no;
+	private int tt_idx;
 	
+	
+	public int getTt_idx() {
+		return tt_idx;
+	}
+	public void setTt_idx(int tt_idx) {
+		this.tt_idx = tt_idx;
+	}
 	public byte getTa_choice_no() {
 		return ta_choice_no;
 	}

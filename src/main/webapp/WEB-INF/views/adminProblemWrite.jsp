@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 	<div>문제출제관리 - 출제</div>
-	<form action="problemWrite.do" method="post">
+	<form action="problemWrite.do" method="get">
       	<table>
           	<tr>
               	<th>과목명</th>
@@ -76,7 +76,7 @@ $("select[name='su_idx']").on("change", function(){
 	
 	$.ajax({
 		type:"post",
-		url:"subjectChapList.ajax", 
+		url:"subjectChapList.ajax",
 		data:{
 			'subject' : subject
 		}, 
@@ -89,11 +89,12 @@ $("select[name='su_idx']").on("change", function(){
 			}else{
 				alert("세부과목을 등록해 주세요");
 				//세부 과목 등록 페이지로 변경
-				location.href='/';
+				//location.href='/';
 			}
 		},
 		error:function(error){
 			console.log(error);
+			console.log("에러다");
 		}
 	});
 	

@@ -31,4 +31,12 @@ public interface TestDAO {
 	boolean testAnswerReg(HashMap<String, Object> map);
 
 	TestDTO testResult(String tt_idx);
+
+	ArrayList<TestDTO> testlist(String loginId);
+
+	ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String loginId);
+
+	TestDTO testInfo(String tt_idx);
+
+	ArrayList<ProblemDTO> testDetail(String tt_idx);
 }

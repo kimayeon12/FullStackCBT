@@ -30,5 +30,115 @@
 			cbt_subject_chapter
 	</select>
 	
+	<select id="problemDetailList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name
+			FROM 
+			cbt_problem_create 
+				NATURAL JOIN 
+			cbt_subject 
+				NATURAL JOIN 
+			cbt_subject_chapter
+				WHERE
+			su_idx = #{su_idx}
+	</select>
+	
+	<select id="subjectChapDetailList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name
+			FROM 
+			cbt_problem_create 
+				NATURAL JOIN 
+			cbt_subject 
+				NATURAL JOIN 
+			cbt_subject_chapter
+				WHERE
+			sc_idx = #{sc_idx}
+	</select>
+	
+	<select id="detail" parameterType="String" resultType="com.fullstack.cbt.dto.ProblemDTO">
+			SELECT * FROM cbt_problem_create WHERE pc_idx = #{pc_idx}
+	</select>
+	
+	<select id="subjectChap" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT sc_idx, sc_name, su_idx FROM cbt_subject_chapter WHERE su_idx = #{su_idx}
+	</select>
+	
+	<update id="problemUpdate" parameterType="hashmap">
+		UPDATE cbt_problem_create SET
+			su_idx = #{su_idx}
+			,sc_idx = #{sc_idx}
+			,pc_problem = #{pc_problem}
+			,pc_answer = #{pc_answer}
+			,pc_answer1 = #{pc_answer1}
+			,pc_answer2 = #{pc_answer2}
+			,pc_answer3 = #{pc_answer3}
+			,pc_answer4 = #{pc_answer4}
+			,pc_explan = #{pc_explan}
+			,pc_difficulty = #{pc_difficulty}
+		WHERE pc_idx = #{pc_idx}			
+	</update>
+	
+	<!-- <select id="getTotal" resultType="int">
+		SELECT count(*) FROM cbt_problem_create
+	</select>
+	
+	<select id="list" resultType="com.fullstack.cbt.dto.ProblemDTO">
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name  
+			FROM 
+				cbt_problem_create
+			NATURAL JOIN 
+				cbt_subject 
+			NATURAL JOIN 
+				cbt_subject_chapter
+			ORDER BY pc_idx DESC limit #{param1} offset #{param2}
+	</select>
+	
+	count할 때 (*:모든 컬럼)을 선택하면 속도가 느릴 수 있다. PK값을 넣어주자.
+	<select id="allCount" resultType="Integer">
+		SELECT COUNT(pc_idx) FROM cbt_problem_create
+	</select> -->
+	
+	<!-- 검색 조건문 -->
+	<sql id="criteria">
+		<trim prefix="where (" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'P'.toString()">
+							pc_problem like concat('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							mb_id like concat('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	
+    <!-- 게시물 목록(페이징) -->
+    <select id="getListPaging" resultType="com.fullstack.cbt.dto.ProblemDTO">
+        SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name, mb_id  
+			FROM 
+				cbt_problem_create
+			NATURAL JOIN 
+				cbt_subject 
+			NATURAL JOIN 
+				cbt_subject_chapter
+			<if test="keyword != null">
+				<include refid="criteria"></include>
+			</if>	
+			ORDER BY pc_idx desc 
+		LIMIT #{skip} , #{amount}
+        <!-- limit ((${pageNum}-1)*${amount}), ${amount} -->
+    </select>
+	
+	<!-- 게시물 총 개숫 -->
+    <select id="getTotal" resultType="int">
+        select count(*) from cbt_problem_create
+        <if test="keyword != null">
+        	<include refid="criteria"></include>
+        </if>
+    </select>
 
 </mapper>

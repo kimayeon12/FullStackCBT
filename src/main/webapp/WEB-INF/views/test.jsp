@@ -50,7 +50,7 @@
 		function test() {
 			beforeChecked = -1;
 			
-			if(!confirm("풀지 않은 문제가 있습니다. 정말 제출하시겠습니까?")) {
+			if($('ul.answer > li > input:checked').length < 10 && !confirm("풀지 않은 문제가 있습니다. 정말 제출하시겠습니까?")) {
 				var noProblem = 0;
 				
 				$('.answer').each(function() {
@@ -137,13 +137,13 @@
 		
 		var timerFunc = window.setInterval(function() {
 			limitSecond--;
-			/*
+			
 			if(limitSecond <= 0) {
 				document.getElementById('test').submit();
 				
 				window.clearInterval(timerFunc);
 			}
-			*/
+			
 			var minute = Math.floor(limitSecond / 60);
 			var second = limitSecond % 60;
 			

@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8"/>
         <title>풀스택(Full-Stack) CBT</title>
         <script src="//code.jquery.com/jquery-latest.min.js"></script>
+        <!-- 아래 script, link는 페이징 처리하려고 추가한 것  -->
+        <script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
+		<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <!-- 위 사항까지 추가했슴  -->
         <link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
         <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
     </head>
@@ -14,6 +22,7 @@
 	table, th, td{
         border: 1px solid black;
     }
+
 </style>
     <body>
         <div id="wrap">

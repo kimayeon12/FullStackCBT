@@ -234,19 +234,97 @@ public class TestController {
 	}
 	
 	
-		//결과 
-		@RequestMapping(value = "/testResult.do")
-		public String testResult(Model model, @RequestParam String tt_idx) {  
-			
-			logger.info("시험 결과 페이지 이동");
-			logger.info("시험 고유번호 : " + tt_idx );
-			
-			TestDTO testResult = service.testResult(tt_idx);
-			if(testResult != null) {
-				model.addAttribute("testResult", testResult);
-			}
-			
-			return "testResult";
-		}	
+	//결과 
+	@RequestMapping(value = "/testResult.do")
+	public String testResult(Model model, @RequestParam String tt_idx) {  
+		
+		logger.info("시험 결과 페이지 이동");
+		logger.info("시험 고유번호 : " + tt_idx );
+		
+		TestDTO testResult = service.testResult(tt_idx);
+		if(testResult != null) {
+			model.addAttribute("testResult", testResult);
+		}
+		
+		return "testResult";
+	}	
+	
+	@RequestMapping(value = "/myTestList.do")
+	public String myTestList(Model model, HttpSession session) {
+		logger.info("내가 응시한 시험 페이지");
+		
+		//select 과목명 가져오기
+		ArrayList<SubjectDTO> subjectList =service.subjectList(); 
+		logger.info("등록된 과목 가져오기 : " + subjectList.size());
+		
+		if(subjectList.size()>0) {
+			model.addAttribute("subjectList", subjectList);
+		} 
+		
+		//뷰 전체에 시험리스트 뿌려줌 
+		String loginId = (String) session.getAttribute("loginId");
+		ArrayList<TestDTO> testdto = service.testlist(loginId);
+		logger.info("시험 리스트 가져오기 : " + testdto.size());
+		model.addAttribute("listCnt", testdto.size());
+		
+		if(testdto.size()>0) {
+			model.addAttribute("testdto", testdto);
+		} 
+		
+		return "myTestList";
+	}
+	
+	//선택한 값에 따른 리스트 가져오기 
+	@RequestMapping(value = "/myTestSearch.do")
+	public String cbtForm(Model model, @RequestParam String su_idx, String tt_status, HttpSession session) {
+		
+		//이게 없으면 과목명 안나옴
+		ArrayList<SubjectDTO> subjectList =service.subjectList(); 
+		logger.info("등록된 과목 가져오기 : " + subjectList.size());
+				
+		if(subjectList.size()>0) {
+			model.addAttribute("subjectList", subjectList);
+		} 
+					
+		logger.info("과목번호 : " + su_idx);
+		logger.info("제출상태 : " + tt_status);
+		
+		
+		// 사용자가 선택 후 값을 고정해주기 위해 model에 저장 
+		model.addAttribute("idx", su_idx);
+		model.addAttribute("status", tt_status);
+
+		String loginId = (String) session.getAttribute("loginId");
+		ArrayList<TestDTO> practiceList = service.selectedList(su_idx,tt_status,loginId);
+		logger.info("선택된 리스트 수 : "  + practiceList.size());
+		model.addAttribute("listCnt", practiceList.size());
+		
+		if(practiceList.size()>0) {
+			model.addAttribute("testdto", practiceList);
+		}
+
+		return "myTestList";
+	}
+	
+	//상세보기 
+	@RequestMapping(value = "/myTestView.do")
+	public String myTestView(Model model, @RequestParam String tt_idx) {
+		logger.info("시험 고유번호 : " +tt_idx);
+		
+		//시험고유번호가 1인 과목명, 회차, 시험시작일자,제출일자, 점수, 상태 
+		TestDTO testInfo = service.testInfo(tt_idx);
+		if(testInfo != null) {
+			model.addAttribute("testInfo", testInfo);
+		}
+		
+		//시험고유번호가 1인 문제출제고유번호, 문제1~10, 사용자답안1~10, 정답오답여부10개 , 문제출제 고유번호에 따른 정답(10개)과 각 사지선다 문항(10)
+		ArrayList<ProblemDTO> testDetail = service.testDetail(tt_idx); 
+		logger.info("데이터 개수 : " + testDetail.size());
+		if(testDetail.size()>0) {
+			model.addAttribute("testDetail", testDetail);
+		}
+		
+		return "myTestView";
+	}
 	
 }

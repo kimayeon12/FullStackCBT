@@ -101,6 +101,26 @@ public class TestService {
 		logger.info("테스트 결과 서비스 요청"  + tt_idx);
 		return dao.testResult(tt_idx);
 	}
+	
+	public ArrayList<TestDTO> testlist(String loginId) {
+		logger.info("시험 리스트 가져오기 서비스 요청");
+		return dao.testlist(loginId);
+	}
+
+	public ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String loginId) {
+		logger.info("선택된 값에 따른 리스트 서비스 요청");
+		return dao.selectedList(su_idx,tt_status,loginId);
+	}
+
+	public TestDTO testInfo(String tt_idx) {
+		logger.info("시험 정보 서비스 요청");
+		return dao.testInfo(tt_idx);
+	}
+
+	public ArrayList<ProblemDTO> testDetail(String tt_idx) {
+		logger.info("상세보기 서비스 요청");
+		return dao.testDetail(tt_idx);
+	}
 
 	
 	

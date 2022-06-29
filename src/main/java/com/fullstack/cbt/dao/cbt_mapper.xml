@@ -31,7 +31,7 @@
 			</if>
 		
 			<if test = "!param3.equals('')">
-				mb_id = #{param3} and 
+				mb_id LIKE CONCAT('%',#{param3}, '%') and 
 			</if>
 		</trim>
 	</sql>

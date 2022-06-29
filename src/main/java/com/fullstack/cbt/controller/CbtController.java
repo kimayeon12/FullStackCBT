@@ -75,12 +75,12 @@ public class CbtController {
 		model.addAttribute("status", tt_status);
 		model.addAttribute("id", mb_id);
 		
-		ArrayList<TestDTO> practiceList = service.selectedList(su_idx,tt_status,mb_id);
-		logger.info("선택된 리스트 수 : "  + practiceList.size());
-		model.addAttribute("listCnt", practiceList.size());
+		ArrayList<TestDTO> selectedList = service.selectedList(su_idx,tt_status,mb_id);
+		logger.info("선택된 리스트 수 : "  + selectedList.size());
+		model.addAttribute("listCnt", selectedList.size());
 		
-		if(practiceList.size()>0) {
-			model.addAttribute("testdto", practiceList);
+		if(selectedList.size()>0) {
+			model.addAttribute("testdto", selectedList);
 		}
 
 		return "adminTestList";

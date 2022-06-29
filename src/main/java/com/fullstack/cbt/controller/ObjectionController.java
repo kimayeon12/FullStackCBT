@@ -36,21 +36,22 @@ public class ObjectionController {
 		return "objection";
 	}
 	
-		//이의제기 내용 제출 
-		@RequestMapping(value = "/objectionInsert.do")
-		public String objectionInsert(Model model,HttpSession session,@RequestParam String content, String pc_idx, String tt_idx) {
-			logger.info("이의제기 내용 및 문제 고유번호 :" +content + pc_idx);
-			logger.info("시험 고유번호 : " + tt_idx);
+	
+	
+	//이의제기 내용 제출 
+	@RequestMapping(value = "/objectionInsert.do")
+	public String objectionInsert(Model model,HttpSession session,@RequestParam String content, String pc_idx, String tt_idx) {
+		logger.info("이의제기 내용 및 문제 고유번호 :" +content + pc_idx);
+		logger.info("시험 고유번호 : " + tt_idx);
 			
-			String loginId = (String) session.getAttribute("loginId");
-			boolean success = service.objectionInsert(content,pc_idx,loginId);
-			String page ="";
-			if(success) {
-				logger.info("이의제기 내용 제출 완료");
-				page = "redirect:/myTestView.do?tt_idx="+tt_idx;
-			} 
-			return page; 
-			
-		}
+		String loginId = (String) session.getAttribute("loginId");
+		boolean success = service.objectionInsert(content,pc_idx,loginId);
+		String page ="";
+		if(success) {
+			logger.info("이의제기 내용 제출 완료");
+			page = "redirect:/myTestView.do?tt_idx="+tt_idx;
+		} 
+		return page; 	
+	 }
 	
 }

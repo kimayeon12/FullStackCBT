@@ -1,9 +1,41 @@
 package com.fullstack.cbt.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.fullstack.cbt.dto.MemberDTO;
+import com.fullstack.cbt.dto.MemberGradeDTO;
+
 public interface MemberDAO {
-	//DAO란 DB데이터에 접근하기 위한 객체
+	
+	
+	ArrayList<MemberDTO> list();
+
+	int join(HashMap<String, String>params);
+
 	String login(String mb_id, String mb_pw);
 
-	String joinForm(String mb_id, String mb_pw, String mb_pw2, String mb_name, String mb_email);
+	String overlayId(String mb_id);
+
+	String overlayEmail(String mb_email);
+
+	MemberDTO adminMemberDetail(String mb_id);
+
+	int update(HashMap<String, String> params);
+
+	ArrayList<MemberGradeDTO> gradelist(String mb_id);
+
+	void changeGrade(String mb_id, String mg_grade_after);
+
+	ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search);
+
+	
+
+
+
+
+	
+
+	
 
 }

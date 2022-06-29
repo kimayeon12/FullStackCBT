@@ -1,37 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+`<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<body>
-	<h1>로그인 페이지</h1>
-	<form action="login.do"  method="POST" onsubmit="return login()">
-        <table>
-		            <tr>
-		                <th>아이디</th>
-		                <td>
-		                	<input type="text" name="id" id="id"/>
-		                </td>
-		            </tr>
-		            <tr>
-		                <th>비밀번호</th>
-		                <td>
-		                	<input type="password" name="pw" id="pw"  maxlength="20"/>
-		                </td>
-		            </tr>
-		            <tr>
-		                <th colspan="2">
-			                <input type="submit" value="로그인" />
-			                <input type="button" value="회원가입"/>
-		                </th>
-		            </tr>
-        <tr>
-            <th colspan="2">
-	            <input type="button" value="아이디 찾기"/>
-	            <input type="button" value="비밀번호 찾기"/>
-            </th>
-        </tr>
-    </table>
-    </form>
-  </body>
+<h1>로그인 페이지</h1>
+<form action="login.do"  method="post" onsubmit="return login()">
+     <table>
+           <tr>
+               <th>아이디</th>
+               <td>
+               	<input type="text" name="mb_id" id="id" maxlength="20"/>
+               </td>
+           </tr>
+           <tr>
+               <th>비밀번호</th>
+               <td>
+               	<input type="password" name="mb_pw" id="pw" maxlength="20"/>
+               </td>
+           </tr>
+           <tr>
+               <th colspan="2">
+                	<input type="submit" value="로그인" />
+                	<input type="button" value="회원가입" onclick="location.href='joinForm.go'"/>
+               </th>
+           </tr>
+     <tr>
+         <th colspan="2">
+          	<input type="button" value="아이디 찾기" onclick="location.href='findId.do'"/>
+          	<input type="button" value="비밀번호 찾기"/>
+         </th>
+     </tr>
+ </table>
+ </form>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 		function login(){

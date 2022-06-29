@@ -297,12 +297,12 @@ public class TestController {
 		model.addAttribute("status", tt_status);
 
 		String loginId = (String) session.getAttribute("loginId");
-		ArrayList<TestDTO> practiceList = service.selectedList(su_idx,tt_status,loginId);
-		logger.info("선택된 리스트 수 : "  + practiceList.size());
-		model.addAttribute("listCnt", practiceList.size());
+		ArrayList<TestDTO> selectedList = service.selectedList(su_idx,tt_status,loginId);
+		logger.info("선택된 리스트 수 : "  + selectedList.size());
+		model.addAttribute("listCnt", selectedList.size());
 		
-		if(practiceList.size()>0) {
-			model.addAttribute("testdto", practiceList);
+		if(selectedList.size()>0) {
+			model.addAttribute("testdto", selectedList);
 		}
 
 		return "myTestList";

@@ -2,6 +2,7 @@ package com.fullstack.cbt.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +34,8 @@ public class SubjectController {
 		return "redirect:/adminSubjectManagement.do";
 	}
 	
+	
+	
 	@RequestMapping(value = "/adminSubjectManagement.do")
 	public String smList(Model model, HttpSession session) {
 		
@@ -43,8 +46,11 @@ public class SubjectController {
 		logger.info("list 갯수 : "+list.size());
 		model.addAttribute("list",list);
 		
+		
 		return page;
 	}
+	
+	
 	
 	@RequestMapping(value = "/adminSubjectManagementRegister.go")
 	public String regpage() {
@@ -52,12 +58,16 @@ public class SubjectController {
 		return "adminSubjectManagementRegister";
 	}
 	
+	
+	
 	@RequestMapping(value = "/subOverlay.ajax")
 	@ResponseBody
 	public HashMap<String, Object> suboverlay(@RequestParam String chkSub) {
 		logger.info("과목명 중복체크 요청: "+chkSub);
 		return service.suboverlay(chkSub);
 	}
+	
+	
 	
 	@RequestMapping(value = "/subReg.ajax")
 	@ResponseBody
@@ -72,11 +82,15 @@ public class SubjectController {
 		return service.subreg(subject, chk);
 	}
 	
+	
+	
 	@RequestMapping(value = "/adminSubjectManagement.go")
 	public String list() {
 		logger.info("과목 관리 리스트 페이지 이동요청");
 		return "adminSubjectManagement";
 	}
+	
+	
 	
 	@RequestMapping(value = "/adminSubjectManagementRevice.do")
 	public String reviceform(Model model, HttpSession session,
@@ -94,14 +108,18 @@ public class SubjectController {
 		return page;
 	}
 	
+	
+	
 	@RequestMapping(value = "/subjectUpdate.do")
 	public String subupdate(Model model,
-			@RequestParam String subject, String check, String su_idx) {
-		logger.info("수정 요청");
-		logger.info("subject : "+subject+"노출,비노출 : "+check+"과목 고유 번호 : "+su_idx);
-		service.subupdate(subject,check,su_idx);
+			@RequestParam HashMap<String, String> params) {
+		logger.info("과목명 수정 요청");
+		logger.info("params : {}",params);
+		service.subupdate(params);
 		return "redirect:/adminSubjectManagement.do";
 	}
+	
+	
 	
 	
 	
@@ -112,24 +130,26 @@ public class SubjectController {
 		return "redirect:/adminSubjectChapterManagement.do";
 	}
 	
+	
+	
 	@RequestMapping(value = "/adminSubjectChapterManagement.do")
 	public String chapList(Model model, HttpSession session) {
 		
 	
 		
 		logger.info("과목단원명 리스트 요청");
-		ArrayList<SubjectChapterDTO> chapList = service.chapList();
-		
-		if(chapList.size() > 0) {
-			logger.info("과목단원관리 리스트 갯수 : "+chapList.size());
-			model.addAttribute("chapList",chapList);
-		}
-		
 		ArrayList<SubjectChapterDTO> subList = service.subList();
 		
 		if(subList.size() > 0) {
-			logger.info("과목단원관리 리스트 갯수 : "+subList.size());
+			logger.info("과목단원관리에서 과목 갯수 : "+subList.size());
 			model.addAttribute("subList",subList);
+		}
+		
+		ArrayList<SubjectChapterDTO> chapList = service.chapList();
+		
+		if(chapList.size() > 0) {
+			logger.info("과목단원에서 과목단원 갯수 : "+chapList.size());
+			model.addAttribute("chapList",chapList);
 		}
 		
 		
@@ -137,11 +157,15 @@ public class SubjectController {
 		return page;
 	}
 	
+	
+	
 	@RequestMapping(value = "/adminSubjectChapterManagementRegister.go")
 	public String chapregpage() {
 		logger.info("과목 단원 등록 페이지 이동요청");
 		return "redirect:/adminSubjectChapterManagementRegister.do";
 	}
+	
+	
 	
 	@RequestMapping(value = "/adminSubjectChapterManagementRegister.do")
 	public String chapregList(Model model, HttpSession session) {
@@ -157,6 +181,8 @@ public class SubjectController {
 		return page;
 	}
 	
+	
+	
 	@RequestMapping(value = "/subChapOverlay.ajax")
 	@ResponseBody
 	public HashMap<String, Object> subChapOverlay(@RequestParam String chksubChap) {
@@ -164,12 +190,16 @@ public class SubjectController {
 		return service.subChapOverlay(chksubChap);
 	}
 	
+	
+	
 	@RequestMapping(value = "/subChapReg.ajax")
 	@ResponseBody
 	public HashMap<String, Object> subChapReg(@RequestParam String subject, String chapter) {
 		logger.info(subject+" 과목의 "+chapter+" 과목단원 등록 요청");
 		return service.subChapReg(subject, chapter);
 	}
+	
+	
 	
 	/*
 	@RequestMapping(value = "/adminSubjectChapterManagementRevice.go")
@@ -179,26 +209,70 @@ public class SubjectController {
 	}
 	*/
 	
+	
+	
 	@RequestMapping(value = "/adminSubjectChapterManagementRevice.do")
-	public String subChapRevice(Model model, HttpSession session, String sc_idx
+	public String subChapRevice(Model model, HttpSession session, @RequestParam String sc_idx, String su_idx
 			) {
 		
-		String page = "adminSubjectChapterManagementRevice";
-		logger.info("과목단원 수정 상세 페이지 요청");
+		logger.info("과목단원 수정 상세 페이지 요청 : "+sc_idx);
 		SubjectChapterDTO chapdto = service.subChapRevice(sc_idx);
-		if(chapdto !=null) {
-			model.addAttribute("chapdto",chapdto);
-			page = "adminSubjectChapterManagementRevice";
-		}
+		model.addAttribute("chapdto", chapdto);
 		
-		ArrayList<SubjectDTO> subjectList = service.subjectList();
-		if(subjectList.size() > 0) {
-			logger.info("등록된 과목 : "+subjectList);
-			model.addAttribute("subjectList",subjectList);
-		}
+		SubjectDTO subjectselList = service.subjectselList(su_idx);
+		logger.info(su_idx);
+		model.addAttribute("subjectselList", subjectselList);
 		
-		return page;
+		return "adminSubjectChapterManagementRevice";
 	}
+	
+	
+	
+	@RequestMapping(value = "/subChapReOverlay.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subChapReOverlay(@RequestParam String chkSubChap) {
+		logger.info("과목단원명 중복체크 요청: "+chkSubChap);
+		return service.subChapReOverlay(chkSubChap);
+	}
+	
+	
+	// 여기부터 수정하기 요청
+	
+	@RequestMapping(value = "/subjectChapterUpdate.do")
+	public String subChapUpdate(Model model, 
+			@RequestParam HashMap<String, String> params) {
+		logger.info("수정요청 요청");
+		logger.info("params : {}",params);		
+		service.subChapUpdate(params);			
+		return "redirect:/adminSubjectChapterManagement.do";
+	}
+	
+	
+	
+	/* 원본
+	@RequestMapping(value = "/subjectChapterUpdate.do")
+	public String subChapUpdate(Model model, 
+			@RequestParam HashMap<String, String> params) {
+		logger.info("수정요청 요청");
+		logger.info("params : {}",params);		
+		service.subChapUpdate(params);			
+		return "redirect:/adminSubjectChapterManagement.do";
+	}
+	
+	*/
+
+	
+	// 임시테스트
+	
+	@RequestMapping(value = "/submitCheck.ajax")
+	@ResponseBody
+	public HashMap<String, Object> submitCheck(@RequestParam String submitChk) {
+		logger.info("수정버튼 클릭시 과목단원명 중복체크 요청: "+submitChk);
+		return service.submitCheck(submitChk);
+	}
+	
+	
+	
 	
 	
 	

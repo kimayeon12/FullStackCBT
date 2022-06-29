@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../resources/inc/header.jsp" %>
-<%@ include file="../../resources/inc/footer.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,18 +37,17 @@
 	            <tr>
 	                <td class="tg1">노출여부</td>
 	                <td class="tg3">
-	                	<input type="checkbox" id="su_is_blind" name="su_is_blind" value="${dto.su_is_blind}"/>
+		                	<input type="checkbox" id="check" name="check" ${dto.su_is_blind eq 0? 'checked= "checked"' : ''} />	
 	                	체크 시 사용자 시험 응시 화면에 과목 선택 목록으로 노출됩니다.
 	                </td>
 	            </tr>
 	            </tbody>
 	        </table>
-	        <input type="button" value="수정" onclick="subRegister()"/>
+	        <input type="submit" value="수정" onclick="submitSubRevice()"/>
 	        <input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>
 	    </form>
 </body>
 <script>
-
 	var overChk = false;
 	function subOverlay() {
 		var subject = $("#subject").val();
@@ -78,44 +76,6 @@
   		});
   	}
 	
-	function subRegister() {
-		console.log('과목명 등록');
-		var $subject = $('#subject');
-		var $check = $('#check');
-		
-		if(overChk){
-			
-		console.log("과목명 등록 요청");
-		
-		$.ajax({
-			type:'post',
-			url:'subReg.ajax',
-			data:{
-				subject:$subject.val(),
-				check:$check.val()
-			},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				if(data.success){
-					alert("과목명 수정에 성공 했습니다.");
-					location.href='/adminSubjectManagement.do';
-				}else{
-					alert("과목명 수정에 실패 했습니다.");
-				}
-			},
-			error:function(e){
-				console.log(e);
-				alert("과목 등록에 실패 했습니다.");
-			}
-		});	
-		} else if($subject.val()=="") {
-			alert("과목명을 입력해 주세요");
-		}else{
-			alert("중복체크를 진행해 주세요");
-		}
-	}
-
     
     </script>
 </html>

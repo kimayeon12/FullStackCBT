@@ -2,6 +2,7 @@ package com.fullstack.cbt.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,28 +54,32 @@ public class SubjectService {
 	public SubjectDTO subdetail(String su_idx) {
 		
 		SubjectDTO dto = null;
-		logger.info(su_idx+" 상세보기 서비스 요청");
+		logger.info(su_idx+" 번 과목 번호 상세보기 서비스 요청");
 		dto = dao.subdetail(su_idx);
 		logger.info("content : "+dto.getSu_name());
 		return dto;
 	}
 
-	public void subupdate(String subject, String check, String su_idx) {
-		logger.info("과목 수정 요청 서비스");
-		int row = dao.update(subject,check,su_idx);
+	public void subupdate(HashMap<String, String> params) {
+		logger.info("과목명 수정 요청 서비스");
+		int row = dao.subupdate(params);
 		logger.info("수정된 과목명 데이터 수 : "+row);
 	}
-
+	
+	
+	
+	
+	
 	//과목 단원
 	
-	public ArrayList<SubjectChapterDTO> chapList() {
-		logger.info("과목단원관리 리스트 서비스 요청");
-		return dao.chapList();
+	public ArrayList<SubjectChapterDTO> subList() {
+		logger.info("과목단원관리에서 과목 갯수 서비스 요청");
+		return dao.subList();
 	}
 	
-	public ArrayList<SubjectChapterDTO> subList() {
-		logger.info("과목단원별 문제갯수 서비스 요청");
-		return dao.subList();
+	public ArrayList<SubjectChapterDTO> chapList() {
+		logger.info("과목단원별 문제갯수 및 과목단원갯수 서비스 요청");
+		return dao.chapList();
 	}
 	
 	public ArrayList<SubjectDTO> subjectList() {
@@ -108,11 +113,51 @@ public class SubjectService {
 	}
 
 	public SubjectChapterDTO subChapRevice(String sc_idx) {
-		SubjectChapterDTO chapdto = null;
-		logger.info(sc_idx+" 번 과목단원 상세보기 서비스 요청");
-		chapdto = dao.subChapRevice(sc_idx);
-		logger.info("content : "+chapdto.getSc_name());
-		return chapdto;
+		logger.info(sc_idx+" 번 과목단원번호 상세보기 서비스 요청");
+		return dao.subChapRevice(sc_idx);
+	}
+
+	public SubjectDTO subjectselList(String su_idx) {
+		logger.info(su_idx+" 번 과목의 과목단원수정에서 과목선택값 서비스 요청");
+		return dao.subjectselList(su_idx);
+	}
+
+	public HashMap<String, Object> subChapReOverlay(String chkSubChap) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String subChapReOverlay = dao.subChapReOverlay(chkSubChap);
+		logger.info("중복 과목단원명이 있나?"+subChapReOverlay);
+		boolean over = subChapReOverlay == null? false : true;
+		map.put("subChapReOverlay",over);
+		
+		return map;
+	}
+
+	
+	
+	// 여기부터 수정하기 서비스
+	
+	public void subChapUpdate(HashMap<String, String> params) {
+		logger.info("과목단원명 수정 요청 서비스"+params);
+		int row = dao.subChapUpdate(params);
+		logger.info("수정된 데이터 수 : "+row);
+		
+	}
+
+	
+	//임시테스트
+	
+	public HashMap<String, Object> submitCheck(String submitChk) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = dao.submitCheck(submitChk);
+		logger.info("수정버튼 클릭시 중복 확인 "+submitChk);
+		boolean over = false;
+		
+		if(row>0) {
+			over = true;
+		}
+		
+		map.put("submitCheck", over);
+		return map;
 	}
 
 

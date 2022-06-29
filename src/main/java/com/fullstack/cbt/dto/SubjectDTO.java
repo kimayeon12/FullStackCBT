@@ -9,7 +9,37 @@ public class SubjectDTO {
 	private int pc_idx;
 	private int tt_idx;
 	private String mb_id;
+	
+	//과목DTO에 없는것 추가
+	private int chapCnt;
+	private int proCnt;
+	private int ttCnt;
+	private int testerCnt;
 
+	public int getTtCnt() {
+		return ttCnt;
+	}
+	public void setTtCnt(int ttCnt) {
+		this.ttCnt = ttCnt;
+	}
+	public int getTesterCnt() {
+		return testerCnt;
+	}
+	public void setTesterCnt(int testerCnt) {
+		this.testerCnt = testerCnt;
+	}
+	public int getChapCnt() {
+		return chapCnt;
+	}
+	public void setChapCnt(int chapCnt) {
+		this.chapCnt = chapCnt;
+	}
+	public int getProCnt() {
+		return proCnt;
+	}
+	public void setProCnt(int proCnt) {
+		this.proCnt = proCnt;
+	}
 	public int getSc_idx() {
 		return sc_idx;
 	}

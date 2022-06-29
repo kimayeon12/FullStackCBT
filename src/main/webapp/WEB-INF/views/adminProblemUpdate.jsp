@@ -2,71 +2,121 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 <div>문제 출제 관리 - 수정</div>
-	<form action="problemUpdate.do" method="post">
+	<form action="problemUpdate.do" method="get">
 	<table>
 		<tr>
 			<th>과목명</th>
 			<td>
-				<select id="select_main">
-					<option value="" selected>과목명</option>
-                    <option value="JAVA">JAVA</option>
-                    <option value="js/jQuery">js/jQuery</option>
-                    <option value="MariaDB">MariaDB(MySQL)</option>
+				<input type="hidden" name="pc_idx" value="${problemDetail.pc_idx}">
+				<select name="su_idx" id="subjectList">
+					<option value="">과목명</option>
+                   		<c:forEach items="${subjectList}" var="item">
+                   			<option value="${item.su_idx}" ${item.su_idx eq problemDetail.su_idx ? 'selected' : ''}>${item.su_name}</option>                   		
+                   		</c:forEach>
                 </select>
 			</td>
 		</tr>
         <tr>
 			<th>과목단원명</th>
 			<td>
-				<select id="select_sub">
-					<option value="" selected>과목단원명</option>
+				<select name="sc_idx" id="subjectChapList">
+					<option value="">과목단원명</option>
+					<c:forEach items="${subjectChap}" var="item">
+                   			<option value="${item.sc_idx}" ${item.sc_idx eq problemDetail.sc_idx ? 'selected' : ''}>${item.sc_name}</option>                   		
+                   		</c:forEach>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>문제</th>
-			<td><textarea rows="15" cols="30" name="problem"></textarea></td>
+			<td><textarea name="pc_problem">${problemDetail.pc_problem}</textarea></td>
 		</tr>
 		<tr>
 			<th>정답</th>
 			<td>
-				<input type="radio" name="answer" value="1">1
-				<input type="radio" name="answer" value="2">2
-				<input type="radio" name="answer" value="3">3
-				<input type="radio" name="answer" value="4">4
+				<input type="radio" name="pc_answer" value="1" <c:if test="${problemDetail.pc_answer eq '1'}">checked</c:if>/>1
+				<input type="radio" name="pc_answer" value="2" <c:if test="${problemDetail.pc_answer eq '2'}">checked</c:if>/>2
+				<input type="radio" name="pc_answer" value="3" <c:if test="${problemDetail.pc_answer eq '3'}">checked</c:if>/>3
+				<input type="radio" name="pc_answer" value="4" <c:if test="${problemDetail.pc_answer eq '4'}">checked</c:if>/>4
 			</td>
 		</tr>
 		<tr>
 			<th>4지선다문항</th>
 			<td>
-				 ①: <input type="text" name="answer1"><br>
-				 ②: <input type="text" name="answer2"><br>
-				 ③: <input type="text" name="answer3"><br>
-				 ④: <input type="text" name="answer4">
+				 ①: <input type="text" name="pc_answer1" value="${problemDetail.pc_answer1}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer1}">checked</c:if>/><br>
+				 ②: <input type="text" name="pc_answer2" value="${problemDetail.pc_answer2}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer2}">checked</c:if>/><br>
+				 ③: <input type="text" name="pc_answer3" value="${problemDetail.pc_answer3}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer3}">checked</c:if>/><br>
+				 ④: <input type="text" name="pc_answer4" value="${problemDetail.pc_answer4}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer4}">checked</c:if>/>
 			</td>
 		</tr>
 		<tr>
 			<th>해설</th>
-			<td><textarea rows="5" cols="30" name="pc_explan"></textarea></td>
+			<td><textarea name="pc_explan">${problemDetail.pc_explan}</textarea></td>
         </tr>
 		<tr>
 			<th>난이도</th>
 			<td>
-				<input type="radio" name="level" value="상">상
-				<input type="radio" name="level" value="중">중
-				<input type="radio" name="level" value="하">하
+				<input type="radio" name="pc_difficulty" value="상" <c:if test="${fn:contains(problemDetail.pc_difficulty, '상')}">checked</c:if>/>상
+				<input type="radio" name="pc_difficulty" value="중" <c:if test="${fn:contains(problemDetail.pc_difficulty, '중')}">checked</c:if>/>중
+				<input type="radio" name="pc_difficulty" value="하" <c:if test="${fn:contains(problemDetail.pc_difficulty, '하')}">checked</c:if>/>하
 			</td>
 		</tr>
 		<tr>
 			<th colspan="2">
-			<input type="submit" value="저장"/>
-			<input type="button" value="목록" onclick="location.href='adminProblemList.go'"/>
+			<input type="submit" value="수정"/>
+			<input type="button" value="목록" onclick="location.href='problemList.do'"/>
 			</th>
 		</tr>
 	</table>
 	</form>
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
+
+$("select[name='su_idx']").on("change", function(){
+	
+	console.log("ajax 전송");
+	var subject = $("#subjectList option:selected").val();
+	
+	$.ajax({
+		type:"post",
+		url:"subjectChapList.ajax",
+		data:{
+			'subject' : subject
+		}, 
+		dataType:"JSON",
+		success:function(data){
+			console.log("세부과목 가져오기 : "+data.subjectChapList);
+			
+			if(data.subjectChapList != null) {
+				drawSubjectChapList(data.subjectChapList);							
+			}else{
+				alert("세부과목을 등록해 주세요");
+				//세부 과목 등록 페이지로 변경
+				//location.href='/';
+			}
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+	
+});
+
+function drawSubjectChapList(subjectChapList){
+	var content = '';
+	console.log(subjectChapList);
+	
+	subjectChapList.forEach(function(subjectChapList){
+		content += '<option value="'+subjectChapList.sc_idx+'">'+subjectChapList.sc_name+'</option>';
+	});
+	$("#subjectChapList").empty();
+	$("#subjectChapList").append(content);
+	
+}
+
+
+
+
 
 
 </script>

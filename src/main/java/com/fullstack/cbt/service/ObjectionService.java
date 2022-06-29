@@ -20,4 +20,16 @@ public class ObjectionService {
 		return dao.problemDto(pc_idx);
 	}
 	
+	
+	public boolean objectionInsert(String content,String pc_idx, String loginId) {
+		logger.info("이의제기 내용 제출 서비스 요청");
+		int row = dao.objectionInsert(content,pc_idx,loginId);
+		
+		boolean success = false;
+		if(row > 0 ) {
+			success = true;
+		}
+		return success;
+	}
+	
 }

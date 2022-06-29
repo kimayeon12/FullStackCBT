@@ -1,5 +1,7 @@
 package com.fullstack.cbt.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +20,14 @@ public class ObjectionController {
 	
 	@Autowired ObjectionService service;
 	
-	//이의제기페이지 이동
-	//tt_idx 같이 가지고올수있어여? 가져와서 model에 담아서 뷰로 가져가면되는데
-	// 그냥 String tt_idx 파라메터 가져온다고 적어넣고 찍어볼까 
-	// test에선 model에 담아서 잘됐던건가 model에 담아서 가능했나봄 
-	
-	//정리 
-	//그럼 내가응시한 시험 상세보기에서 tt_idx를 model 에 담고 난 파라메터로 가져오고 ++ 추가하기! 
-	// 그리고 objection viewd에도 취소 링크에 써주면 됨 
+	//이의제기 페이지
 	@RequestMapping(value = "/objection.do")
 	public String cbtTestDetail(Model model,@RequestParam String pc_idx, String tt_idx) {
-		logger.info("이의제기 문제 고유번호 : " + pc_idx);
+		logger.info("이의제기할 문제 고유번호 : " + pc_idx);
 		logger.info("시험 고유번호 : " + tt_idx);
-	
+		
+		model.addAttribute("tt_idx", tt_idx);
+		
 		ProblemDTO problemDto = service.problemDto(pc_idx);
 		if(problemDto != null) {
 			model.addAttribute("problemdto", problemDto);
@@ -38,4 +35,22 @@ public class ObjectionController {
 		
 		return "objection";
 	}
+	
+		//이의제기 내용 제출 
+		@RequestMapping(value = "/objectionInsert.do")
+		public String objectionInsert(Model model,HttpSession session,@RequestParam String content, String pc_idx, String tt_idx) {
+			logger.info("이의제기 내용 및 문제 고유번호 :" +content + pc_idx);
+			logger.info("시험 고유번호 : " + tt_idx);
+			
+			String loginId = (String) session.getAttribute("loginId");
+			boolean success = service.objectionInsert(content,pc_idx,loginId);
+			String page ="";
+			if(success) {
+				logger.info("이의제기 내용 제출 완료");
+				page = "redirect:/myTestView.do?tt_idx="+tt_idx;
+			} 
+			return page; 
+			
+		}
+	
 }

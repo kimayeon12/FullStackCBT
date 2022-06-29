@@ -40,15 +40,21 @@
 	<textarea name="content" style="resize:none"></textarea>
 	<p class="red">이의제기는 묻고 답하는 공간이 아닙니다.<br/>
 	문의 사항은 1:1 게시판을 이용해 주세요.</p>
+	<input type="hidden" name="tt_idx" value="${tt_idx}"/>
 	<input type="submit" value="제출"/>
-	<input type="button" value="취소" /><!--내가응시한시험으로 이동 onclick="location.href='000'"  그럼tt_idx 가 있어야하나?a-->
+	<input type="button" value="취소" onclick="location.href='myTestView.do?tt_idx=${tt_idx}'"><!--내가응시한시험으로 이동 onclick="location.href='000'"  그럼tt_idx 가 있어야하나?a-->
 	<!-- 이의제기 버튼 누를 때 pc_idx랑 tt_idx 둘다 가지고와야 할 듯 -->
 </form>
 
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
  function checkSubmit(){
-	if(!confirm("이의제기 내용을 제출하시겠습니까?")){
+	if($('textarea[name=content]').val()==""){
+		alert("이의제기 내용을 작성해주세요");
+		$("textarea").focus();
+		return false;
+	}
+	if(!confirm("이의제기 내용을 제출하시겠습니까?") ){
 		return false;
 	}
 } 

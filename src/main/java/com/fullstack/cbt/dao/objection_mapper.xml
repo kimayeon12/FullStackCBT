@@ -8,4 +8,9 @@
 	from cbt_problem_create where pc_idx=#{param1}
 </select>
 
+
+<insert id="objectionInsert" >
+	insert into cbt_objection(oj_content,oj_date,oj_status,pc_idx,mb_id)
+	 values(#{param1},now(),'처리대기',#{param2},#{param3})
+</insert>
 </mapper>

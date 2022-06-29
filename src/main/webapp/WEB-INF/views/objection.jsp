@@ -55,7 +55,7 @@
 	}else if(!confirm("이의제기 내용을 제출하시겠습니까?") ){
 		return false;
 	} else {
-		alert("제출완료 되었습니다.");
+		alert("제출 되었습니다.");
 	}
 } 
 </script>

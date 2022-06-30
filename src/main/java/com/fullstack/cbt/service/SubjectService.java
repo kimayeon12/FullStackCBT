@@ -60,10 +60,47 @@ public class SubjectService {
 		return dto;
 	}
 
+	
+	
+	
 	public void subupdate(HashMap<String, String> params) {
 		logger.info("과목명 수정 요청 서비스");
 		int row = dao.subupdate(params);
 		logger.info("수정된 과목명 데이터 수 : "+row);
+	}
+	
+	/*
+	public HashMap<String, Object> subRev(String su_idx, String subject, int chk) {
+		HashMap<String, Object> subRevResult = new HashMap<String, Object>();
+		int row = dao.subRev(su_idx,subject,chk);
+		boolean subRevSuccess = false;
+		
+		if(row > 0) {
+			subRevSuccess = true;
+		}
+		
+		logger.info("수정된 데이터 수 : "+row);
+		subRevResult.put("subRevSuccess", subRevSuccess);
+		
+		return subRevResult;
+	}
+	*/
+	
+	
+	
+public HashMap<String, Object> subreg(String su_idx, String subject,int chk) {
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int row = dao.subreg(subject, chk);
+		boolean success = false;
+		
+		if(row > 0) {
+			success = true;
+		}
+		
+		result.put("success", success);
+		
+		return result;
 	}
 	
 	
@@ -145,7 +182,7 @@ public class SubjectService {
 
 	
 	//임시테스트
-	
+	/*
 	public HashMap<String, Object> submitCheck(String submitChk) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row = dao.submitCheck(submitChk);
@@ -159,6 +196,9 @@ public class SubjectService {
 		map.put("submitCheck", over);
 		return map;
 	}
+	*/
+
+	
 
 
 	

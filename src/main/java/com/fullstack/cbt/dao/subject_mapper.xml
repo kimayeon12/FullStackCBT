@@ -27,12 +27,23 @@
 	</select>
 	
 
+
 	<update id="subupdate" parameterType="hashmap">
 		UPDATE cbt_subject SET
 			su_name = #{subject}	
 			,su_is_blind = #{su_is_blind}
 		WHERE su_idx = ${su_idx}
 	</update>
+	
+	
+	<!--  
+	<update id="subRev">
+		UPDATE cbt_subject SET
+			su_name = #{param2}	
+			,su_is_blind = #{param3}
+		WHERE su_idx = ${param1}
+	</update>
+	-->
 	
 	
 	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">

@@ -21,6 +21,8 @@ public interface SubjectDAO {
 	SubjectDTO subdetail(String su_idx);
 
 	int subupdate(HashMap<String, String> params);
+	
+	//int subRev(String su_idx,String subject, int chk);
 
 	ArrayList<SubjectDTO> subjectList();
 
@@ -44,6 +46,7 @@ public interface SubjectDAO {
 
 	//임시 테스트
 	int submitCheck(String submitChk);
+
 
 
 	

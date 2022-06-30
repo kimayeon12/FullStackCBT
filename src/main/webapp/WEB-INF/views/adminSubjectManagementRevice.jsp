@@ -21,15 +21,15 @@
 </head>
 <body>
     <h2>과목 관리 - 수정</h2>
-        <form action="subjectUpdate.do" method="post">
+        <form action="subjectUpdate.do" method="post" onsubmit="return subjectUpdate()">
 	        <table class="tg">
 	            <thead>
 		            <tr>
 		                <th class="tg2">과목명</th>
 		                <th class="tg3">
-		                	<input type="hidden" name="su_idx" value="${dto.su_idx}"/>
+		                	<input type="hidden" id="su_idx" name="su_idx" value="${dto.su_idx}"/>
 		                    <input type="text" id="subject" name="subject" value="${dto.su_name}"/>
-		                    <input type="button" name="subCheck" value="중복확인" onclick="subOverlay()">
+		                    <input type="button" id="subCheck" name="subCheck" value="중복확인" onclick="subOverlay()">
 		                </th>
 		            </tr>
 	            </thead>
@@ -37,15 +37,15 @@
 	            <tr>
 	                <td class="tg1">노출여부</td>
 	                <td class="tg3">
-		                	<input type="checkbox" id="check" name="check" ${dto.su_is_blind eq 0? 'checked= "checked"' : ''} />	
+		                	<input type="checkbox" id="check" name="check" value="on" ${dto.su_is_blind eq 0? 'checked= "checked"' : ''} />	
 	                	체크 시 사용자 시험 응시 화면에 과목 선택 목록으로 노출됩니다.
 	                </td>
 	            </tr>
 	            </tbody>
 	        </table>
-	        <input type="submit" value="수정" onclick="submitSubRevice()"/>
+	        <input type="submit" value="수정"/>
 	        <input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>
-	    </form>
+		</form>
 </body>
 <script>
 	var overChk = false;
@@ -76,6 +76,53 @@
   		});
   	}
 	
+	function subjectUpdate() {
+		if($("#subject").val() == "") {
+			alert("과목명을 입력해 주세요.");
+			return false;
+		}else if(overChk == false){
+			alert("중복체크를 진행해 주세요.");
+			return false;
+		}else{
+			alert("수정이 완료 되었습니다.");
+		}
+	}
+	
+	/*
+	function submitSubRevice() {
+		console.log('과목명 수정');
+		var subject = $('#subject').val();
+		var check = $('#check').val();
+		var su_idx = $('#su_idx').val();
+			
+		
+			console.log(subject,check,su_idx);
+		
+		
+			
+			$.ajax({
+				type:'post',
+				url:'subRev.ajax',
+				data:{
+					su_idx:su_idx,
+					subject:subject,
+					check:check
+				},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data);
+					if(data.success){
+						alert("과목 등록에 성공했습니다.");
+					}
+				},
+				error:function(e){
+					console.log(e);
+				}
+				
+			});
+			
+	}
+	*/
     
     </script>
 </html>

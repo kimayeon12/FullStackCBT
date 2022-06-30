@@ -22,7 +22,7 @@
 </head>
 <body>
 <h2>과목 단원 관리 - 수정</h2>
-	<form action ="subjectChapterUpdate.do" method="post">
+	<form action ="subjectChapterUpdate.do" method="post" onsubmit="return subjectChapUpdate()">
         <table class="tg">
             <thead>
                 <tr>
@@ -44,9 +44,9 @@
               </tr>
             </tbody>
             </table>
-            <input type="button" value="수정" onclick="submitCheck()"/>
+            <input type="submit" value="수정"/>
             <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.do'"/>
-	</form>
+	</form>  
 </body>
 
 <script>
@@ -81,7 +81,22 @@
 		});	
 	}
 	
+	
+	function subjectChapUpdate() {
+		if($("#subChapter").val() == "") {
+			alert("과목명을 입력해 주세요.");
+			return false;
+		}else if(overChk == false){
+			alert("중복체크를 진행해 주세요.");
+			return false;
+		}else{
+			alert("수정이 완료 되었습니다.");
+		}
+	}
+	
+	
 	//임시 테스트
+/*
 	function submitCheck() {
 		console.log('과목 단원 수정');
 		var subChapter = $("#subChapter");
@@ -112,7 +127,7 @@
 			alert("중복체크를 진행해 주세요.")
 		}	
 	}
-
+*/
 </script>
 
 </html>

@@ -40,8 +40,8 @@
 	             </tr>
             </tbody>
 		</table>
-            <input type="button" value="등록" onclick="subRegister()"/>
-            <input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>	
+		<input type="button" value="등록" onclick="subRegister()"/>
+		<input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>	
 </body>
 <script>
 	

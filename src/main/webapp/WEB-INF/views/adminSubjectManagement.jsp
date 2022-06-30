@@ -46,7 +46,7 @@
 		               <td class="tg-lqy6">${dto.proCnt}</td>
 		               <td class="tg-lqy6">${dto.testerCnt}</td>
 		               <td class="tg-lqy6">${dto.ttCnt}</td>
-		               <td class="tg-baqh"> ${dto.su_is_blind eq 0? 'O' : 'X' }</td>
+		               <td class="tg-baqh"> ${dto.su_is_blind eq '0'? 'O' : 'X' }</td>
 		               <td class="tg-0lax"><button onclick="location.href='adminSubjectManagementRevice.do?su_idx=${dto.su_idx}'">과목수정</button></td>
 	             	</tr>
              	</c:forEach>

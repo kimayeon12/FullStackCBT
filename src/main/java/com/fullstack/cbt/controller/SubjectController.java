@@ -109,15 +109,40 @@ public class SubjectController {
 	}
 	
 	
-	
 	@RequestMapping(value = "/subjectUpdate.do")
 	public String subupdate(Model model,
 			@RequestParam HashMap<String, String> params) {
 		logger.info("과목명 수정 요청");
+		
+		if(params.get("check") != null) {
+			params.put("su_is_blind", "0");
+		} else {
+			params.put("su_is_blind", "1");
+		}
 		logger.info("params : {}",params);
+		
 		service.subupdate(params);
 		return "redirect:/adminSubjectManagement.do";
 	}
+	
+	
+	
+	/*
+	@RequestMapping(value = "/subRev.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subRev(@RequestParam String su_idx, String subject, String check) {
+		logger.info("수정하려는 과목 번호 : "+su_idx);
+		logger.info("과목명 수정 요청 : "+subject);
+		logger.info("노출 여부 : "+check);
+		int chk = 0;
+		
+		if(check == null) {
+			chk = 1;
+		}
+		return service.subRev(su_idx,subject, chk);
+	}
+	*/
+	
 	
 	
 	
@@ -263,13 +288,14 @@ public class SubjectController {
 
 	
 	// 임시테스트
-	
+	/*
 	@RequestMapping(value = "/submitCheck.ajax")
 	@ResponseBody
 	public HashMap<String, Object> submitCheck(@RequestParam String submitChk) {
 		logger.info("수정버튼 클릭시 과목단원명 중복체크 요청: "+submitChk);
 		return service.submitCheck(submitChk);
 	}
+	*/
 	
 	
 	

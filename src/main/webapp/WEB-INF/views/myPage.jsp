@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
+<style>
+table {
+	border : 1px solid black;
+	border-collapse : collapse;
+	width: 50%;
+}
+th,td {
+	border : 1px solid black;
+	padding : 10px 15px ; 
+}
+
+
+</style>
 <h1>내 정보</h1>
       <form action="myPage.do" method="post" onsubmit="return myPage()">
            <table>

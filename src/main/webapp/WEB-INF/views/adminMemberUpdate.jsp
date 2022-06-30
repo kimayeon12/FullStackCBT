@@ -18,7 +18,6 @@
 	</tr>
 		<tr>
 		<th>회원권한</th>
-		<br>
 		<td >
 			<select id="select_member2">
        		<option value="회원권한" selected>회원권한</option>
@@ -26,8 +25,8 @@
        		<option value="최고관리자">최고관리자</option>
        		<option value="일반회원">일반회원</option>
        		<option value="탈퇴회원">탈퇴회원</option>       		
-	       	<textarea name="mg_content" cols="30" rows="10"  placeholder="변경사유를 입력해주세요."></textarea>
        </select>
+	       	<textarea name="mg_content" cols="30" rows="10"  placeholder="변경사유를 입력해주세요."></textarea>
        	</td>
 	</tr>
 		<tr>

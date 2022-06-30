@@ -66,4 +66,9 @@
   	 </if>
 </if>
 </select>
+
+<insert id="myDetail" parameterType ="hashmap">
+	INSERT INTO cbt_member(mb_id,mb_name,mb_pw,mb_email)
+		VALUES(#{mb_id},#{mb_name},PASSWORD(#{mb_pw}),#{mb_email})	
+</insert>
 </mapper>

@@ -126,6 +126,15 @@ th,td {
 		//파라메터 전송
 		$("select").on("change", function(){ 
 			$("#form").submit();
+			
+			/*추가 *
+			$(".pageInfo a").on("click", function(e){
+		        e.preventDefault();
+		        $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
+		        $("#moveForm").attr("action", "/cbtFormList.do");
+		        $("#moveForm").submit();
+			});
+			*/ 
 		});
 		
 		

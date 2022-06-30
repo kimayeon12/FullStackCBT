@@ -1,6 +1,7 @@
 package com.fullstack.cbt.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dto.ProblemDTO;
@@ -24,4 +25,22 @@ public interface CbtDAO {
 	public ArrayList<TestDTO> getListPaging(Criteria cri);
 
 	public int getTotal(Criteria cri);
+
+	ArrayList<TestDTO> selectedListPaging(HashMap<String, String> params, Criteria cri);
+
+	ArrayList<TestDTO> selectedListPaging(String su_idx, String tt_status, String mb_id, Criteria cri);
+	
+	
 }
+
+
+
+	
+
+	
+	
+
+	
+
+
+	

@@ -7,8 +7,11 @@
         <meta charset="utf-8"/>
         <title>풀스택(Full-Stack) CBT</title>
         <script src="//code.jquery.com/jquery-latest.min.js"></script>
+<<<<<<< HEAD
         <!-- 아래 script, link는 페이징 처리하려고 추가한 것  -->
         <!-- 위 사항까지 추가했슴  -->
+=======
+>>>>>>> ca919034ff1bb678af8bd4e02b68e4bde0ed8540
         <link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
         <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
     </head>

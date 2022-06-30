@@ -45,4 +45,15 @@
 		SELECT tt_idx, pc_idx, ta_problem_no, ta_choice_no, ta_is_answer, pc_answer1, pc_answer2, pc_answer3, pc_answer4,pc_answer,pc_problem
 		FROM cbt_test_answer NATURAL JOIN cbt_problem_create WHERE tt_idx=#{param1}
 	</select>
+	
+	<!--  페이징  -->
+	<select id="getListPaging" resultType="com.fullstack.cbt.dto.TestDTO">
+		SELECT su_idx, su_name, tt_idx, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
+		FROM cbt_subject NATURAL JOIN cbt_test ORDER BY tt_idx DESC limit #{skip}, #{amount}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT count(tt_idx) FROM cbt_test
+	</select>
+	
 </mapper>

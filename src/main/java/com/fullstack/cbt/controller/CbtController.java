@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullstack.cbt.dto.PageMakerDTO;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
 import com.fullstack.cbt.dto.TestDTO;
@@ -25,7 +26,7 @@ public class CbtController {
 	
 	//시험관리 리스트 페이지 
 	@RequestMapping(value = "/cbtList.do", method = RequestMethod.GET)
-	public String cbtList(Model model) {
+	public String cbtList(Model model, Criteria cri) {
 		
 		//select 과목명 가져오기
 		ArrayList<SubjectDTO> subjectList =service.subjectList(); 
@@ -35,7 +36,7 @@ public class CbtController {
 			model.addAttribute("subjectList", subjectList);
 		} 
 		
-		
+		/*
 		//뷰 전체에 시험리스트 뿌려줌 
 		ArrayList<TestDTO> testdto = service.testlist();
 		logger.info("시험 리스트 가져오기 : " + testdto.size());
@@ -44,6 +45,21 @@ public class CbtController {
 			if(testdto.size()>0) {
 				model.addAttribute("testdto", testdto);
 			} 
+		*/
+		
+		//페이징 처리하여 리스트 불러오기 
+		ArrayList<TestDTO> testdto = service.getListPaging(cri);
+		//.info("시험 리스트 가져오기 : " + testdto.size()); //이렇게 하면 총 게시글 수가 안나옴! 32건인데 10건이라고 나옴 
+		model.addAttribute("testdto", testdto);
+		
+		
+		int total = service.getTotal();
+		logger.info("전체 게시글 수 : " + total);
+		model.addAttribute("listCnt", total); // 게시글 수 표시 
+		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+		
+		
 		
 		 return "adminTestList"; 
 	}	

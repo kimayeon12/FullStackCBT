@@ -21,58 +21,81 @@
                 border : 1px solid black;
             }
 </style>
-<form action="saveList.do" method="get">
-  <select name="su_idx"> 
-        <option value="">과목명</option>
-	        <c:forEach items="${subjectList}" var="subjectList">
-	        	<option value="${subjectList.su_idx}">${subjectList.su_name}</option>
-	        </c:forEach>
-    </select>
-</form>
+<!--  폼 1개로 합친  버전  -->
+<form action="problemSaveList.do" method="get" id="form">
+	  <select name="su_idx"> 
+	        <option value="">과목명</option>
+		        <c:forEach items="${subjectList}" var="subjectList">
+		        	<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx? 'selected="selected"' : ''}>${subjectList.su_name}</option>
+		        </c:forEach>
+	    </select>
+	 
+	    <c:choose>
+	    <c:when test="${saveList.size()>0}">
+			    <c:forEach items="${saveList}" var="saveList">
+				    <table>
+				        <tr>
+				            <td>과목명</td>
+				            <td>${saveList.su_name}</td>
+				            <td>보관일자</td>
+				            <td>${saveList.ps_date}</td> 
+				        </tr>
+				    </table>
+				    <div class="problem"> <!--문제,4지선다,정답 영역-->
+				    	${saveList.pc_problem} 정답 : ${saveList.pc_answer}
+				    	<br/>
+				    	1. ${saveList.pc_answer1}	<br/>
+				    	2. ${saveList.pc_answer2}	<br/>
+				    	3. ${saveList.pc_answer3}	<br/>
+				    	4. ${saveList.pc_answer4}
+				    </div>
+				    
+				    <div class="problem"><!-- 해설 영역-->
+				    	${saveList.pc_explan}
+				    </div>
+				    <input type="checkbox" name="chkArr" value="${saveList.ps_idx}"/>문제보관삭제
+			    </c:forEach>
+		   		<button type="submit">선택삭제</button>
+	    </c:when>
+	  	<c:otherwise>
+	  		<p>
+		    	보관한 문제가 없습니다. <br/>
+		    	<a href="myTestList.do">'내가 응시한 시험'</a>에서 문제 보관함 기능을 사용해보세요.
+	    	</p>
+	  	</c:otherwise>
+	    </c:choose>
+</form>  	
     
-    <!--c: if 태그 뷰 2개 -->
-    <table>
-        <tr>
-            <td>과목명</td>
-            <td>JAVA</td><!-- 가져올 것 : 문제출제 테이블 -->
-            <td>보관일자</td>
-            <td>2022-06-15 23:55:43</td> <!-- 가져올 것 :문제보관테이블-->
-        </tr>
-    </table>
-    <div class="problem"></div> <!--문제,4지선다,정답 영역-->
-    <div class="problem"></div><!-- 해설 영역-->
-    <input type="checkbox"/>문제보관삭제
-    <button>선택삭제</button>
-
+    
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
-	 //데이터가 있는 경우 없는 경우
-    //데이터가 없는경우 화면을 완전히 다르게 보여주는 것만 설정할 수 없나..
-    //데이터가 들어온 경우에 그려주는걸로 해야하나요
-    //function drawProblemSave(){
-       // var content = '';
-   // }
+
+$("select").on("change",function(){
+	$("#form").submit();
+});
+	 
 
 $("button").on("click",function(){
 
-   console.log( $("input[type='checkbox']:checked").length); //length 개수로 나옴
+   //console.log( $("input[type='checkbox']:checked").length); //length 개수로 나옴
  
-    var checked = $("input[type='checkbox']:checked").length;
+    var checked = $("input[type='checkbox']:checked");
+  
     
-    if(checked>0){
-        if(confirm("정말 삭제 하시겠습니까?")){
-            alert("확인"); //삭제된 이후에 화면이 보여야함 //아작스써야하나바..왜냐면 여기서 확인을 
-            //누를 때 넘어가는거니까 
+    if(checked.length>0){
+        if(confirm("선택한 문제를 보관함에서 삭제 하시겠습니까?")){
+        	$("#form").submit(); 
+            
         } else {
-            alert("취소"); //아무 변화없는 현재페이지 
-
+           checked.prop("checked",false);
+           return false;
         }
     } else {
-        alert("선택된 문제가 없습니다.");
+        alert("선택한 문제가 없습니다.");
     }
 
-
-
    });
+   
+   
 	</script>
 </html>

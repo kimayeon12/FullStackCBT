@@ -144,4 +144,20 @@ public class ProblemDTO {
 		this.mb_id = mb_id;
 	}
 
+	private Date ps_date;
+	private int ps_idx;
+
+
+	public Date getPs_date() {
+		return ps_date;
+	}
+	public void setPs_date(Date ps_date) {
+		this.ps_date = ps_date;
+	}
+	public int getPs_idx() {
+		return ps_idx;
+	}
+	public void setPs_idx(int ps_idx) {
+		this.ps_idx = ps_idx;
+	}
 }

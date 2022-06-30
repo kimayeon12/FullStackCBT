@@ -53,7 +53,7 @@ public class CbtController {
 		model.addAttribute("testdto", testdto);
 		
 		
-		int total = service.getTotal();
+		int total = service.getTotal(cri);
 		logger.info("전체 게시글 수 : " + total);
 		model.addAttribute("listCnt", total); // 게시글 수 표시 
 		PageMakerDTO pageMake = new PageMakerDTO(cri, total);

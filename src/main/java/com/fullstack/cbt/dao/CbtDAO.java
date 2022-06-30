@@ -19,7 +19,9 @@ public interface CbtDAO {
 
 	ArrayList<ProblemDTO> testDetail(String tt_idx);
 
-	ArrayList<TestDTO> getListPaging(Criteria cri);
+	
+	/*페이징*/  
+	public ArrayList<TestDTO> getListPaging(Criteria cri);
 
-	int getTotal();
+	public int getTotal(Criteria cri);
 }

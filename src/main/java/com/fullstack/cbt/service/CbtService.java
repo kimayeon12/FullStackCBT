@@ -52,8 +52,8 @@ public class CbtService {
 		return dao.getListPaging(cri);
 	}
 
-	public int getTotal() {
+	public int getTotal(Criteria cri) {
 		logger.info("전체 게시글 수 가져오기 서비스 요청");
-		return dao.getTotal();
+		return dao.getTotal(cri);
 	}
 }

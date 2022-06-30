@@ -59,6 +59,16 @@ public class MemberController {
 		return page;
 	
 	}
+	
+	//로그아웃
+	@RequestMapping(value = "/logout.do")
+	public String logout(Model model,HttpSession session) {
+		session.removeAttribute("loginId");
+		model.addAttribute("msg", "로그아웃 되었습니다.");
+		return "login";
+		}
+	
+	
 	//회원가입페이지 이동
 	@RequestMapping(value = "/joinForm.go")
 	public String joinForm(Model model) {
@@ -126,8 +136,13 @@ public class MemberController {
 		@RequestMapping(value="/myPage.do")
 		public String myupdate(HttpSession session, Model model, 
 				@RequestParam HashMap<String, String> params) {
-			logger.info("회원수정요청:{}",params);
-			String page="myPage";
+			logger.info("내정보수정:{}",params);
+			String page="redirect:/myPage.do?mb_id="+params.get("mb_id");
+			logger.info(page);
+
+			MemberDTO dto=service.myDetail(params);
+			model.addAttribute("memberList",dto);
+			
 			return "myPage";
 		}
 			
@@ -200,7 +215,7 @@ public class MemberController {
 			
 		}
 		
-		// 회원관리 리스트, 건수 옵션필터
+		//옵션필터
 		@RequestMapping(value="/memberList.do")
 		public String memberList(Model model,@RequestParam String mb_grade, String searchOption, String search ) {
 			logger.info("옵션 확인: "+ mb_grade+searchOption+search);

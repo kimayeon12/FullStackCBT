@@ -29,6 +29,8 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search);
 
+	MemberDTO myDetail(HashMap<String, String> params);
+
 	
 
 

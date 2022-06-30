@@ -78,8 +78,8 @@ public class ObjectionController {
 		//페이징 부분**************************
 		model.addAttribute("objectionList", service.getListPaging(cri));
 		int total = service.getTotal(cri);
-        PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-        model.addAttribute("pageMaker", pageMake);
+		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
 		
 		return "adminObjectionList";
 	}
@@ -88,7 +88,7 @@ public class ObjectionController {
 	//이의제기 셀렉트 리스트 + 페이징
 	@RequestMapping(value = "/objectionSelectList.do")
 	public String objectionSelectList(Model model, @RequestParam String oj_status, String oj_searchOption
-			, String keyword) {
+			, String keyword, Criteria cri) {
 		
 		logger.info("이의제기 셀렉트 리스트 요청 :"+oj_status+oj_searchOption+keyword);
 		model.addAttribute("oj_status", oj_status);
@@ -106,6 +106,8 @@ public class ObjectionController {
 			logger.info("list size : "+objectionSelectList.size());
 			model.addAttribute("objectionList", objectionSelectList);
 		}
+		
+		
 		
 		return "adminObjectionList";
 	}

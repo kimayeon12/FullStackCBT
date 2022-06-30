@@ -80,7 +80,7 @@ $("#oj_status").on("change", function(){
 	$("#detailForm").submit();
 });
 
-* 페이징 부분 기도 */
+
 $(".pageInfo a").on("click", function(e){
 	
 	e.preventDefault();

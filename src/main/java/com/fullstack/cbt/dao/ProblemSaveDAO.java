@@ -11,4 +11,8 @@ public interface ProblemSaveDAO {
 
 	ArrayList<ProblemDTO> problemSaveList(String loginId);
 
+	ArrayList<ProblemDTO> selectedSaveList(String loginId, String su_idx);
+
+	int problemSaveDel(String[] chkArr);
+
 }

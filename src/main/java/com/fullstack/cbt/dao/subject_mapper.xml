@@ -2,7 +2,96 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.SubjectDAO">
+	
+	<select id="list" resultType="com.fullstack.cbt.dto.SubjectDTO">
+		SELECT su_idx, su_name, su_is_blind, 
+					(SELECT COUNT(pc_idx) FROM cbt_problem_create WHERE su_idx = cbt_subject.su_idx) as proCnt, 
+					(SELECT COUNT(sc_idx) FROM cbt_subject_chapter WHERE su_idx = cbt_subject.su_idx) as chapCnt,
+					(SELECT COUNT(tt_times) FROM cbt_test WHERE su_idx = cbt_subject.su_idx) as ttCnt,
+					(SELECT COUNT(distinct mb_id) FROM cbt_test WHERE su_idx = cbt_subject.su_idx) as testerCnt
+						FROM cbt_subject ORDER BY su_idx ASC
+	</select>
+	
+	<select id="suboverlay" parameterType="String" resultType="String">
+		SELECT su_name FROM cbt_subject WHERE su_name = #{chkSub}
+	</select>
+	
+	<insert id="subreg">
+		INSERT INTO cbt_subject(su_name,su_is_blind)
+			VALUES(#{param1},#{param2})
+	</insert>
+	
+	<select id="subdetail" parameterType="String" 
+		resultType="com.fullstack.cbt.dto.SubjectDTO">
+		SELECT * FROM cbt_subject WHERE su_idx = #{su_idx}	
+	</select>
+	
 
+
+	<update id="subupdate" parameterType="hashmap">
+		UPDATE cbt_subject SET
+			su_name = #{subject}	
+			,su_is_blind = #{su_is_blind}
+		WHERE su_idx = ${su_idx}
+	</update>
+	
+	
+	<!--  
+	<update id="subRev">
+		UPDATE cbt_subject SET
+			su_name = #{param2}	
+			,su_is_blind = #{param3}
+		WHERE su_idx = ${param1}
+	</update>
+	-->
+	
+	
+	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">
+		SELECT su_name,su_idx FROM cbt_subject WHERE su_is_blind = 0
+	</select>
+	
+	<select id="subChapOverlay" parameterType="String" resultType="String">
+		SELECT sc_name FROM cbt_subject_chapter WHERE sc_name = #{chkSubChap}
+	</select>
+	
+	<insert id="subChapReg">
+		INSERT INTO cbt_subject_chapter(su_idx,sc_name)
+			VALUES(#{param1},#{param2})
+	</insert>
+	
+	<select id="subList"  parameterType="String" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT su_idx, su_name, (select count(pc_idx) FROM cbt_problem_create WHERE su_idx = cbt_subject.su_idx) as subCnt 
+			FROM cbt_subject ORDER BY su_idx asc
+	</select>
+	
+	<select id="chapList"  parameterType="String" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT sc_idx, sc_name, su_idx, (select count(pc_idx) FROM cbt_problem_create where sc_idx = cbt_subject_chapter.sc_idx) as chapcnt 
+			FROM cbt_subject_chapter ORDER BY sc_idx asc
+	</select>
+	
+	<select id="subChapRevice" parameterType="String" 
+		resultType="com.fullstack.cbt.dto.SubjectChapterDTO">
+		SELECT * FROM cbt_subject_chapter WHERE sc_idx = #{sc_idx}	
+	</select>
+	
+	<select id="subjectselList" parameterType="String" resultType="com.fullstack.cbt.dto.SubjectDTO">
+		SELECT su_name,su_idx FROM cbt_subject WHERE su_idx = #{su_idx}
+	</select>
+	
+	<select id="subChapReOverlay" parameterType="String" resultType="String">
+		SELECT sc_name FROM cbt_subject_chapter WHERE sc_name = #{chkSubChap}
+	</select>
+	
+	<!-- 여기부터 수정하기 매퍼 -->
+	
+	<update id="subChapUpdate" parameterType="hashmap">
+		UPDATE cbt_subject_chapter SET sc_name = #{subChapter} WHERE sc_idx = #{sc_idx}
+	</update>
+	
+	<!-- ajax 임시 테스트 -->
+	<select id="submitCheck" parameterType="String" resultType="String">
+		SELECT sc_name FROM cbt_subject_chapter WHERE sc_name = #{submitChk}
+	</select>
 	
 
 </mapper>

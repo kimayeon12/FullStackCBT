@@ -13,4 +13,81 @@
 	INSERT INTO cbt_objection(oj_content,oj_date,oj_status,pc_idx,mb_id)
 	 VALUES(#{param1},now(),'처리대기',#{param2},#{param3})
 </insert>
+
+
+<!-- 이의제기 전체 리스트  -->
+<select id="objectionList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+	SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+		FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
+	ON co.oj_idx = cpc.pc_idx;
+</select>
+
+<!-- 이의제기 셀렉트 리스트 -->
+<!-- <select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+	SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+		FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
+	ON co.oj_idx = cpc.pc_idx AND oj_status = #{param1};
+</select> -->
+
+<select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+	<![CDATA[
+		SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+			FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
+		ON co.oj_idx = cpc.pc_idx
+	]]>
+		<include refid="objectionSelectListSql"></include>
+	ORDER BY oj_idx 
+</select>
+	
+	<sql id="objectionSelectListSql">
+		<if test="param1 != null">
+			<if test="param1 == '처리상태'.toString()">
+			
+			</if>
+			<if test="param1 == '처리대기'.toString()">
+				and oj_status = '처리대기'
+			</if>
+			<if test="param1 == '처리중'.toString()">
+				and oj_status = '처리중'
+			</if>
+			<if test="param1 == '처리완료'.toString()">
+				and oj_status = '처리완료'
+			</if>	
+		</if>
+		
+		<if test="param2 != null">
+			<if test="param2 == 'problem'.toString()">
+                and pc_problem like CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param2 == 'userId'.toString()">
+                and co.mb_id like CONCAT('%', #{param3}, '%')
+            </if>
+            <if test="param2 == 'all'.toString()">
+                and (
+                	pc_problem like CONCAT('%', #{param3}, '%')
+                	OR
+                	co.mb_id like CONCAT('%', #{param3}, '%')
+                )
+            </if>	
+		</if>
+	</sql>
+	
+	<!-- 게시물 목록(페이징) -->
+    <select id="getListPaging" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+        SELECT oj_idx, co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+			FROM 
+				cbt_objection co 
+			INNER JOIN 
+				cbt_problem_create cpc 
+			ON co.oj_idx = cpc.pc_idx
+			ORDER BY oj_idx desc 
+		LIMIT #{skip} , #{amount}
+    </select>
+    
+    <!-- 게시물 총 개숫 -->
+    <select id="getTotal" resultType="int">
+        select count(*) from cbt_objection co
+    </select>
+
+
 </mapper>

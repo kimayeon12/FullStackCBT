@@ -28,18 +28,11 @@ public interface ProblemDAO {
 
 	int problemUpdate(HashMap<String, Object> params);
 
-	//ArrayList<ProblemDTO> search(String pc_idx);
-
 	/* 게시판 목록(페이징 적용) */
     public ArrayList<ProblemDTO> getListPaging(Criteria cri);
     
     /* 게시판 총 갯수 */
     public int getTotal(Criteria cri);
-	
-	/*//페이징 
-	ArrayList<ProblemDTO> list(int cnt, int offset);
-	int allCount();
-	*/
 	
 
 }

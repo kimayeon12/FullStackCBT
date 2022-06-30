@@ -1,5 +1,7 @@
 package com.fullstack.cbt.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -8,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fullstack.cbt.dto.ObjectionDTO;
+import com.fullstack.cbt.dto.PageMakerDTO;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.service.ObjectionService;
 
@@ -53,5 +58,59 @@ public class ObjectionController {
 		} 
 		return page; 	
 	 }
+	
+	
+	
+	
+	
+	
+	//이의제기 관리 리스트 + 페이징
+	@RequestMapping(value = "/objectionList.do", method = RequestMethod.GET)
+	public String objectionList(Model model, Criteria cri) {
+		
+		logger.info("이의제기 관리 리스트 요청");
+		ArrayList<ObjectionDTO> objectionList = service.objectionList();
+		if(objectionList.size() > 0) {
+			logger.info("list size : "+objectionList.size());
+			model.addAttribute("objectionList", objectionList);
+		}
+		
+		//페이징 부분**************************
+		model.addAttribute("objectionList", service.getListPaging(cri));
+		int total = service.getTotal(cri);
+		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+		
+		return "adminObjectionList";
+	}
+	
+	
+	//이의제기 셀렉트 리스트 + 페이징
+	@RequestMapping(value = "/objectionSelectList.do")
+	public String objectionSelectList(Model model, @RequestParam String oj_status, String oj_searchOption
+			, String keyword, Criteria cri) {
+		
+		logger.info("이의제기 셀렉트 리스트 요청 :"+oj_status+oj_searchOption+keyword);
+		model.addAttribute("oj_status", oj_status);
+		model.addAttribute("oj_searchOption", oj_searchOption);
+		model.addAttribute("keyword", keyword);
+		
+		//등록된 이의제기 전체 리스트, 처리상태를 선택 시 전체리스트를 보여주자
+		ArrayList<ObjectionDTO> objectionList = service.objectionList();
+		if(oj_status == "") {
+			model.addAttribute("objectionList", objectionList);
+		}
+		
+		ArrayList<ObjectionDTO> objectionSelectList = service.objectionSelectList(oj_status,oj_searchOption,keyword);
+		if(objectionSelectList.size() > 0) {
+			logger.info("list size : "+objectionSelectList.size());
+			model.addAttribute("objectionList", objectionSelectList);
+		}
+		
+		
+		
+		return "adminObjectionList";
+	}
+	
 	
 }

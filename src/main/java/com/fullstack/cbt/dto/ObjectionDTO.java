@@ -14,6 +14,29 @@ public class ObjectionDTO {
 	private int pc_idx;
 	private String mb_id;
 	
+	//새로 지정해준 컬럼
+	private String oj_problem;
+	
+	//cbt_problem_carete 테이블에서 가져온 것
+	private String pc_problem;
+	
+	
+	
+	public String getOj_problem() {
+		return oj_problem;
+	}
+	public void setOj_problem(String oj_problem) {
+		this.oj_problem = oj_problem;
+	}
+	public String getPc_problem() {
+		return pc_problem;
+	}
+	public void setPc_problem(String pc_problem) {
+		this.pc_problem = pc_problem;
+	}
+	
+	
+	
 	public int getOj_idx() {
 		return oj_idx;
 	}

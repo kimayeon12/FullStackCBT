@@ -109,7 +109,7 @@ public class ProblemController {
 			model.addAttribute("problemList", problemList);
 		}
 		
-		//페이징 테스트 기도
+		//페이징 테스트 기도*****************************
 		model.addAttribute("problemList", service.getListPaging(cri));
 		int total = service.getTotal(cri);
         PageMakerDTO pageMake = new PageMakerDTO(cri, total);
@@ -169,36 +169,9 @@ public class ProblemController {
 			model.addAttribute("subjectChapList", subjectChapList);
 		}				
 		
-		//검색 부분
-		model.addAttribute("pc_idx", pc_idx);
-		
-		//ArrayList<ProblemDTO> search = service.search(pc_idx);
-		
-		
 		return "adminProblemList";
 	
-	}
-	
-	
-	// ****************리스트 페이징****************
-	
-	//list.jsp에서 listCall()에서 list.ajax 호출하면 이 list 메서드가 다시 listCall에게 돌려준다. ajax 이기 때문에 @ResponseBody어노테이션 선언해야 한다.
-	//@ResponseBody로 HashMap<String, Object> 요거 반환할 거다.
-	/*
-	@RequestMapping("/list.ajax")
-	@ResponseBody
-	public HashMap<String, Object> list(
-			@RequestParam HashMap<String, String> params
-			) {
-		logger.info("리스트 요청 : {}", params);
-		return service.list(params);
-	}
-	
-	*/
-	
-	
-	
-	
+	}	
 	
 	
 	

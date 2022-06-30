@@ -70,11 +70,6 @@ public class ProblemService {
 		
 	}
 
-	/*
-	 * public ArrayList<ProblemDTO> search(String pc_idx) {
-	 * logger.info("검색에 따른 리스트 요청"); return dao.search(pc_idx); }
-	 */
-
 	 /* 게시판 목록(페이징 적용) */
     public ArrayList<ProblemDTO> getListPaging(Criteria cri){
     	
@@ -86,41 +81,6 @@ public class ProblemService {
         
         return dao.getTotal(cri);
     }
-	
-	//페이징 처리
-	/*
-	public HashMap<String, Object> list(HashMap<String, String> params) {
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		int cnt = Integer.parseInt(params.get("cnt"));//몇 개 씩 보여줄 건가.
-		int page = Integer.parseInt(params.get("page"));
-		logger.info("보여줄 페이지 :"+ page);
-		
-		//총갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-		int allCnt = dao.allCount();
-		logger.info("allCnt : "+allCnt);
-		
-		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
-		
-		logger.info("pages : "+pages);
-		
-		if(page>pages) {
-			page=pages;
-		}
-		
-		map.put("currPage", page);//현재 페이지
-		map.put("pages", pages);//만들 수 있는 최대 페이지 수
-		
-		int offset = (page-1) * cnt;
-		logger.info("offset : "+offset);		
-		
-		ArrayList<ProblemDTO> list = dao.list(cnt, offset);
-		map.put("list", list);
-		
-		return map;
-	}
-	*/
 	
 	
 }

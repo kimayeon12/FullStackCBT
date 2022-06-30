@@ -21,7 +21,7 @@
 	</insert>
 	
 	<select id="problemList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
-		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name, mb_id
 			FROM 
 			cbt_problem_create 
 				NATURAL JOIN 
@@ -31,7 +31,7 @@
 	</select>
 	
 	<select id="problemDetailList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
-		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name
+		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name, mb_id
 			FROM 
 			cbt_problem_create 
 				NATURAL JOIN 

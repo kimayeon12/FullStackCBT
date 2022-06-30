@@ -98,6 +98,12 @@ public class MemberService {
 	}
 
 
+	public MemberDTO myDetail(HashMap<String, String> params) {
+		logger.info("내정보수정");
+		return dao.myDetail(params);
+	}
+
+
 	
 
 

@@ -7,50 +7,33 @@
         <meta charset="utf-8"/>
         <title>풀스택(Full-Stack) CBT</title>
         <script src="//code.jquery.com/jquery-latest.min.js"></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <!-- 아래 script, link는 페이징 처리하려고 추가한 것  -->
-        <!-- 위 사항까지 추가했슴  -->
-=======
->>>>>>> ca919034ff1bb678af8bd4e02b68e4bde0ed8540
-=======
-		<link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
-		<link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
-=======
->>>>>>> 24ad75be565539f5df6eef453f0b44c9619760dc
         <link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
         <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
->>>>>>> origin/master
     </head>
-<!-- 틀 확인하려고 내가 만든 것, 나중에 지울 예정 -->
-<style>
-	table, th, td{
-        border: 1px solid black;
-    }
-
-</style>
     <body>
         <div id="wrap">
             <nav>
 				<p id="logo"><a href="javascript:;">풀스택(Full-Stack) CBT</a></p>
 				<ul>
                     <!-- 관리자 메뉴 -->
-                    <li><a href="javascript:;">메인</a></li>
-                    <li><a href="javascript:;">CBT 시험관리</a></li>
-                    <li><a href="javascript:;">문제 출제 관리</a></li>
+                    <li><a href="adminMain.do">메인</a></li>
+                    <li><a href="cbtList.do">CBT 시험관리</a></li>
+                    <li><a href="problemList.do">문제 출제 관리</a></li>
                     <li><a href="javascript:;">과목 관리</a></li>
                     <li><a href="javascript:;">과목 단원 관리</a></li>
-                    <li><a href="javascript:;">회원 관리</a></li>
+                    <li><a href="adminMemberList.do">회원 관리</a></li>
                     <li><a href="javascript:;">이의제기 관리</a></li>
                     <li><a href="javascript:;">1:1게시판 관리</a></li>
-
+					
                     <!-- 사용자 메뉴 -->
-					<li><a href="javascript:;">메인</a></li>
-                    <li><a href="javascript:;">시험 응시</a></li>
-                    <li><a href="javascript:;">내가 응시한 시험</a></li>
+					<li><a href="main.go">메인</a></li>
+                    <li><a href="testStart.do">시험 응시</a></li>
+                    <li><a href="myTestList.do">내가 응시한 시험</a></li>
                     <li><a href="javascript:;">문제 보관함</a></li>
                     <li><a href="javascript:;">1:1게시판</a></li>
 				</ul>
 			</nav>
             <div id="container">
-                <aside><strong>홍길동(hgd1234)</strong>님 <a href="javascript:;">내정보</a> | <a href="javascript:;">로그아웃</a> <a href="javascript:;">관리자페이지 이동 혹은 사용자페이지로 이동</a></aside>
+				<c:if test="${sessionScope.loginId != null}">
+                <aside><strong>${sessionScope.loginName}(${sessionScope.loginId})</strong>님 <a href="myPage.do">내정보</a> | <a href="logout.do">로그아웃</a> <c:if test="${sessionScope.isAdmin eq true}"><a href="adminMain.do" target="_blank">관리자페이지</a></c:if><c:if test="${sessionScope.isAdmin eq false}"><a href="main.go" target="_blank">사용자페이지</a></c:if></aside>
+				</c:if>

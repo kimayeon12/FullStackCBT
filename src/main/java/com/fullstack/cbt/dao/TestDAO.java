@@ -38,5 +38,9 @@ public interface TestDAO {
 
 	TestDTO testInfo(String tt_idx);
 
-	ArrayList<ProblemDTO> testDetail(String tt_idx);
+	ArrayList<ProblemDTO> testDetail(String tt_idx, String loginId);
+
+	boolean problemSave(int pc_idx, String loginId);
+
+	boolean problemDelete(int pc_idx, String loginId);
 }

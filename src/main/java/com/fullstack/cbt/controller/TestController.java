@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
@@ -310,7 +311,7 @@ public class TestController {
 	
 	//상세보기 
 	@RequestMapping(value = "/myTestView.do")
-	public String myTestView(Model model, @RequestParam String tt_idx) {
+	public String myTestView(Model model, @RequestParam String tt_idx, HttpSession session) {
 		logger.info("시험 고유번호 : " +tt_idx);
 		
 		//시험고유번호가 1인 과목명, 회차, 시험시작일자,제출일자, 점수, 상태 
@@ -320,13 +321,37 @@ public class TestController {
 		}
 		
 		//시험고유번호가 1인 문제출제고유번호, 문제1~10, 사용자답안1~10, 정답오답여부10개 , 문제출제 고유번호에 따른 정답(10개)과 각 사지선다 문항(10)
-		ArrayList<ProblemDTO> testDetail = service.testDetail(tt_idx); 
+		ArrayList<ProblemDTO> testDetail = service.testDetail(tt_idx, (String) session.getAttribute("loginId")); 
 		logger.info("데이터 개수 : " + testDetail.size());
 		if(testDetail.size()>0) {
 			model.addAttribute("testDetail", testDetail);
 		}
 		
 		return "myTestView";
+	}
+	
+	//문제보관
+	@RequestMapping(value = "problemSave.ajax")
+	@ResponseBody
+	public HashMap<String, Object> problemSave(@RequestParam int pc_idx, @RequestParam boolean isSave, HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		String msg = "실패";
+		
+		if(isSave == true) {
+			if(service.problemSave(pc_idx, loginId) == true) {
+				msg = "성공";
+			}
+		} else {
+			if(service.problemDelete(pc_idx, loginId) == true) {
+				msg = "성공";
+			}
+		}
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("msg", msg);
+		
+		return result;
 	}
 	
 }

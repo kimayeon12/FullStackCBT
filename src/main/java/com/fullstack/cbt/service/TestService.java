@@ -117,9 +117,19 @@ public class TestService {
 		return dao.testInfo(tt_idx);
 	}
 
-	public ArrayList<ProblemDTO> testDetail(String tt_idx) {
+	public ArrayList<ProblemDTO> testDetail(String tt_idx, String loginId) {
 		logger.info("상세보기 서비스 요청");
-		return dao.testDetail(tt_idx);
+		return dao.testDetail(tt_idx, loginId);
+	}
+
+	public boolean problemSave(int pc_idx, String loginId) {
+		logger.info("문제보관 서비스 요청");
+		return dao.problemSave(pc_idx, loginId);
+	}
+
+	public boolean problemDelete(int pc_idx, String loginId) {
+		logger.info("문제보관 삭제 서비스 요청");
+		return dao.problemDelete(pc_idx, loginId);
 	}
 
 	

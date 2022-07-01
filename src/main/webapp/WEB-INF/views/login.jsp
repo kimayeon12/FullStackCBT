@@ -24,8 +24,8 @@
            </tr>
      <tr>
          <th colspan="2">
-          	<input type="button" value="아이디 찾기" onclick="location.href='findId.do'"/>
-          	<input type="button" value="비밀번호 찾기"/>
+          	<input type="button" value="아이디 찾기" onclick="location.href='findId.go'"/>
+          	<input type="button" value="비밀번호 찾기" onclick="location.href='findPw.go'"/>
          </th>
      </tr>
  </table>

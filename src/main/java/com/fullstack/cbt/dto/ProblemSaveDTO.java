@@ -1,11 +1,11 @@
 package com.fullstack.cbt.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ProblemSaveDTO {
 
 	private int ps_idx;
-	private Date ps_date;
+	private Timestamp ps_date;
 	private int pc_idx;
 	private String mb_id;
 	
@@ -15,10 +15,10 @@ public class ProblemSaveDTO {
 	public void setPs_idx(int ps_idx) {
 		this.ps_idx = ps_idx;
 	}
-	public Date getPs_date() {
+	public Timestamp getPs_date() {
 		return ps_date;
 	}
-	public void setPs_date(Date ps_date) {
+	public void setPs_date(Timestamp ps_date) {
 		this.ps_date = ps_date;
 	}
 	public int getPc_idx() {

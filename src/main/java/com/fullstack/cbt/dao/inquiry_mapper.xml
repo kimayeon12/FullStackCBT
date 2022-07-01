@@ -4,5 +4,180 @@
 <mapper namespace="com.fullstack.cbt.dao.InquiryDAO">
 
 	
+	<select id="inquiryList" resultType="com.fullstack.cbt.dto.InquiryDTO">
+			SELECT ib_idx,ib_subject,ib_reg_date,ib_status FROM cbt_inquiry_board ORDER BY ib_idx DESC 
+	</select>
+	
+
+	<select id="adminInquiryList" resultType="com.fullstack.cbt.dto.InquiryDTO">
+			SELECT ib_idx,ib_subject,mb_id,ib_reg_date,ib_status FROM cbt_inquiry_board
+			ORDER BY ib_idx DESC;
+	</select>
+
+	<insert id="write" 
+		useGeneratedKeys="true"
+		keyColumn="ib_idx"
+		keyProperty="ib_idx"
+		parameterType="com.fullstack.cbt.dto.InquiryDTO">
+		INSERT INTO cbt_inquiry_board(ib_subject, ib_content,mb_id)
+			VALUES(#{ib_subject},#{ib_content},#{mb_id})
+	</insert>
+
+	<insert id="fileWrite">
+		INSERT INTO cbt_inquiry_board_attach(ba_org_name, ba_new_name, ib_idx)
+			VALUES(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<select id="inquiryDetail" parameterType="String" 
+		resultType="com.fullstack.cbt.dto.InquiryDTO">
+		SELECT * FROM cbt_inquiry_board WHERE ib_idx = #{ib_idx}
+	</select>
+	
+	<select id="photoList" parameterType="String"
+		resultType="com.fullstack.cbt.dto.InquiryAttachDTO">
+		SELECT * FROM cbt_inquiry_board_attach WHERE ib_idx = #{ib_idx}	
+	</select>
+	
+	<select id="photoList2" parameterType="String"
+		resultType="com.fullstack.cbt.dto.InquiryAttachDTO">
+		SELECT * FROM cbt_inquiry_board_attach WHERE ba_idx = #{ba_idx}	
+	</select>
+	
+	
+	<select id="adminInquiryDetail" parameterType="String" 
+		resultType="com.fullstack.cbt.dto.InquiryDTO">
+		SELECT * FROM cbt_inquiry_board WHERE ib_idx = #{ib_idx}
+	</select>
+	
+	<select id="adminPhotoList" parameterType="String"
+		resultType="com.fullstack.cbt.dto.InquiryAttachDTO">
+		SELECT * FROM cbt_inquiry_board_attach WHERE ib_idx = #{ib_idx}	
+	</select>
+
+	<delete id="del">
+		DELETE FROM cbt_inquiry_board WHERE ib_idx = #{ib_idx}
+	</delete>
+	
+	<delete id="del2">
+		DELETE FROM cbt_inquiry_board_attach WHERE ib_idx = #{ib_idx} 
+	</delete>
+
+	<delete id="del3">
+		DELETE FROM cbt_inquiry_board_attach WHERE ba_idx = #{ba_idx} 
+	</delete>
+ 	
+ 	<update id="update" parameterType="hashmap">
+	UPDATE cbt_inquiry_board SET ib_subject =#{ib_subject},ib_content =#{ib_content}
+	WHERE ib_idx =#{ib_idx}
+	</update>
+ 	
+ 	
+ 	<update id="adUpdate" parameterType="hashmap" >
+	UPDATE cbt_inquiry_board 
+	SET ib_status =#{ib_status},ib_answer =#{ib_answer},ib_memo =#{ib_memo},ib_answer_date =NOW(),ib_admin_id =#{ib_admin_id} 
+	WHERE ib_idx =#{ib_idx}
+	</update>
+
+
+
+
+
+	<!-- 1대1 게시판(관리자) 검색 리스트 -->
+	<select id="adSearchList" resultType="com.fullstack.cbt.dto.InquiryDTO">
+		<![CDATA[
+			SELECT ib_idx,ib_subject,mb_id,ib_reg_date,ib_status FROM cbt_inquiry_board		
+			WHERE ib_idx > 0
+		]]>
+ 		  <include refid="adSearchSql"></include>		
+		ORDER BY ib_idx DESC 
+	</select>
+		<sql id="adSearchSql">
+	    <if test="param2 !=null">	    
+	            <if test="param2 == 'title'.toString()">
+	                AND ib_subject like CONCAT('%', #{param3}, '%')
+	            </if>
+	     
+	            <if test="param2 == 'content'.toString()">
+	                AND ib_content like CONCAT('%', #{param3}, '%')
+	            </if>
+	             
+	            <if test="param2 == 'all'.toString()">
+	                AND ( 
+	                   
+	                     ib_subject like CONCAT('%', #{param3}, '%')
+	                    OR
+	                     ib_content like CONCAT('%', #{param3}, '%')
+	                )
+	            </if>	             
+	    </if>
+	    
+	    <if test="param1!=null">
+	    		<if test="param1 == '1'.toString()">
+	               
+	            </if>
+	    	     <if test="param1 == '2'.toString()">
+	                AND ib_status ='2' 
+	            </if>
+	    	     <if test="param1 == '3'.toString()">
+	                AND ib_status ='3'
+	            </if>	  
+	    	     <if test="param1 == '4'.toString()">
+	                AND ib_status ='4'
+	            </if>	  	            	            	    
+	    </if>
+	    
+	</sql>
+	
+	
+	
+	<!-- 1대1 게시판 검색 리스트 -->
+	<select id="searchList" resultType="com.fullstack.cbt.dto.InquiryDTO">
+		<![CDATA[
+			SELECT ib_idx,ib_subject,ib_reg_date,ib_status FROM cbt_inquiry_board		
+			WHERE ib_idx > 0
+		]]>
+ 		  <include refid="searchSql"></include>		
+		ORDER BY ib_idx DESC 
+	</select>
+	
+
+		<sql id="searchSql">
+	    <if test="param2 !=null">	    
+	            <if test="param2 == 'title'.toString()">
+	                AND ib_subject like CONCAT('%', #{param3}, '%')
+	            </if>
+	     
+	            <if test="param2 == 'content'.toString()">
+	                AND ib_content like CONCAT('%', #{param3}, '%')
+	            </if>
+	             
+	            <if test="param2 == 'all'.toString()">
+	                AND ( 
+	                   
+	                     ib_subject like CONCAT('%', #{param3}, '%')
+	                    OR
+	                     ib_content like CONCAT('%', #{param3}, '%')
+	                )
+	            </if>	             
+	    </if>
+	    
+	    <if test="param1!=null">
+	    		<if test="param1 == '1'.toString()">
+	               
+	            </if>
+	    	     <if test="param1 == '2'.toString()">
+	                AND ib_status ='2' 
+	            </if>
+	    	     <if test="param1 == '3'.toString()">
+	                AND ib_status ='3'
+	            </if>	  
+	    	     <if test="param1 == '4'.toString()">
+	                AND ib_status ='4'
+	            </if>	  	            	            	    
+	    </if>
+	    
+	</sql>
+	
+	
 
 </mapper>

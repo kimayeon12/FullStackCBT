@@ -1,13 +1,13 @@
 package com.fullstack.cbt.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class InquiryAttachDTO {
 
 	private int ba_idx;
 	private String ba_org_name;
 	private String ba_new_name;
-	private Date ba_date;
+	private Timestamp ba_date;
 	private String ba_ext;
 	private int ib_idx;
 	
@@ -29,10 +29,10 @@ public class InquiryAttachDTO {
 	public void setBa_new_name(String ba_new_name) {
 		this.ba_new_name = ba_new_name;
 	}
-	public Date getBa_date() {
+	public Timestamp getBa_date() {
 		return ba_date;
 	}
-	public void setBa_date(Date ba_date) {
+	public void setBa_date(Timestamp ba_date) {
 		this.ba_date = ba_date;
 	}
 	public String getBa_ext() {

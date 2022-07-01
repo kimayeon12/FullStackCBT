@@ -78,7 +78,7 @@ th,td {
 					<td>${status.count}</td>
 					<td>${gradeUpdate.mg_grade_before}</td>
 					<td>${gradeUpdate.mg_grade_after}</td>
-					<td>${gradeUpdate.mg_id}</td>
+					<td>${gradeUpdate.mb_id}</td>
 					<td>${gradeUpdate.mg_content}</td>
 					<td>${gradeUpdate.mg_date}</td>
 				</tr>

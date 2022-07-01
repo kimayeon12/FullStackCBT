@@ -21,7 +21,7 @@ public interface MemberDAO {
 
 	MemberDTO adminMemberDetail(String mb_id);
 
-	int update(HashMap<String, String> params);
+	int update(HashMap<String, String> params, String loginId);
 
 	ArrayList<MemberGradeDTO> gradelist(String mb_id);
 
@@ -30,6 +30,10 @@ public interface MemberDAO {
 	ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search);
 
 	MemberDTO myDetail(HashMap<String, String> params);
+
+	String gradeCheck(String loginId);
+
+	int update(HashMap<String, String> params);
 
 	
 

@@ -51,27 +51,35 @@
 	function overlayId(){
 		 var id = $("#id").val();
 		 console.log('아이디 중복체크:'+id);
+		 var expId=/^[a-z]+[a-z0-9]{4,20}$/g;
 		 
-		$.ajax({
-			type:'get',
-			url:'overlayId.ajax',
-			data:{
-				chkmb_id:id
+		 if(expId.test($("#id").val())){
+			 
+			$.ajax({
+				type:'get',
+				url:'overlayId.ajax',
+				data:{
+					chkmb_id:id
+					},
+				datatype:"JSON",
+				success:function(data){
+					//console.log(data);
+					if(data.overlayId){
+						alert("사용중인 아이디 입니다.")
+					}else{
+						alert("사용 가능한 아이디 입니다.")
+						overChk = true;
+					}
 				},
-			datatype:"JSON",
-			success:function(data){
-				//console.log(data);
-				if(data.overlayId){
-					alert("사용중인 아이디 입니다.")
-				}else{
-					alert("사용 가능한 아이디 입니다.")
-					overChk = true;
+				error:function(e){
+					console.log(e);
 				}
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
+			});
+			
+		}else{
+			alert("아이디는 영문 숫자 조합으로 4~20자로 작성해주세요.")
+			return false;	
+		}
 	}
 	
 	var overChk2=false;
@@ -104,6 +112,7 @@
 	
 		function joinForm(){
 	        var $id = $("#id");
+	        var expId= /^[a-z]+[a-z0-9]{4,20}$/g;
 	        var $pw=$("#pw");
 	        var expPw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,20}$/;
 	        var $pw2=$("#pw2");

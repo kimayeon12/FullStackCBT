@@ -104,6 +104,13 @@ public class MemberService {
 	}
 
 
+	public String gradeCheck(String loginId) {
+		logger.info("로그인한 계정 권한 서비스 요청 ");
+		return dao.gradeCheck(loginId);
+	
+	}
+
+
 	
 
 	

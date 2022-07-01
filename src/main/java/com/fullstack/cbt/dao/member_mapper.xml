@@ -40,7 +40,7 @@
 
 <insert id="update" parameterType="hashmap">
 	INSERT INTO cbt_member_grade(mb_id,mg_content,mg_date,mg_grade_before,mg_grade_after,mg_id)
-		VALUES (#{mb_id},#{mg_content},now(),#{mg_grade_before},#{mg_grade_after},'admin')
+		VALUES (#{mb_id},#{mg_content},now(),#{mg_grade_before},#{mg_grade_after},#{loginId})
 </insert>
 		
 <select id="gradelist" parameterType="String" resultType="com.fullstack.cbt.dto.MemberGradeDTO">

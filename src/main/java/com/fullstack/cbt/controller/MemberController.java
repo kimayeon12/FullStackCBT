@@ -193,13 +193,15 @@ public class MemberController {
 		}
 		
 		@RequestMapping(value="/adminMemberUpdate.do")
-		public String update(Model model, @RequestParam HashMap<String, String> params) {
+		public String update(Model model, HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("회원수정요청:{}",params);
 		
 		String mb_id = params.get("mb_id");
 		
 		
+		String loginId= (String) session.getAttribute("loginId"); 
 		
+		params.put("loginId",loginId);
 		service.update(params);
 		ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);
 		if(gradedto.size()>0) {

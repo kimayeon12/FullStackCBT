@@ -119,6 +119,7 @@ th,td {
 	  <form id="moveForm" method="get">
 	  	 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 	        <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+	       <input type="hidden" name="su_idx" value="$)">
 	  </form>
 	  
 <%@ include file="../../resources/inc/footer.jsp" %>

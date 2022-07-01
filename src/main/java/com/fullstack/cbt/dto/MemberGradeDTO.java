@@ -1,6 +1,6 @@
 package com.fullstack.cbt.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberGradeDTO {
 
@@ -9,7 +9,7 @@ public class MemberGradeDTO {
 	private String mg_grade_before;
 	private String mg_grade_after;
 	private String mg_content;
-	private Date mg_date;
+	private Timestamp mg_date;
 	private String mb_id;
 	
 	public int getMg_idx() {
@@ -42,10 +42,10 @@ public class MemberGradeDTO {
 	public void setMg_content(String mg_content) {
 		this.mg_content = mg_content;
 	}
-	public Date getMg_date() {
+	public Timestamp getMg_date() {
 		return mg_date;
 	}
-	public void setMg_date(Date mg_date) {
+	public void setMg_date(Timestamp mg_date) {
 		this.mg_date = mg_date;
 	}
 	public String getMb_id() {

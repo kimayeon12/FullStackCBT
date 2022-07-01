@@ -57,7 +57,7 @@ public class MemberController {
                 session.setAttribute("loginGrade", login.getMb_grade());
                 
                 if(login.getMb_grade().equals("관리자") || login.getMb_grade().equals("최고관리자")) {
-                    session.setAttribute("isAdmin", true);
+                    session.setAttribute("isAdmin", "true");
                 }
                 
                 page = "main";//로그인 성공시 메인화면
@@ -296,7 +296,9 @@ public class MemberController {
 		@RequestMapping(value="/adminMemberUpdate.do")
         public String update(Model model, HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("회원수정요청:{}",params);
-		
+		if((String) session.getAttribute("isAdmin") == "false") {
+			
+		}
 		String mb_id = params.get("mb_id");
 		
 		

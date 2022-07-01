@@ -107,7 +107,14 @@ public class ObjectionController {
 			model.addAttribute("objectionList", objectionSelectList);
 		}
 		
+		//페이징 부분**************************
 		
+		/*
+		 * model.addAttribute("objectionList", service.getListPaging(cri)); int total =
+		 * service.getTotal(cri); PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		 * model.addAttribute("pageMaker", pageMake);
+		 */
+		 
 		
 		return "adminObjectionList";
 	}

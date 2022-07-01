@@ -1,6 +1,7 @@
 package com.fullstack.cbt.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +58,11 @@ public class ObjectionService {
 	public int getTotal(Criteria cri) {
 		return dao.getTotal(cri);
     }
+
+	public ObjectionDTO objectionDetail(String oj_idx) {
+		ObjectionDTO objectionDetail = null;
+		objectionDetail = dao.objectionDetail(oj_idx);
+		return objectionDetail;
+	}
 
 }

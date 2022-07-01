@@ -21,7 +21,10 @@ public class ProblemDTO {
 	private char ta_is_answer;
 	private byte ta_problem_no;
 	private int tt_idx;
-	
+	//과목명 가져오기 테스트
+	private String su_name;
+	//과목 단원명 가져오기 테스트
+	private String sc_name;
 	
 	public int getTt_idx() {
 		return tt_idx;
@@ -47,8 +50,6 @@ public class ProblemDTO {
 	public void setTa_problem_no(byte ta_problem_no) {
 		this.ta_problem_no = ta_problem_no;
 	}
-	//과목명 가져오기 테스트
-	private String su_name;
 	
 	public String getSu_name() {
 		return su_name;
@@ -56,8 +57,6 @@ public class ProblemDTO {
 	public void setSu_name(String su_name) {
 		this.su_name = su_name;
 	}
-	//과목 단원명 가져오기 테스트
-	private String sc_name;
 	
 	public String getSc_name() {
 		return sc_name;

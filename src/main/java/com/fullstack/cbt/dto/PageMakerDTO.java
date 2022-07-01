@@ -18,6 +18,7 @@ public class PageMakerDTO {
     
     /* 현재 페이지, 페이지당 게시물 표시수 정보 */
     private Criteria cri;
+
     
     /* 생성자 */
     public PageMakerDTO(Criteria cri, int total) {

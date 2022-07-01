@@ -16,18 +16,50 @@
 
 
 <!-- 이의제기 전체 리스트  -->
-<select id="objectionList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
-	SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, oj_idx, pc_problem 
+<select id="objectionList" resultType="com.fullstack.cbt.dto.ObjectionDTO">	
+	SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem, oj_idx 
 		FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
-	ON co.pc_idx = cpc.pc_idx;
+	ON co.pc_idx = cpc.pc_idx
 </select>
 
+<!-- 이의제기 상세보기  -->
 <select id="objectionDetail" resultType="com.fullstack.cbt.dto.ObjectionDTO">
-	SELECT mb_id, oj_content, oj_date, oj_admin_id, oj_memo, oj_proc_date, oj_status, 
-			(SELECT pc_problem FROM cbt_problem_create WHERE pc_idx = cbt_objection.oj_idx) as problem
-				FROM cbt_objection WHERE oj_idx = #{oj_idx}
+	SELECT 
+		co.mb_id
+		,oj_date
+		,oj_status
+		,oj_content
+		,oj_admin_id
+		,oj_proc_date
+		,oj_memo
+		,oj_proc_date
+		,oj_idx
+		,pc_problem
+		,cpc.pc_idx
+		,co.pc_idx 	
+	FROM 
+		cbt_objection co 
+	INNER JOIN 
+		cbt_problem_create cpc 
+	ON oj_idx = #{oj_idx} AND co.pc_idx = cpc.pc_idx
 </select>
 
+<select id="status" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+	SELECT 
+		DISTINCT oj_status
+	FROM 
+		cbt_objection
+</select>
+
+<!-- 이의제기 등록(수정)하기  -->
+<update id="objectionUpdate" parameterType="hashmap">
+	UPDATE cbt_objection SET
+		oj_admin_id = #{oj_admin_id}
+		,oj_memo = #{oj_memo}
+		,oj_status = #{oj_status}
+		,oj_proc_date = now()
+	WHERE oj_idx = #{oj_idx}			
+</update>
 
 <!-- 이의제기 셀렉트 리스트 -->
 <!-- <select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
@@ -38,7 +70,7 @@
 
 <select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
 	<![CDATA[
-		SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+		SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem, oj_idx 
 			FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
 		ON co.pc_idx = cpc.pc_idx
 	]]>
@@ -86,9 +118,10 @@
 				cbt_objection co 
 			INNER JOIN 
 				cbt_problem_create cpc 
-			ON co.oj_idx = cpc.pc_idx
+			ON co.pc_idx = cpc.pc_idx
 			ORDER BY oj_idx desc 
 		LIMIT #{skip} , #{amount}
+		
     </select>
     
     <!-- 게시물 총 개숫 -->

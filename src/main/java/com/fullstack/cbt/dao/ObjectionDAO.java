@@ -23,5 +23,9 @@ public interface ObjectionDAO {
 
 	ObjectionDTO objectionDetail(String oj_idx);
 
+	ArrayList<ObjectionDTO> status();
+
+	int objectionUpdate(HashMap<String, Object> params);
+
 
 }

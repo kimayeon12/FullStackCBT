@@ -16,7 +16,6 @@ public class ObjectionDTO {
 	
 	//새로 지정해준 컬럼
 	private String oj_problem;
-	
 	//cbt_problem_carete 테이블에서 가져온 것
 	private String pc_problem;
 	

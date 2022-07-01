@@ -37,6 +37,7 @@ public class ObjectionService {
 		return success;
 	}
 
+	
 	public ArrayList<ObjectionDTO> objectionList() {
 		logger.info("이의제기 리스트 요청");
 		return dao.objectionList();
@@ -54,15 +55,27 @@ public class ObjectionService {
 		logger.info("페이징 서비스 요청");
 		return dao.getListPaging(cri);
     }
-
+	/* 페이징 총 게시글 수 구하기*/
 	public int getTotal(Criteria cri) {
 		return dao.getTotal(cri);
     }
-
+	
+	/* 이의제기 상세보기 */
 	public ObjectionDTO objectionDetail(String oj_idx) {
-		ObjectionDTO objectionDetail = null;
-		objectionDetail = dao.objectionDetail(oj_idx);
-		return objectionDetail;
+		logger.info("이의제기 상세보기");
+		return dao.objectionDetail(oj_idx);
+	}
+
+	public ArrayList<ObjectionDTO> status() {
+		logger.info("처리상태 옵션 가져오기 서비스");
+		return dao.status();
+	}
+
+	public void objectionUpdate(HashMap<String, Object> params) {
+		logger.info("이의제기 수정 서비스 요청");
+		int success = dao.objectionUpdate(params);
+		logger.info("수정된 데이터 수 : "+ success);
+		
 	}
 
 }

@@ -22,8 +22,8 @@
 				<select name="sc_idx" id="subjectChapList">
 					<option value="">과목단원명</option>
 					<c:forEach items="${subjectChap}" var="item">
-                   			<option value="${item.sc_idx}" ${item.sc_idx eq problemDetail.sc_idx ? 'selected' : ''}>${item.sc_name}</option>                   		
-                   		</c:forEach>
+                   		<option value="${item.sc_idx}" ${item.sc_idx eq problemDetail.sc_idx ? 'selected' : ''}>${item.sc_name}</option>                   		
+                   	</c:forEach>
 				</select>
 			</td>
 		</tr>

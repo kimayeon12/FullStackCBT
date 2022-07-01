@@ -12,6 +12,27 @@ th,td {
 	border : 1px solid black;
 	padding : 5px 10px; 
 }
+
+/*페이징*/ 
+.pageInfo{
+      list-style : none;
+      display: inline-block;
+    margin: 50px 0 0 100px;      
+  }
+  .pageInfo li{
+      float: left;
+    font-size: 20px;
+    margin-left: 18px;
+    padding: 7px;
+    font-weight: 500;
+  }
+ a:link {color:black; text-decoration: none;}
+ a:visited {color:black; text-decoration: none;}
+ a:hover {color:black; text-decoration: underline;}
+ 
+ .active{
+      background-color: #cdd5ec;
+  }
 </style>
 
 <p>총 시험 수 : ${listCnt} 건</p>
@@ -30,7 +51,9 @@ th,td {
 	  </select>
 
 
-	   <input type="text" name="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/> 
+	   <input type="text" name="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
+	    
+	   <input type="hidden" name="pageNum" value=""/>
 	   <button type="submit" >검색</button>
  </form>
   
@@ -67,17 +90,63 @@ th,td {
 	     	</tr>
 	     </c:otherwise>
     </c:choose>
-    
     </tbody>
   </table>
   
+    <!--페이징 -->
+    <div class="pageInfo_wrap" >
+        <div class="pageInfo_area">
+        		<ul id="pageInfo" class="pageInfo">
+        		<!-- 이전페이지 버튼 -->
+	                <c:if test="${pageMaker.prev}">
+	                    <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+	                </c:if>
+	        		
+	        		
+	 				<!-- 각 번호 페이지 버튼 -->
+	                <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	                    <li class='pageInfo_btn ${pageMaker.cri.pageNum == num ? "active": "" }'><a href="${num}">${num}</a></li>
+	                </c:forEach>
+	                
+	                <!-- 다음페이지 버튼 -->
+	                <c:if test="${pageMaker.next}">
+	                    <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+	                </c:if> 
+        		</ul>
+ 
+        </div>
+    </div>
+  
+
+	  <form id="moveForm" method="get">
+	  	 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+	        <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+	  </form>
+	  
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
+		//파라메터 전송
 		$("select").on("change", function(){ 
+			$('input[name="pageNum"]').val(1);
 			$("#form").submit();
-			//var status = $("select[name='tt_status'] option:selected").val();
-			//console.log(status);
-			//attr selected 추가 
+			/*
+			$(".pageInfo a").on("click", function(e){
+				var pageNum = $(this).attr("href");  //얘가 pageNum이니까 이걸 cbtFormlist에 보내주면 되는데 
+				console.log("pageNum :"  + pageNum);
+				$('input [name="pageNum"]').val(pageNum);
+				
+			});
+			*/
+		});
+		
+		
+		
+		//클릭했을 때 페이지 이동 	
+		$(".pageInfo a").on("click", function(e){
+	        e.preventDefault();
+	        $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
+	        $("#moveForm").attr("action", "/cbtList.do");
+	        $("#moveForm").submit();
 		});
 	</script>
 </html>

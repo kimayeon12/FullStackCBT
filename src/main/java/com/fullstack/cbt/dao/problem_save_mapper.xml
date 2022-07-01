@@ -3,6 +3,34 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.ProblemSaveDAO">
 
-	
+	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO" parameterType="String">
+		SELECT distinct su_name, su_idx FROM cbt_subject NATURAL JOIN cbt_problem_create 
+		WHERE pc_idx IN (select pc_idx from cbt_problem_save where mb_id = #{loginId})
+	</select>
 
+	<select id="problemSaveList" resultType="com.fullstack.cbt.dto.ProblemDTO">
+		SELECT cs.su_idx , su_name, pc_problem, pc_answer, pc_answer1, pc_answer2,pc_answer3,pc_answer4, pc_explan, cps.pc_idx, ps_idx, ps_date 
+		FROM cbt_problem_save cps LEFT OUTER JOIN cbt_problem_create cpc ON cps.pc_idx = cpc.pc_idx LEFT OUTER JOIN cbt_subject cs ON cpc.su_idx = cs.su_idx 
+		WHERE cps.mb_id=#{param1}
+	</select>
+	
+	<select id="selectedSaveList" resultType="com.fullstack.cbt.dto.ProblemDTO">
+		SELECT cs.su_idx , su_name, pc_problem, pc_answer, pc_answer1, pc_answer2,pc_answer3,pc_answer4, pc_explan, cps.pc_idx, ps_idx, ps_date 
+		FROM cbt_problem_save cps LEFT OUTER JOIN cbt_problem_create cpc ON cps.pc_idx = cpc.pc_idx LEFT OUTER JOIN cbt_subject cs ON cpc.su_idx = cs.su_idx 
+		WHERE cps.mb_id=#{param1} 
+				
+			<if test="!param2.equals('')">
+				AND cs.su_idx=#{param2}
+			</if>
+			
+	</select>
+	
+	<delete id="problemSaveDel">
+		DELETE FROM cbt_problem_save WHERE ps_idx in 
+		<foreach collection = "array" item="chkArr" open="(" close=")" separator = ",">
+			#{chkArr}
+		</foreach>
+	</delete>
+	
+	
 </mapper>

@@ -99,6 +99,12 @@ th,td {
 		} 
 	};
 	
+<<<<<<< HEAD
+	
+
+	
+	
+=======
 	var mb_grade = "${mb_grade}";
 		console.log(mb_grade);
 
@@ -107,5 +113,6 @@ th,td {
 	} else {
 		$("#superAdmin").attr("disabled" , false);
 	}
+>>>>>>> f237b748350ec623040fe95adbce8bde0ae15b06
 </script>
 </html>

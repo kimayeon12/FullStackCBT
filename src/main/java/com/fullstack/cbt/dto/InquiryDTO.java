@@ -1,6 +1,6 @@
 package com.fullstack.cbt.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class InquiryDTO {
 
@@ -8,12 +8,16 @@ public class InquiryDTO {
 	private	String ib_subject;
 	private	String ib_content;
 	private	String ib_answer;
-	private	Date ib_reg_date;
-	private	Date ib_answer_date;
+	private Timestamp ib_reg_date;
+	private	Timestamp ib_answer_date;
 	private	String ib_admin_id;
 	private	String ib_status;
 	private	String ib_memo;
 	private	String mb_id;
+	private String ib_searchOption; //상태값
+	private String ib_keyword; //검색키워드
+	
+
 	
 	public int getIb_idx() {
 		return ib_idx;
@@ -39,16 +43,16 @@ public class InquiryDTO {
 	public void setIb_answer(String ib_answer) {
 		this.ib_answer = ib_answer;
 	}
-	public Date getIb_reg_date() {
+	public Timestamp getIb_reg_date() {
 		return ib_reg_date;
 	}
-	public void setIb_reg_date(Date ib_reg_date) {
+	public void setIb_reg_date(Timestamp ib_reg_date) {
 		this.ib_reg_date = ib_reg_date;
 	}
-	public Date getIb_answer_date() {
+	public Timestamp getIb_answer_date() {
 		return ib_answer_date;
 	}
-	public void setIb_answer_date(Date ib_answer_date) {
+	public void setIb_answer_date(Timestamp ib_answer_date) {
 		this.ib_answer_date = ib_answer_date;
 	}
 	public String getIb_admin_id() {
@@ -75,5 +79,16 @@ public class InquiryDTO {
 	public void setMb_id(String mb_id) {
 		this.mb_id = mb_id;
 	}
-
+	public String getIb_searchOption() {
+		return ib_searchOption;
+	}
+	public void setIb_searchOption(String ib_searchOption) {
+		this.ib_searchOption = ib_searchOption;
+	}
+	public String getIb_keyword() {
+		return ib_keyword;
+	}
+	public void setIb_keyword(String ib_keyword) {
+		this.ib_keyword = ib_keyword;
+	}
 }

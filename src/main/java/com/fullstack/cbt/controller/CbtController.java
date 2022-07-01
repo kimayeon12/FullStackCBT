@@ -54,7 +54,7 @@ public class CbtController {
 		model.addAttribute("testdto", testdto);
 		
 		
-		int total = service.getTotal(cri);
+		int total = service.getTotal();
 		logger.info("전체 게시글 수 : " + total);
 		model.addAttribute("listCnt", total); // 게시글 수 표시 
 		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
@@ -69,7 +69,7 @@ public class CbtController {
 	//페이징 버전 
 	//선택한 값에 따른 리스트 가져오기 
 		@RequestMapping(value = "/cbtFormList.do")
-		public String cbtForm(Model model,Criteria cri ,@RequestParam HashMap<String, Object> params) {
+		public String cbtForm(Model model, Criteria cri,@RequestParam String su_idx, String tt_status, String mb_id, int pageNum) {
 			
 			
 			//이게 없으면 과목명 안나옴
@@ -79,20 +79,23 @@ public class CbtController {
 			if(subjectList.size()>0) {
 				model.addAttribute("subjectList", subjectList);
 			} 
-			
+			/*
 			String su_idx = (String) params.get("su_idx");
 			String tt_status = (String) params.get("tt_status");
 			String mb_id = (String) params.get("mb_id");
-			/*
+			*/ 
+			
 			logger.info("과목번호 : " + su_idx);
 			logger.info("제출상태 : " + tt_status);
 			logger.info("아이디 : " + mb_id);
-			*/
+			logger.info("pageNum :" + pageNum);
+			
 			// 사용자가 선택 후 값을 고정해주기 위해 model에 저장 
 			model.addAttribute("idx", su_idx);
 			model.addAttribute("status", tt_status);
 			model.addAttribute("id", mb_id);
 			
+			int skip = (pageNum -1) * 10;
 			/*기존 방식 
 			ArrayList<TestDTO> selectedList = service.selectedList(su_idx,tt_status,mb_id);
 			logger.info("선택된 리스트 수 : "  + selectedList.size());
@@ -102,18 +105,23 @@ public class CbtController {
 				model.addAttribute("testdto", selectedList);
 			}
 			*/ 
-			params.put("cri", cri);
-			ArrayList<TestDTO> testdto = service.selectedListPaging(params);
+			//params.put("cri", cri);
+			ArrayList<TestDTO> testdto = service.selectedListPaging(su_idx,tt_status,mb_id,skip);
 			//.info("시험 리스트 가져오기 : " + testdto.size()); //이렇게 하면 총 게시글 수가 안나옴! 32건인데 10건이라고 나옴 
 			model.addAttribute("testdto", testdto);
 			
-			
+			/*
 			int total = service.getTotal(cri);
 			//logger.info("전체 게시글 수 : " + total);
 			//model.addAttribute("listCnt", total); // 게시글 수 표시 
 			PageMakerDTO pageMake = new PageMakerDTO(cri, total);
 			model.addAttribute("pageMaker", pageMake);
+			*/
 			
+			int selectedTotal = service.selectedTotal(su_idx,tt_status,mb_id);
+			logger.info("선택된 게시글 수 : " + selectedTotal);
+			PageMakerDTO pageMake2 = new PageMakerDTO(pageNum, selectedTotal);
+			model.addAttribute("pageMaker", pageMake2);
 			
 			
 			

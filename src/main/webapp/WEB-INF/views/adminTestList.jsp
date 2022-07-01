@@ -51,7 +51,9 @@ th,td {
 	  </select>
 
 
-	   <input type="text" name="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/> 
+	   <input type="text" name="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
+	    
+	   <input type="hidden" name="pageNum" value=""/>
 	   <button type="submit" >검색</button>
  </form>
   
@@ -119,23 +121,22 @@ th,td {
 	  <form id="moveForm" method="get">
 	  	 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 	        <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-	       <input type="hidden" name="su_idx" value="$)">
 	  </form>
 	  
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 		//파라메터 전송
 		$("select").on("change", function(){ 
+			$('input[name="pageNum"]').val(1);
 			$("#form").submit();
-			
-			/*추가 *
+			/*
 			$(".pageInfo a").on("click", function(e){
-		        e.preventDefault();
-		        $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
-		        $("#moveForm").attr("action", "/cbtFormList.do");
-		        $("#moveForm").submit();
+				var pageNum = $(this).attr("href");  //얘가 pageNum이니까 이걸 cbtFormlist에 보내주면 되는데 
+				console.log("pageNum :"  + pageNum);
+				$('input [name="pageNum"]').val(pageNum);
+				
 			});
-			*/ 
+			*/
 		});
 		
 		

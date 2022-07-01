@@ -24,14 +24,17 @@ public interface CbtDAO {
 	/*페이징*/  
 	public ArrayList<TestDTO> getListPaging(Criteria cri);
 
-	public int getTotal(Criteria cri);
+	public int getTotal();
 
 	ArrayList<TestDTO> selectedListPaging(HashMap<String, String> params, Criteria cri);
 
-	ArrayList<TestDTO> selectedListPaging(String su_idx, String tt_status, String mb_id, Criteria cri);
+	ArrayList<TestDTO> selectedListPaging(String su_idx, String tt_status, String mb_id, int skip);
 
+	int selectedTotal(String su_idx, String tt_status, String mb_id);
+
+	/*
 	ArrayList<TestDTO> selectedListPaging(HashMap<String, Object> params);
-	
+	*/
 	
 }
 

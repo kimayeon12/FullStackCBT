@@ -53,9 +53,9 @@ public class CbtService {
 		return dao.getListPaging(cri);
 	}
 
-	public int getTotal(Criteria cri) {
+	public int getTotal() {
 		logger.info("전체 게시글 수 가져오기 서비스 요청");
-		return dao.getTotal(cri);
+		return dao.getTotal();
 	}
 /*
 	public ArrayList<TestDTO> selectedListPaging(HashMap<String, String> params, Criteria cri) {
@@ -63,11 +63,25 @@ public class CbtService {
 		return dao.selectedListPaging(params, cri);
 	}
 */
-
+/*
 	public ArrayList<TestDTO> selectedListPaging(HashMap<String, Object> params) {
 		logger.info("전체 리스트 페이징 서비스 요청");
 		return dao.selectedListPaging(params);
 	}
+*/ 
+	
+	public ArrayList<TestDTO> selectedListPaging(String su_idx, String tt_status, String mb_id, int skip) {
+		logger.info("전체 리스트 페이징 서비스 요청");
+		return dao.selectedListPaging(su_idx, tt_status, mb_id,skip);
+	}
+
+
+
+	public int selectedTotal(String su_idx, String tt_status, String mb_id) {
+		logger.info("선택에 따라  게시글 수 가져오기 서비스 요청");
+		return dao.selectedTotal(su_idx,tt_status,mb_id);
+	}
+
 
 
 	

@@ -27,14 +27,6 @@ public class SubjectController {
 	@Autowired SubjectService service;
 	
 	
-
-	@RequestMapping(value = "/")
-	public String page() {
-		logger.info("과목 리스트 페이지 이동요청");
-		return "redirect:/adminSubjectManagement.do";
-	}
-	
-	
 	
 	@RequestMapping(value = "/adminSubjectManagement.do")
 	public String smList(Model model, HttpSession session) {

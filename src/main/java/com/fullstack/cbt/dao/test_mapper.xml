@@ -83,12 +83,12 @@
 
 	<select id="testlist" resultType="com.fullstack.cbt.dto.TestDTO">
 		SELECT su_idx, su_name, tt_idx, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
-			FROM cbt_subject NATURAL JOIN cbt_test WHERE mb_id = #{param1}
+			FROM cbt_subject NATURAL JOIN cbt_test WHERE mb_id = #{param3}
 	</select>
 	
 	<select id="selectedList" resultType="com.fullstack.cbt.dto.TestDTO">
 		SELECT tt_idx, su_idx, su_name, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
-		FROM cbt_subject NATURAL JOIN cbt_test WHERE mb_id = #{param1}
+		FROM cbt_subject NATURAL JOIN cbt_test WHERE mb_id = #{param3}
 		<if test = "!param1.equals('')">
 			AND su_idx = #{param1} 
 		</if>
@@ -104,8 +104,15 @@
 	</select>
 	
 	<select id="testDetail" resultType="com.fullstack.cbt.dto.ProblemDTO">
-		SELECT tt_idx, pc_idx, ta_problem_no, ta_choice_no, ta_is_answer, pc_answer1, pc_answer2, pc_answer3, pc_answer4,pc_answer,pc_problem
-			FROM cbt_test_answer NATURAL JOIN cbt_problem_create WHERE tt_idx =#{param1}
+		SELECT tt_idx, pc_idx, ta_problem_no, ta_choice_no, ta_is_answer, pc_answer1, pc_answer2, pc_answer3, pc_answer4,pc_answer,pc_problem, pc_explan, (SELECT COUNT(ps_idx) FROM cbt_problem_save WHERE pc_idx = b.pc_idx AND mb_id = #{param2}) AS cnt FROM cbt_test_answer a NATURAL JOIN cbt_problem_create b WHERE tt_idx =#{param1}
 	</select>
+	
+	<insert id="problemSave">
+		INSERT INTO cbt_problem_save (pc_idx, mb_id) VALUES(#{param1}, #{param2})
+	</insert>
+	
+	<delete id="problemDelete">
+		DELETE FROM cbt_problem_save WHERE pc_idx = #{param1} AND mb_id = #{param2}
+	</delete>
 	
 </mapper>

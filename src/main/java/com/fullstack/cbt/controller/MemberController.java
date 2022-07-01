@@ -5,19 +5,16 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.MidiDevice.Info;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.fullstack.cbt.dto.MemberDTO;
 import com.fullstack.cbt.dto.MemberGradeDTO;
@@ -43,19 +40,36 @@ public class MemberController {
 		String mb_id=request.getParameter("mb_id");
 		String mb_pw=request.getParameter("mb_pw");
 		logger.info(mb_id+"/"+mb_pw);
-		String loginId = service.login(mb_id,mb_pw);
-		logger.info("로그인 아이디: "+loginId);
+        MemberDTO login = service.login(mb_id, mb_pw);
 		
 		String page="login";
-		String msg="아이디 또는 비밀번호를 확인하세요.";
+        String msg = null;
 		
-		if(loginId==null) {
-			model.addAttribute("msg",msg);
-		}else {
-			HttpSession session=request.getSession();
-			session.setAttribute("loginId", loginId);
-			page = "main";//로그인 성공시 메인화면
-		}
+        if(login!=null) {
+            if(login.getMb_grade().equals("탈퇴회원")) {
+                msg = "탈퇴된 회원 계정입니다.";
+                model.addAttribute("msg",msg);
+            } else {
+                HttpSession session=request.getSession();
+                
+                session.setAttribute("loginId", login.getMb_id());
+                session.setAttribute("loginName", login.getMb_name());
+                session.setAttribute("loginGrade", login.getMb_grade());
+                
+                if(login.getMb_grade().equals("관리자") || login.getMb_grade().equals("최고관리자")) {
+                    session.setAttribute("isAdmin", "true");
+                }
+                
+                page = "main";//로그인 성공시 메인화면
+            }
+        }else {
+            msg = "아이디 또는 비밀번호를 확인하세요.";
+            model.addAttribute("msg",msg);
+        }
+        
+        if(msg != null) {
+            model.addAttribute("msg", msg);
+        }
 
 		return page;
 	
@@ -65,6 +79,7 @@ public class MemberController {
 	@RequestMapping(value = "/logout.do")
 	public String logout(Model model,HttpSession session) {
 		session.removeAttribute("loginId");
+        session.removeAttribute("loginName");
 		model.addAttribute("msg", "로그아웃 되었습니다.");
 		return "login";
 		}
@@ -115,11 +130,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/findId.do" , method= RequestMethod.POST)
-	public String findAction(Model model, HttpServletRequest req ) {
+    public String findId(Model model, HttpServletRequest req ) {
 		
-		String mb_id= req.getParameter("mb_id");
-		String mb_email=req.getParameter("mb_email");
-		logger.info(mb_id+"/"+mb_email);
+        String mb_name= req.getParameter("mb_name");
+        String mb_email=req.getParameter("mb_email");
+        logger.info(mb_name+"/"+mb_email);
+        String id = service.findId(mb_name, mb_email);
+        String msg = "일치하는 정보를 찾을 수 없습니다.";
+        
+        if(id != null) {
+            msg = "아이디는 "+id+" 입니다.";
+        }
+        
+        model.addAttribute("msg", msg);
 		
 	 
 	 	return "login";
@@ -133,19 +156,97 @@ public class MemberController {
 		return "findPw";
 	}
 	
+    @RequestMapping(value="/findPw.do" , method= RequestMethod.POST)
+    public String findPw(Model model, HttpServletRequest req ,HttpSession session) {
+        
+        String mb_id= req.getParameter("mb_id");
+        String mb_name= req.getParameter("mb_name");
+        String mb_email=req.getParameter("mb_email");
+        logger.info(mb_id+"/"+mb_name+"/"+mb_email);
+        
+        int row = service.isFindPw(mb_id, mb_name, mb_email);
+        
+        if(row > 0) {
+            model.addAttribute("mb_id", mb_id);
+            session.setAttribute("findID", mb_id);
+            
+             return "pwChange";
+        } else {
+            model.addAttribute("msg", "일치하는 정보를 찾을 수 없습니다.");
+            
+            return "findPw";
+        }
+        
+    }
+        
+    //새 비밀번호 설정 페이지 이동
+    @RequestMapping(value="/pwChange.go")
+    public String pwChange() {
+        logger.info("새 비밀번호 설정 페이지 이동");
+        return "pwChange";
+    }
+    
+    @RequestMapping(value="/pwChange.do")
+    public String pwChange(HttpServletRequest req, HttpSession session) {
+        HashMap<String, String> map = new HashMap<String, String>();
+        
+        String id = (String) session.getAttribute("findID");
+        
+        if(id != null) {
+            service.pwChange(id, req.getParameter("pw"));
+        }
+        
+        session.removeAttribute("findID");
+        
+        return "redirect:/login.go";
+    }
+	
 	//내 정보페이지 이동
-		@RequestMapping(value="/myPage.do")
-		public String myupdate(HttpSession session, Model model, 
-				@RequestParam HashMap<String, String> params) {
-			logger.info("내정보수정:{}",params);
-			String page="redirect:/myPage.do?mb_id="+params.get("mb_id");
-			logger.info(page);
-
-			MemberDTO dto=service.myDetail(params);
-			model.addAttribute("memberList",dto);
-			
-			return "myPage";
-		}
+    @RequestMapping(value="myPage.do")
+    public String myupdate(HttpSession session, Model model) {
+        MemberDTO dto=service.myDetail((String) session.getAttribute("loginId"));
+        model.addAttribute("memberList",dto);
+        
+        return "myPage";
+    }
+    
+    //내정보 수정
+    @RequestMapping(value="/myInfoUpdate.do")
+    public String myInfoUpdate(HttpSession session, @RequestParam HashMap<String, String> params) {
+        String loginId = (String) session.getAttribute("loginId");
+        
+        params.put("mb_id", loginId);
+        logger.info("params : {}", params);
+        service.myInfoUpdate(params);
+        
+        return "redirect:/myPage.do";
+    }
+    
+    //회원탈퇴
+    @RequestMapping(value="/memberDelete.do")
+    public String memberDelete(HttpSession session, @RequestParam HashMap<String, String> params) {
+        String loginId = (String) session.getAttribute("loginId");
+        String mg_grade_before = service.getMbGrade(loginId, params.get("pw"));
+        
+        if(mg_grade_before != null) {
+            params.put("mg_grade_before", mg_grade_before);
+        }
+        
+        params.put("mb_id", loginId);
+        logger.info("params : {}", params);
+        if(service.memberDelete(loginId, params.get("pw")) == true) {
+            if(params.get("mg_content").equals("기타")) {
+                params.put("mg_content", "기타(" + params.get("mg_content_other") + ")");
+            }
+            
+            service.memberGrade(params);
+        }
+        
+        session.removeAttribute("loginId");
+        session.removeAttribute("loginName");
+        
+        return "redirect:/login.go";
+    }
 			
 		
 		
@@ -193,14 +294,16 @@ public class MemberController {
 		}
 		
 		@RequestMapping(value="/adminMemberUpdate.do")
-		public String update(Model model, HttpSession session, @RequestParam HashMap<String, String> params) {
+        public String update(Model model, HttpSession session, @RequestParam HashMap<String, String> params) {
 		logger.info("회원수정요청:{}",params);
-		
+		if((String) session.getAttribute("isAdmin") == "false") {
+			
+		}
 		String mb_id = params.get("mb_id");
 		
 		
-		String loginId= (String) session.getAttribute("loginId"); 
-		
+        String loginId= (String) session.getAttribute("loginId");
+        
 		params.put("loginId",loginId);
 		service.update(params);
 		ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);

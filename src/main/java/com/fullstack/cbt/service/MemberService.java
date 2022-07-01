@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.fullstack.cbt.dao.MemberDAO;
 import com.fullstack.cbt.dto.MemberDTO;
@@ -20,7 +19,7 @@ public class MemberService {
 	
 	@Autowired MemberDAO dao;
 
-	public String login(String mb_id, String mb_pw) {
+	public MemberDTO login(String mb_id, String mb_pw) {
 		logger.info("서비스도착");
 		return dao.login(mb_id,mb_pw);
 	}
@@ -98,9 +97,44 @@ public class MemberService {
 	}
 
 
-	public MemberDTO myDetail(HashMap<String, String> params) {
+	public MemberDTO myDetail(String string) {
 		logger.info("내정보수정");
-		return dao.myDetail(params);
+		return dao.myDetail(string);
+	}
+
+
+	public void myInfoUpdate(HashMap<String, String> params) {
+		dao.myInfoUpdate(params);
+	}
+
+
+	public boolean memberDelete(String loginId, String mb_pw) {
+		return dao.memberDelete(loginId, mb_pw);
+	}
+
+
+	public void memberGrade(HashMap<String, String> params) {
+		dao.memberGrade(params);
+	}
+
+
+	public String getMbGrade(String loginId, String mb_pw) {
+		return dao.getMbGrade(loginId, mb_pw);
+	}
+
+
+	public String findId(String mb_name, String mb_email) {
+		return dao.findId(mb_name, mb_email);
+	}
+
+
+	public int isFindPw(String mb_id, String mb_name, String mb_email) {
+		return dao.isFindPw(mb_id, mb_name, mb_email);
+	}
+
+
+	public void pwChange(String id, String pw) {
+		dao.pwChange(id, pw);
 	}
 
 

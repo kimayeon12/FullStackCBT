@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.MemberDAO">
-<select id="login" resultType="String">
-	SELECT mb_id FROM cbt_member
+<select id="login" resultType="com.fullstack.cbt.dto.MemberDTO">
+	SELECT mb_id, mb_name, mb_grade FROM cbt_member
 			WHERE  mb_id = #{param1} AND mb_pw = PASSWORD(#{param2})
 </select>
 <insert id="join" parameterType="hashmap">
@@ -15,11 +15,15 @@
 </select>
 
 <select id="overlayEmail" parameterType="String" resultType="String">
-	SELECT mb_email FROM cbt_member WHERE mb_email=#{chkmb_email}
+	SELECT mb_email FROM cbt_member WHERE mb_email = #{chkmb_email}
 </select>
 
 <select id="findId"  resultType="String">
-	SELECT mb_id FROM WHERE mb_id=#{mb_id} AND mb_email=#{mb_email}
+	SELECT mb_id FROM cbt_member WHERE mb_name=#{param1} AND mb_email=#{param2} AND mb_grade = '일반회원'
+</select>
+
+<select id="isFindPw" resultType="int">
+	SELECT COUNT(mb_id) FROM cbt_member WHERE mb_id=#{param1} AND mb_name=#{param2} AND mb_email=#{param3} AND mb_grade = '일반회원'
 </select>
 
 <select id="list" resultType="com.fullstack.cbt.dto.MemberDTO">
@@ -33,14 +37,14 @@
 
 <insert id="update" parameterType="hashmap">
 	INSERT INTO cbt_member_grade(mb_id,mg_content,mg_date,mg_grade_before,mg_grade_after,mg_id)
-		VALUES (#{mb_id},#{mg_content},now(),#{mg_grade_before},#{mg_grade_after},'admin')
+		VALUES (#{mb_id},#{mg_content},now(),#{mg_grade_before},#{mg_grade_after},#{loginId})
 </insert>
 		
 <select id="gradelist" parameterType="String" resultType="com.fullstack.cbt.dto.MemberGradeDTO">
 	SELECT * FROM cbt_member_grade WHERE mb_id=#{mb_id}
 </select>
 
-<update id="changeGrade" >
+<update id="changeGrade">
 	UPDATE cbt_member SET mb_grade = #{param1} WHERE mb_id = #{param2}
 </update>
 
@@ -67,8 +71,28 @@
 </if>
 </select>
 
-<insert id="myDetail" parameterType ="hashmap">
-	INSERT INTO cbt_member(mb_id,mb_name,mb_pw,mb_email)
-		VALUES(#{mb_id},#{mb_name},PASSWORD(#{mb_pw}),#{mb_email})	
+<select id="myDetail" parameterType="String" resultType="com.fullstack.cbt.dto.MemberDTO">
+	SELECT mb_name, mb_email FROM cbt_member WHERE mb_id = #{mb_id}
+</select>
+
+<update id="myInfoUpdate" parameterType="hashmap">
+	UPDATE cbt_member SET <if test='pw != null'>mb_pw = PASSWORD(#{pw}),</if> mb_name = #{mb_name}, mb_email = #{mb_email} WHERE mb_id = #{mb_id} AND mb_pw = PASSWORD(#{current_pw})
+</update>
+
+<update id="memberDelete">
+	UPDATE cbt_member SET mb_grade = '탈퇴회원' WHERE mb_id = #{param1} AND mb_pw = PASSWORD(#{param2})
+</update>
+
+<insert id="memberGrade" parameterType="hashmap">
+	INSERT INTO cbt_member_grade(mb_id,mg_content,mg_grade_before,mg_grade_after,mg_id)
+		VALUES (#{mb_id},#{mg_content},#{mg_grade_before},'탈퇴회원',#{mb_id})
 </insert>
+
+<select id="getMbGrade" resultType="String">
+	SELECT mb_grade FROM cbt_member WHERE mb_id = #{param1} AND mb_pw = PASSWORD(#{param2})
+</select>
+
+<update id="pwChange">
+	UPDATE cbt_member SET mb_pw = PASSWORD(#{param2}) WHERE mb_id = #{param1}
+</update>
 </mapper>

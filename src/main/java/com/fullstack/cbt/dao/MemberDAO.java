@@ -13,7 +13,7 @@ public interface MemberDAO {
 
 	int join(HashMap<String, String>params);
 
-	String login(String mb_id, String mb_pw);
+	MemberDTO login(String mb_id, String mb_pw);
 
 	String overlayId(String mb_id);
 
@@ -21,7 +21,7 @@ public interface MemberDAO {
 
 	MemberDTO adminMemberDetail(String mb_id);
 
-	int update(HashMap<String, String> params);
+	int update(HashMap<String, String> params, String loginId);
 
 	ArrayList<MemberGradeDTO> gradelist(String mb_id);
 
@@ -29,7 +29,21 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search);
 
-	MemberDTO myDetail(HashMap<String, String> params);
+	MemberDTO myDetail(String mb_id);
+
+	void myInfoUpdate(HashMap<String, String> params);
+
+	boolean memberDelete(String loginId, String mb_pw);
+
+	void memberGrade(HashMap<String, String> params);
+
+	String getMbGrade(String mb_id, String mb_pw);
+
+	String findId(String mb_name, String mb_email);
+
+	int isFindPw(String mb_id, String mb_name, String mb_email);
+
+	void pwChange(String id, String pw);
 
 	
 

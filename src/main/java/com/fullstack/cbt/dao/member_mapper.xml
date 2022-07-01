@@ -3,19 +3,26 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.MemberDAO">
 <select id="login" resultType="String">
-	SELECT mb_id FROM cbt_member
-			WHERE  mb_id = #{param1} AND mb_pw = PASSWORD(#{param2})
+	SELECT mb_id 
+		FROM cbt_member
+	WHERE  mb_id = #{param1} AND mb_pw = PASSWORD(#{param2})
 </select>
 <insert id="join" parameterType="hashmap">
-	INSERT INTO cbt_member(mb_id,mb_name,mb_pw,mb_email)
-		VALUES(#{mb_id},#{mb_name},PASSWORD(#{mb_pw}),#{mb_email})	
+	INSERT INTO cbt_member
+		(mb_id,mb_name,mb_pw,mb_email)
+	VALUES(#{mb_id},#{mb_name},
+	PASSWORD(#{mb_pw}),#{mb_email})	
 </insert>
 <select id="overlayId" parameterType="String" resultType="String">
-	SELECT mb_id FROM cbt_member WHERE mb_id=#{chkmb_id}
+	SELECT mb_id 
+	FROM cbt_member 
+	WHERE mb_id=#{chkmb_id}
 </select>
 
 <select id="overlayEmail" parameterType="String" resultType="String">
-	SELECT mb_email FROM cbt_member WHERE mb_email=#{chkmb_email}
+	SELECT mb_email 
+	FROM cbt_member 
+	WHERE mb_email=#{chkmb_email}
 </select>
 
 <select id="findId"  resultType="String">
@@ -28,12 +35,12 @@
 </select>
 <select id="adminMemberDetail" parameterType="String"
 	resultType="com.fullstack.cbt.dto.MemberDTO">
-		SELECT*FROM cbt_member WHERE mb_id=#{mb_id}
+		SELECT * FROM cbt_member WHERE mb_id=#{mb_id}
 </select>
 
 <insert id="update" parameterType="hashmap">
 	INSERT INTO cbt_member_grade(mb_id,mg_content,mg_date,mg_grade_before,mg_grade_after,mg_id)
-		VALUES (#{mb_id},#{mg_content},now(),#{mg_grade_before},#{mg_grade_after},'admin')
+		VALUES (#{mb_id},#{mg_content},now(),#{mg_grade_before},#{mg_grade_after},#{loginId})
 </insert>
 		
 <select id="gradelist" parameterType="String" resultType="com.fullstack.cbt.dto.MemberGradeDTO">
@@ -41,28 +48,32 @@
 </select>
 
 <update id="changeGrade" >
-	UPDATE cbt_member SET mb_grade = #{param1} WHERE mb_id = #{param2}
+	UPDATE cbt_member 
+	SET mb_grade = #{param1} 
+	WHERE mb_id = #{param2}
 </update>
 
 <select id="selectedList"  resultType="com.fullstack.cbt.dto.MemberDTO">
 	SELECT * FROM cbt_member 
-	where 1 
+	WHERE 1 
 <if test = "!param1.equals('')  ">
-	and mb_grade = #{param1}
+	AND mb_grade = #{param1}
 </if>
 
 <if  test = "param2.equals('') and  !param3.equals('')"> 
-	and mb_id LIKE CONCAT ('%',#{param3},'%') or mb_name LIKE CONCAT ('%',#{param3},'%') or mb_email LIKE CONCAT ('%',#{param3},'%')
+	AND mb_id LIKE CONCAT ('%',#{param3},'%') 
+	OR mb_name LIKE CONCAT ('%',#{param3},'%') 
+	OR mb_email LIKE CONCAT ('%',#{param3},'%')
 </if>
 <if  test = "!param3.equals('')">
 	   <if test = "param2.equals('아이디')">
-      		and mb_id LIKE CONCAT ('%',#{param3},'%')
+      		AND mb_id LIKE CONCAT ('%',#{param3},'%')
   	 </if>
   	 <if test ="param2.equals('이름')">
-    	  	and mb_name LIKE CONCAT ('%',#{param3},'%')
+    	  	AND mb_name LIKE CONCAT ('%',#{param3},'%')
   	 </if>
 	  <if test = "param2.equals('이메일')">
-      		and mb_email LIKE CONCAT ('%',#{param3},'%')
+      		AND mb_email LIKE CONCAT ('%',#{param3},'%')
   	 </if>
 </if>
 </select>
@@ -71,4 +82,8 @@
 	INSERT INTO cbt_member(mb_id,mb_name,mb_pw,mb_email)
 		VALUES(#{mb_id},#{mb_name},PASSWORD(#{mb_pw}),#{mb_email})	
 </insert>
+
+<select id="gradeCheck" resultType="String">
+	SELECT mb_grade FROM cbt_member WHERE mb_id = #{param1}
+</select>
 </mapper>

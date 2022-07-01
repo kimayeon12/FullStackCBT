@@ -1,6 +1,7 @@
 package com.fullstack.cbt.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dto.ObjectionDTO;
@@ -19,6 +20,8 @@ public interface ObjectionDAO {
 	public ArrayList<ObjectionDTO> getListPaging(Criteria cri);
 
 	public int getTotal(Criteria cri);
+
+	ObjectionDTO objectionDetail(String oj_idx);
 
 
 }

@@ -25,10 +25,6 @@ th,td {
 		<td>${memberList.mb_name}</td>
 	</tr>
 	<tr>
-		<th>비밀번호</th>
-		<td>${memberList.mb_pw}</td>
-	</tr>
-		<tr>
 		<th>이메일</th>
 		<td>${memberList.mb_email}</td>
 	</tr>
@@ -37,7 +33,7 @@ th,td {
 		<td >
 			<select name="mg_grade_after">
 	       		<option value="관리자" ${memberList.mb_grade eq '관리자'? 'selected="selected"' : ''}>관리자</option>
-	       		<option value="최고관리자" ${memberList.mb_grade eq '최고관리자'? 'selected="selected"' : ''}>최고관리자</option>
+	       		<option value="최고관리자" id="superAdmin" ${memberList.mb_grade eq '최고관리자'? 'selected="selected"' : ''}>최고관리자</option>
 	       		<option value="일반회원" ${memberList.mb_grade eq '일반회원'? 'selected="selected"' : ''}>일반회원</option>
 	       		<option value="탈퇴회원" ${memberList.mb_grade eq '탈퇴회원'? 'selected="selected"' : ''}>탈퇴회원</option>
        		</select>
@@ -103,5 +99,13 @@ th,td {
 		} 
 	};
 	
+	var mb_grade = "${mb_grade}";
+		console.log(mb_grade);
+
+	if(mb_grade != "최고관리자"){ 
+		$("#superAdmin").attr("disabled" , true);
+	} else {
+		$("#superAdmin").attr("disabled" , false);
+	}
 </script>
 </html>

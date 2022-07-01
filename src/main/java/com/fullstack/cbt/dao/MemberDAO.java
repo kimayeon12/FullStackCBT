@@ -31,6 +31,8 @@ public interface MemberDAO {
 
 	MemberDTO myDetail(HashMap<String, String> params);
 
+	String gradeCheck(String loginId);
+
 	
 
 

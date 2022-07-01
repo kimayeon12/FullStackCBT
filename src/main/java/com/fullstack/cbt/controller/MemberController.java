@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.fullstack.cbt.dto.MemberDTO;
 import com.fullstack.cbt.dto.MemberGradeDTO;
@@ -171,10 +172,16 @@ public class MemberController {
 		}
 		
 		@RequestMapping(value ="/adminMemberDetail.do")
-		public String adminMemberDetail(Model model, @RequestParam String mb_id) {
+		public String adminMemberDetail(Model model, HttpSession session, @RequestParam String mb_id) {
 			logger.info("상세보기 요청: "+mb_id);
 			MemberDTO dto=service.detail(mb_id);
 			model.addAttribute("memberList",dto);
+			
+			//로그인한 사용자의 권한이 최고관리자가 아니면 최고관리자 등급을 안보이게 
+			String loginId = (String) session.getAttribute("loginId");
+			String grade = service.gradeCheck(loginId);
+			logger.info("로그인한 계정 권한 : " + grade);
+			model.addAttribute("mb_grade", grade);
 			
 			//회원권한변경내역
 			ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);

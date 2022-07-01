@@ -1,6 +1,7 @@
 package com.fullstack.cbt.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ProblemDTO {
 
@@ -13,7 +14,7 @@ public class ProblemDTO {
 	private short pc_answer;
 	private String pc_explan;
 	private char pc_difficulty;
-	private Date pc_date;
+	private Timestamp pc_date;
 	private int su_idx;
 	private int sc_idx;
 	private String mb_id;
@@ -118,10 +119,10 @@ public class ProblemDTO {
 	public void setPc_difficulty(char pc_difficulty) {
 		this.pc_difficulty = pc_difficulty;
 	}
-	public Date getPc_date() {
+	public Timestamp getPc_date() {
 		return pc_date;
 	}
-	public void setPc_date(Date pc_date) {
+	public void setPc_date(Timestamp pc_date) {
 		this.pc_date = pc_date;
 	}
 	public int getSu_idx() {

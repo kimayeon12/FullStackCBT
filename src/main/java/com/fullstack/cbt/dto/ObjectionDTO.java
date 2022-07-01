@@ -1,15 +1,15 @@
 package com.fullstack.cbt.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ObjectionDTO {
 
 	private int oj_idx;
 	private String oj_content;
-	private Date oj_date;
+	private Timestamp oj_date;
 	private String oj_status;
 	private String oj_admin_id;
-	private Date oj_proc_date;
+	private Timestamp oj_proc_date;
 	private String oj_memo;
 	private int pc_idx;
 	private String mb_id;
@@ -48,10 +48,10 @@ public class ObjectionDTO {
 	public void setOj_content(String oj_content) {
 		this.oj_content = oj_content;
 	}
-	public Date getOj_date() {
+	public Timestamp getOj_date() {
 		return oj_date;
 	}
-	public void setOj_date(Date oj_date) {
+	public void setOj_date(Timestamp oj_date) {
 		this.oj_date = oj_date;
 	}
 	public String getOj_status() {
@@ -66,10 +66,10 @@ public class ObjectionDTO {
 	public void setOj_admin_id(String oj_admin_id) {
 		this.oj_admin_id = oj_admin_id;
 	}
-	public Date getOj_proc_date() {
+	public Timestamp getOj_proc_date() {
 		return oj_proc_date;
 	}
-	public void setOj_proc_date(Date oj_proc_date) {
+	public void setOj_proc_date(Timestamp oj_proc_date) {
 		this.oj_proc_date = oj_proc_date;
 	}
 	public String getOj_memo() {

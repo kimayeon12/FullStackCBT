@@ -3,7 +3,7 @@
 <%@ include file="../../resources/inc/header.jsp" %>
 	<div>문제 출제 관리</div>
 	<div>총 문제수 : </div>
-		<form action="problemDetailList.do" method="get" id="subjectForm">
+		<form action="problemList.do" method="get" id="subjectForm">
 			<select name="su_idx" id="subjectList" onchange="subjectListShow();">
 				<option value="">과목명</option>
 				<c:forEach items="${subjectList}" var="subjectList">

@@ -108,34 +108,62 @@ public class ObjectionController {
 			model.addAttribute("objectionList", objectionSelectList);
 		}
 		
+		//페이징 부분**************************
 		
+		
+		model.addAttribute("objectionList", service.getListPaging(cri)); 
+		int total = service.getTotal(cri); 
+		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+		model.addAttribute("pageMaker", pageMake);
+		
+		 
 		
 		return "adminObjectionList";
 	}
 	
 	
 	
-	//여기부터 최상인이 함!
+	
+	
+	// *************** 이의제기 수정 상세보기 *************** 
 	
 	@RequestMapping(value = "/adminObjectionDetail.go")
-	public String objectionDetailGo() {
-		logger.info("이의제기 상세 페이지 이동요청");
+	public String objectionDetailGo(Model model, @RequestParam String oj_idx) {
+		
+		logger.info("이의제기 상세 페이지 이동요청 : "+oj_idx);
+		ObjectionDTO objectionDetail = service.objectionDetail(oj_idx);
+		logger.info("objection : "+objectionDetail.getOj_content());
+		logger.info("objection : "+objectionDetail.getPc_problem());
+		
+		//처리상태 옵션 가져오기
+		logger.info("처리상태 가져오기");
+		ArrayList<ObjectionDTO> statusList = service.status();
+		
+		if(statusList.size() > 0) {
+			logger.info("처리상태 리스트:"+statusList);
+			model.addAttribute("statusList", statusList);
+		}
+		
+		
+		model.addAttribute("objectionDetail", objectionDetail);
+		
+		
 		return "adminObjectionDetail";
 	}
 	
-	
-	@RequestMapping(value = "/adminObjectionDetail.do")
-	public String objectionDetailDo(Model model, HttpSession session, @RequestParam String oj_idx) {
+	//이의제기 저장하기
+	@RequestMapping(value = "/objectionUpdate.do")
+	public String objectionUpdate(Model model, @RequestParam HashMap<String, Object> params) {
 		
-		String page = "adminObjectionDetail";
-		logger.info("이의제기 상세보기 페이지 요청"+oj_idx);
-		ObjectionDTO objectionDetail = service.objectionDetail(oj_idx);
-		if(objectionDetail != null) {
-			model.addAttribute("objectionDetail",objectionDetail);
-			page = "adminobjectionDetail";
-		}
-		return page;
+		logger.info("이의제기 저장 요청");
+		logger.info("params: {}", params);
+		
+		service.objectionUpdate(params);
+		
+		return "redirect:/adminObjectionDetail.go?oj_idx="+params.get("oj_idx");
 	}
+	
+	
 	
 	
 	

@@ -30,14 +30,14 @@
 		<tbody>
 			<c:forEach items="${objectionList}" var="objectionList">
 				<tr>
-					<td>${objectionList.pc_problem}</td>
+					<td><a href="/adminObjectionDetail.go?oj_idx=${objectionList.oj_idx}">${objectionList.pc_problem}</a></td>
 					<td>${objectionList.mb_id}</td>
 					<td>${objectionList.oj_date}</td>
 					<td>
 						<c:choose>
 							<c:when test="${objectionList.oj_status eq '처리대기'}">처리대기</c:when>
 							<c:when test="${objectionList.oj_status eq '처리중'}">처리중</c:when>
-							<c:otherwise>처리완료</c:otherwise>
+							<c:when test="${objectionList.oj_status eq '처리완료'}">처리완료</c:when>
 						</c:choose>
 					</td>
 				</tr>

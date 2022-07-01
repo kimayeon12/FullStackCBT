@@ -29,6 +29,8 @@ public interface CbtDAO {
 	ArrayList<TestDTO> selectedListPaging(HashMap<String, String> params, Criteria cri);
 
 	ArrayList<TestDTO> selectedListPaging(String su_idx, String tt_status, String mb_id, Criteria cri);
+
+	ArrayList<TestDTO> selectedListPaging(HashMap<String, Object> params);
 	
 	
 }

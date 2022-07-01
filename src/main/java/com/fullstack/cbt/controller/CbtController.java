@@ -69,7 +69,7 @@ public class CbtController {
 	//페이징 버전 
 	//선택한 값에 따른 리스트 가져오기 
 		@RequestMapping(value = "/cbtFormList.do")
-		public String cbtForm(Model model,Criteria cri ,@RequestParam HashMap<String, String> params) {
+		public String cbtForm(Model model,Criteria cri ,@RequestParam HashMap<String, Object> params) {
 			
 			
 			//이게 없으면 과목명 안나옴
@@ -80,9 +80,9 @@ public class CbtController {
 				model.addAttribute("subjectList", subjectList);
 			} 
 			
-			String su_idx = params.get("su_idx");
-			String tt_status = params.get("tt_status");
-			String mb_id = params.get("mb_id");
+			String su_idx = (String) params.get("su_idx");
+			String tt_status = (String) params.get("tt_status");
+			String mb_id = (String) params.get("mb_id");
 			/*
 			logger.info("과목번호 : " + su_idx);
 			logger.info("제출상태 : " + tt_status);
@@ -102,8 +102,8 @@ public class CbtController {
 				model.addAttribute("testdto", selectedList);
 			}
 			*/ 
-			//params.put("cri", cri);
-			ArrayList<TestDTO> testdto = service.selectedListPaging(su_idx,tt_status,mb_id,cri);
+			params.put("cri", cri);
+			ArrayList<TestDTO> testdto = service.selectedListPaging(params);
 			//.info("시험 리스트 가져오기 : " + testdto.size()); //이렇게 하면 총 게시글 수가 안나옴! 32건인데 10건이라고 나옴 
 			model.addAttribute("testdto", testdto);
 			

@@ -64,11 +64,13 @@ public class CbtService {
 	}
 */
 
-
-	public ArrayList<TestDTO> selectedListPaging(String su_idx, String tt_status, String mb_id, Criteria cri) {
+	public ArrayList<TestDTO> selectedListPaging(HashMap<String, Object> params) {
 		logger.info("전체 리스트 페이징 서비스 요청");
-		return dao.selectedListPaging(su_idx,tt_status,mb_id, cri);
+		return dao.selectedListPaging(params);
 	}
+
+
+	
 	
 	
 

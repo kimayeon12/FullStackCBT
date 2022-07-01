@@ -63,21 +63,21 @@
 		FROM cbt_subject NATURAL JOIN cbt_test  
 		<include refid="practiceSql"></include>
 		ORDER BY tt_idx DESC
-		limit 0, 10
+		limit #{skip}, #{amount}
 	</select>
 	
 	<sql id="practiceSql">
 		<trim prefix="where" suffixOverrides="and">
-			<if test = "!param1.equals('')">
-				su_idx = #{param1} and
+			<if test = "!su_idx.equals('')">
+				su_idx = #{su_idx} and
 			</if>
 		
-			<if test = "!param2.equals('')">
-				tt_status = #{param2} and 
+			<if test = "!tt_status.equals('')">
+				tt_status = #{tt_status} and 
 			</if>
 		
-			<if test = "!param3.equals('')">
-				mb_id LIKE CONCAT('%',#{param3}, '%') and 
+			<if test = "!mb_id.equals('')">
+				mb_id LIKE CONCAT('%',#{mb_id}, '%') and 
 			</if>
 		</trim>
 	</sql>

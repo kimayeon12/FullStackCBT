@@ -22,7 +22,7 @@
 			<select id="select_member2">
        		<option value="회원권한" selected>회원권한</option>
        		<option value="관리자">관리자</option>
-       		<option value="최고관리자">최고관리자</option>
+       		<option value="최고관리자" >최고관리자</option>
        		<option value="일반회원">일반회원</option>
        		<option value="탈퇴회원">탈퇴회원</option>       		
        </select>
@@ -73,5 +73,7 @@
 	if(msg !=""){
 		alert(msg);
 	}
+	
+	
 </script>
 </html>

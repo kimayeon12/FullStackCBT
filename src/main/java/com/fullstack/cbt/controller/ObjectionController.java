@@ -1,6 +1,7 @@
 package com.fullstack.cbt.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -111,6 +112,33 @@ public class ObjectionController {
 		
 		return "adminObjectionList";
 	}
+	
+	
+	
+	//여기부터 최상인이 함!
+	
+	@RequestMapping(value = "/adminObjectionDetail.go")
+	public String objectionDetailGo() {
+		logger.info("이의제기 상세 페이지 이동요청");
+		return "adminObjectionDetail";
+	}
+	
+	
+	@RequestMapping(value = "/adminObjectionDetail.do")
+	public String objectionDetailDo(Model model, HttpSession session, @RequestParam String oj_idx) {
+		
+		String page = "adminObjectionDetail";
+		logger.info("이의제기 상세보기 페이지 요청"+oj_idx);
+		ObjectionDTO objectionDetail = service.objectionDetail(oj_idx);
+		if(objectionDetail != null) {
+			model.addAttribute("objectionDetail",objectionDetail);
+			page = "adminobjectionDetail";
+		}
+		return page;
+	}
+	
+	
+	
 	
 	
 }

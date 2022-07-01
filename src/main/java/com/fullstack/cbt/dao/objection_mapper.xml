@@ -17,10 +17,17 @@
 
 <!-- 이의제기 전체 리스트  -->
 <select id="objectionList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
-	SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+	SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, oj_idx, pc_problem 
 		FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
 	ON co.oj_idx = cpc.pc_idx;
 </select>
+
+<select id="objectionDetail" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+	SELECT mb_id, oj_content, oj_date, oj_admin_id, oj_memo, oj_proc_date, oj_status, 
+			(SELECT pc_problem FROM cbt_problem_create WHERE pc_idx = cbt_objection.oj_idx) as problem
+				FROM cbt_objection WHERE oj_idx = #{oj_idx}
+</select>
+
 
 <!-- 이의제기 셀렉트 리스트 -->
 <!-- <select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">

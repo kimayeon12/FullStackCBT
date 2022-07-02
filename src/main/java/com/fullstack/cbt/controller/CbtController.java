@@ -50,7 +50,6 @@ public class CbtController {
 		
 		//페이징 처리하여 리스트 불러오기 
 		ArrayList<TestDTO> testdto = service.getListPaging(cri);
-		//.info("시험 리스트 가져오기 : " + testdto.size()); //이렇게 하면 총 게시글 수가 안나옴! 32건인데 10건이라고 나옴 
 		model.addAttribute("testdto", testdto);
 		
 		
@@ -95,7 +94,6 @@ public class CbtController {
 			model.addAttribute("status", tt_status);
 			model.addAttribute("id", mb_id);
 			
-			int skip = (pageNum -1) * 10;
 			/*기존 방식 
 			ArrayList<TestDTO> selectedList = service.selectedList(su_idx,tt_status,mb_id);
 			logger.info("선택된 리스트 수 : "  + selectedList.size());
@@ -106,8 +104,11 @@ public class CbtController {
 			}
 			*/ 
 			//params.put("cri", cri);
+			
+			
+			//선택된 값에 따라 리스트 블러오기 
+			int skip = (pageNum -1) * 10;
 			ArrayList<TestDTO> testdto = service.selectedListPaging(su_idx,tt_status,mb_id,skip);
-			//.info("시험 리스트 가져오기 : " + testdto.size()); //이렇게 하면 총 게시글 수가 안나옴! 32건인데 10건이라고 나옴 
 			model.addAttribute("testdto", testdto);
 			
 			/*
@@ -119,7 +120,10 @@ public class CbtController {
 			*/
 			
 			int selectedTotal = service.selectedTotal(su_idx,tt_status,mb_id);
+			model.addAttribute("listCnt", selectedTotal);
 			logger.info("선택된 게시글 수 : " + selectedTotal);
+			
+			//생성자 (int pageNum, int total)
 			PageMakerDTO pageMake2 = new PageMakerDTO(pageNum, selectedTotal);
 			model.addAttribute("pageMaker", pageMake2);
 			

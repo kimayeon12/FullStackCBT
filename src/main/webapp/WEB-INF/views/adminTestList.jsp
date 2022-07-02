@@ -37,23 +37,23 @@ th,td {
 
 <p>총 시험 수 : ${listCnt} 건</p>
 <form action="cbtFormList.do" method="get" id="form"> <!-- get으로  -->
-	  <select name="su_idx"> 
+	  <select name="su_idx" id="su_idx"> 
 		    <option value="">과목선택</option>
 			    <c:forEach items="${subjectList}" var="subjectList">
 			    	<option value="${subjectList.su_idx}"  ${idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
 			    </c:forEach>
 	  </select>
 
-	  <select name="tt_status">
+	  <select name="tt_status" id="tt_status">
 		    <option value="">제출상태</option>
 		    <option value="제출완료" ${status == '제출완료' ? 'selected="selected"' : ''}>제출완료</option>
 		    <option value="시간초과 제출" ${status == '시간초과 제출' ? 'selected="selected"' : ''}>시간초과 제출</option>
 	  </select>
 
 
-	   <input type="text" name="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
-	    
-	   <input type="hidden" name="pageNum" value=""/>
+	   <input type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
+	    <!-- 페이징  -->
+	   <input type="hidden" name="pageNum" value="1"/>
 	   <button type="submit" >검색</button>
  </form>
   
@@ -120,33 +120,29 @@ th,td {
 
 	  <form id="moveForm" method="get">
 	  	 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-	        <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 	  </form>
 	  
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 		//파라메터 전송
 		$("select").on("change", function(){ 
-			$('input[name="pageNum"]').val(1);
 			$("#form").submit();
-			/*
-			$(".pageInfo a").on("click", function(e){
-				var pageNum = $(this).attr("href");  //얘가 pageNum이니까 이걸 cbtFormlist에 보내주면 되는데 
-				console.log("pageNum :"  + pageNum);
-				$('input [name="pageNum"]').val(pageNum);
-				
-			});
-			*/
 		});
 		
-		
+	
 		
 		//클릭했을 때 페이지 이동 	
 		$(".pageInfo a").on("click", function(e){
 	        e.preventDefault();
-	        $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
-	        $("#moveForm").attr("action", "/cbtList.do");
-	        $("#moveForm").submit();
+		        if($("#su_idx").val()=="" && $("#tt_status").val()=="" && $("#mb_id").val()==""){
+	        		$("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
+		        	$("#moveForm").attr("action", "/cbtList.do");
+	        		$("#moveForm").submit();
+		        } else {
+		        	$("#form").find('input[name="pageNum"]').val($(this).attr("href"));
+		        	$("#form").submit();
+		        }
+		        
 		});
 	</script>
 </html>

@@ -3,11 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fullstack.cbt.dao.CbtDAO">
 
-
+	<!--  페이징 안할 때 
 	<select id="testlist" resultType="com.fullstack.cbt.dto.TestDTO">
 		SELECT su_idx, su_name, tt_idx, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
 		FROM cbt_subject NATURAL JOIN cbt_test ORDER BY tt_idx DESC
 	</select>
+	 -->
 	
 	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">
 		SELECT su_idx, su_name FROM cbt_subject WHERE su_is_blind = 0
@@ -39,19 +40,46 @@
 	 -->
 	
 	<select id="testInfo" resultType="com.fullstack.cbt.dto.TestDTO">
-		SELECT su_name, mb_id, tt_idx, tt_times, tt_start_date, tt_end_date, tt_score, tt_status 
-		FROM cbt_test NATURAL JOIN cbt_subject WHERE tt_idx=#{param1}
+		SELECT 
+		su_name
+		,mb_id
+		,tt_idx
+		,tt_times
+		,tt_start_date
+		,tt_end_date
+		,tt_score
+		,tt_status 
+		FROM cbt_test NATURAL JOIN cbt_subject 
+		WHERE tt_idx=#{param1}
 	</select>
 	
 	<select id="testDetail" resultType="com.fullstack.cbt.dto.ProblemDTO">
-		SELECT tt_idx, pc_idx, ta_problem_no, ta_choice_no, ta_is_answer, pc_answer1, pc_answer2, pc_answer3, pc_answer4,pc_answer,pc_problem
-		FROM cbt_test_answer NATURAL JOIN cbt_problem_create WHERE tt_idx=#{param1}
+		SELECT 
+		tt_idx
+		,pc_idx
+		,ta_problem_no
+		,ta_choice_no
+		,ta_is_answer
+		,pc_answer1, pc_answer2, pc_answer3, pc_answer4
+		,pc_answer
+		,pc_problem
+		FROM cbt_test_answer NATURAL JOIN cbt_problem_create 
+		WHERE tt_idx=#{param1}
 	</select>
 	
-	<!--  페이징  -->
+	<!-- 시험관리 리스트  페이징  -->
+	
 	<select id="getListPaging" resultType="com.fullstack.cbt.dto.TestDTO">
-		SELECT su_idx, su_name, tt_idx, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
-		FROM cbt_subject NATURAL JOIN cbt_test ORDER BY tt_idx DESC limit #{skip}, #{amount}
+		SELECT 
+		su_idx
+		,su_name
+		,tt_idx
+		,tt_times
+		,mb_id
+		,tt_end_date 
+		,tt_score,tt_status 
+		FROM cbt_subject NATURAL JOIN cbt_test 
+		ORDER BY tt_idx DESC limit #{skip}, 10
 	</select>
 	
 	<select id="getTotal" resultType="int">
@@ -59,42 +87,22 @@
 	</select>
 	
 
-	<!-- 
-	
-	<select id="selectedListPaging" resultType="com.fullstack.cbt.dto.TestDTO" parameterType="hashmap" >
-		SELECT tt_idx, su_idx, su_name, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
-		FROM cbt_subject NATURAL JOIN cbt_test  
-		<include refid="practiceSql"></include>
-		ORDER BY tt_idx DESC
-		limit #{skip}, #{amount}
-	</select>
-	
-	<sql id="practiceSql">
-		<trim prefix="where" suffixOverrides="and">
-			<if test = "!su_idx.equals('')">
-				su_idx = #{su_idx} and
-			</if>
-		
-			<if test = "!tt_status.equals('')">
-				tt_status = #{tt_status} and 
-			</if>
-		
-			<if test = "!mb_id.equals('')">
-				mb_id LIKE CONCAT('%',#{mb_id}, '%') and 
-			</if>
-		</trim>
-	</sql>
-	 -->
-	
 	<select id="selectedListPaging" resultType="com.fullstack.cbt.dto.TestDTO"  >
-		SELECT tt_idx, su_idx, su_name, tt_times ,mb_id, tt_end_date ,tt_score,tt_status 
+		SELECT 
+		tt_idx
+		,su_idx
+		,su_name
+		,tt_times 
+		,mb_id
+		,tt_end_date 
+		,tt_score,tt_status 
 		FROM cbt_subject NATURAL JOIN cbt_test  
-		<include refid="practiceSql"></include>
+		<include refid="selectedSql"></include>
 		ORDER BY tt_idx DESC
-		limit #{param4}, 10
+		LIMIT #{param4}, 10
 	</select>
 	
-	<sql id="practiceSql">
+	<sql id="selectedSql">
 		<trim prefix="where" suffixOverrides="and">
 			<if test = "!param1.equals('')">
 				su_idx = #{param1} and

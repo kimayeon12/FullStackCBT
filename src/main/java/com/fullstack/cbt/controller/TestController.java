@@ -32,16 +32,24 @@ public class TestController {
 	@Autowired TestService service;
 	
 	@RequestMapping(value = "/testStart.do", method = RequestMethod.GET)
-	public String testStart(Model model) {
-		logger.info("등록된 과목 가져오기");
-		ArrayList<SubjectDTO> subjectList =service.subjectList();
-		logger.info("등록된 과목 :" +subjectList.size());
-		  
-		if(subjectList.size() > 0) {
-			 model.addAttribute("subjectList", subjectList);
+	public String testStart(Model model, HttpSession session) {
+		
+		String page =  "testStart";
+		
+		if(session.getAttribute("loginId") != null) {
+				logger.info("등록된 과목 가져오기");
+				ArrayList<SubjectDTO> subjectList =service.subjectList();
+				logger.info("등록된 과목 :" +subjectList.size());
+				
+				if(subjectList.size() > 0) {
+					model.addAttribute("subjectList", subjectList);
+				}
+		}else{
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
+			page = "login";
 		}
 		  
-		return "testStart"; 
+		return page; 
 	}	
 	
 	@RequestMapping(value = "/test.do", method = RequestMethod.POST)
@@ -237,17 +245,23 @@ public class TestController {
 	
 	//결과 
 	@RequestMapping(value = "/testResult.do")
-	public String testResult(Model model, @RequestParam String tt_idx) {  
+	public String testResult(Model model,HttpSession session,@RequestParam String tt_idx) {  
 		
 		logger.info("시험 결과 페이지 이동");
 		logger.info("시험 고유번호 : " + tt_idx );
 		
-		TestDTO testResult = service.testResult(tt_idx);
-		if(testResult != null) {
-			model.addAttribute("testResult", testResult);
+		String page = "testResult";
+		if(session.getAttribute("loginId") != null) {
+			TestDTO testResult = service.testResult(tt_idx);
+			if(testResult != null) {
+				model.addAttribute("testResult", testResult);
+			}
+		}else{
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다.");
+			page = "login";
 		}
 		
-		return "testResult";
+		return page;
 	}	
 	
 	//내가 응시한 시험 

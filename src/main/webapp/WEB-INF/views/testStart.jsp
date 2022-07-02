@@ -16,6 +16,8 @@
     </form>
 <%@ include file="../../resources/inc/footer.jsp" %>
    <script>
+ 
+   
       function checkSubject() {
           var $subjectSelect = $('select[name="su_idx"]');
           

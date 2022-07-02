@@ -3,6 +3,8 @@ package com.fullstack.cbt.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +29,7 @@ public class CbtController {
 	
 	//시험관리 리스트 페이지 
 	@RequestMapping(value = "/cbtList.do", method = RequestMethod.GET)
-	public String cbtList(Model model, Criteria cri) {
-		
-		//select 과목명 가져오기
-		ArrayList<SubjectDTO> subjectList =service.subjectList(); 
-		logger.info("등록된 과목 가져오기 : " + subjectList.size());
-		
-		if(subjectList.size()>0) {
-			model.addAttribute("subjectList", subjectList);
-		} 
+	public String cbtList(Model model, HttpSession session,Criteria cri) {
 		
 		/*
 		//뷰 전체에 시험리스트 뿌려줌 
@@ -46,22 +40,31 @@ public class CbtController {
 			if(testdto.size()>0) {
 				model.addAttribute("testdto", testdto);
 			} 
-		*/
+		 */
+			
+			//select 과목명 가져오기
+			ArrayList<SubjectDTO> subjectList =service.subjectList(); 
+			logger.info("등록된 과목 가져오기 : " + subjectList.size());
+			if(subjectList.size()>0) {
+				model.addAttribute("subjectList", subjectList);
+			} 
+			
+			
+			
+			//페이징 처리하여 리스트 불러오기 
+			ArrayList<TestDTO> testdto = service.getListPaging(cri);
+			model.addAttribute("testdto", testdto);
+			
+			int total = service.getTotal();
+			logger.info("전체 게시글 수 : " + total);
+			model.addAttribute("listCnt", total); // 게시글 수 표시 
+			
+			PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+			model.addAttribute("pageMaker", pageMake);
 		
-		//페이징 처리하여 리스트 불러오기 
-		ArrayList<TestDTO> testdto = service.getListPaging(cri);
-		model.addAttribute("testdto", testdto);
 		
-		
-		int total = service.getTotal();
-		logger.info("전체 게시글 수 : " + total);
-		model.addAttribute("listCnt", total); // 게시글 수 표시 
-		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-		model.addAttribute("pageMaker", pageMake);
-		
-		
-		
-		 return "adminTestList"; 
+	
+			return "adminTestList"; 
 	}	
 	
 	

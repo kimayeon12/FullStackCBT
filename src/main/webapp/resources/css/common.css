@@ -9,6 +9,30 @@ body {
     padding: 0;
 }
 
+table {
+	width:100%;
+	border:1px solid #787878;
+	border-collapse:collapse;
+}
+
+table tr th {
+	padding:10px;
+	border:1px solid #787878;
+	background-color:#efefef;
+}
+table tr td {
+	padding:10px;
+	border:1px solid #787878;
+}
+textarea {
+	width:100%;
+	height:100px;
+	resize:none;
+}
+p > b{
+	color:#0000ff;
+}
+
 #wrap {
     margin: 0 auto;
     max-width: 1200px;
@@ -39,6 +63,14 @@ body {
     color: #333;
 }
 
+#timer {
+	margin-bottom:30px;
+	display:block;
+	text-align:center;
+	font-size:30px;
+	color:#ff0000;
+}
+
 ul.answer {margin-top: 0.6em; padding: 0; position: relative;}
 .answer li {margin: 0.4em 0; list-style: none; position: relative;}
 #questionBox > li:not(:first-of-type), #btnPrev {display: none;}
@@ -58,7 +90,8 @@ table > tbody > tr > td > input[type="checkbox"] {
 
 table > tbody > tr > td > input[type="checkbox"]:before,
 table > tbody > tr > td > input[type="checkbox"]:checked:before {
-	top: 5px;
+	top: 16px;
+	left: 6px;
 	border: 1px solid #0000ff;
 }
 
@@ -127,7 +160,7 @@ ol#questionBox > li {
 	background-color: #ececec;
 }
 
-#answerBox > div {
+#answerBox > #choice {
 	overflow-y: scroll;
 	width: 180px;
 	max-height: 180px;
@@ -148,30 +181,46 @@ table {
 	border-collapse: collapse;
 }
 
-#answerBox > div > table > thead > tr > th {
+#answerBox > #choice > table > thead > tr > th {
 	background-color: #c8c8c8;
 }
 
-#answerBox > div > table > tbody > tr > th {
+#answerBox > #choice > table > tbody > tr > th {
 	height: 1.8em;
 }
 
-#answerBox > div > table > tbody > tr > td {
+#answerBox > #choice > table > tbody > tr > td {
 	position: relative;
 	width: 1.2em;
 }
 
-#answerBox > div > table > tbody > tr > th > a {
+#answerBox > #choice > table > tbody > tr > th > a {
 	color: #0000ff;
 	text-decoration: none;
 }
 
-#answerBox > div > table > tbody > tr > th > a:hover {
+#answerBox > #choice > table > tbody > tr > th > a:hover {
 	text-decoration: underline;
 }
 
+[type="button"], input[type="submit"] {cursor:pointer;}
 
+#login,
+#join,
+#findId,
+#findPw {margin:0px auto; max-width:1200px;}
 
+#login > h1,
+#join > h1,
+#findId > h1,
+#findPw > h1 {margin-top:180px; text-align:center;}
+
+#findPw > h4 {text-align:center;}
+
+#join > form > table {margin:0px auto; max-width:800px;}
+#login > form > table,
+#findId > form > table,
+#findPw > form > table {margin:0px auto; max-width:400px;}
 
 /* 페이징 CSS */
 .pageInfo{
@@ -213,3 +262,39 @@ a:hover {color:black; text-decoration: underline;}
 	height: 35px;
 }
 
+.problem {
+	margin:10px 0;
+}
+.problem > span.tO,
+.problem > span.tX {
+	position:relative;
+}
+.problem > span.tO:after {
+	content:'○';
+	position:absolute;
+	font-size:30px;
+	font-weight:bold;
+	left:-10px;
+	top:-10px;
+	color:#0000ff;
+}
+.problem > span.tX:after {
+	content:'／';
+	position:absolute;
+	font-size:30px;
+	font-weight:bold;
+	left:-10px;
+	top:-15px;
+	color:#ff0000;
+}
+
+.answers {
+	margin-bottom:10px;
+}
+
+.explan {
+	margin-bottom:10px;
+	padding:10px;
+	width:100%;
+	border:1px dotted black;
+}

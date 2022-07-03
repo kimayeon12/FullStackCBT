@@ -32,9 +32,9 @@ public interface TestDAO {
 
 	TestDTO testResult(String tt_idx);
 
-	ArrayList<TestDTO> testlist(String loginId);
+	ArrayList<TestDTO> myTestList(HashMap<String, Object> params);
 
-	ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String loginId);
+	int myTestTotal(HashMap<String, Object> params);
 
 	TestDTO testInfo(String tt_idx);
 

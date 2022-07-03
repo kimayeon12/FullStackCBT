@@ -22,6 +22,7 @@
             }
 </style>
 <!--  폼 1개로 합친  버전  -->
+<p> ${listCnt}문제 보관 중입니다.</p>
 <form action="problemSaveList.do" method="get" id="form">
 	  <select name="su_idx"> 
 	        <option value="">과목명</option>
@@ -64,9 +65,38 @@
 	    	</p>
 	  	</c:otherwise>
 	    </c:choose>
+	    <input type="hidden" name="pageNum" value="1"/>
 </form>  	
     
     
+ <!--페이징 -->
+    <div class="pageInfo_wrap" >
+        <div class="pageInfo_area">
+        		<ul id="pageInfo" class="pageInfo">
+        		<!-- 이전페이지 버튼 -->
+	                <c:if test="${pageMaker.prev}">
+	                    <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+	                </c:if>
+	        		
+	        		
+	 				<!-- 각 번호 페이지 버튼 -->
+	                <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	                    <li class='pageInfo_btn ${pageMaker.cri.pageNum == num ? "active": "" }'><a href="${num}">${num}</a></li>
+	                </c:forEach>
+	                
+	                <!-- 다음페이지 버튼 -->
+	                <c:if test="${pageMaker.next}">
+	                    <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+	                </c:if> 
+        		</ul>
+ 
+        </div>
+    </div>
+    
+    <form id="moveForm" method="get">
+	  	 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+	  </form>
+
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 
@@ -96,6 +126,20 @@ $("button").on("click",function(){
 
    });
    
+   
+//클릭했을 때 페이지 이동 	
+$(".pageInfo a").on("click", function(e){
+    e.preventDefault();
+    
+        if($("#su_idx").val()=="" ){
+        	$("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
+        	$("#moveForm").attr("action", "/problemSave.do");
+        	$("#moveForm").submit();
+        } else {
+        	$("#form").find('input[name="pageNum"]').val($(this).attr("href"));
+        	$("#form").submit();
+        }
+});
    
 	</script>
 </html>

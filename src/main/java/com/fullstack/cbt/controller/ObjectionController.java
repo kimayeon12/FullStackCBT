@@ -28,18 +28,24 @@ public class ObjectionController {
 	
 	//이의제기 페이지
 	@RequestMapping(value = "/objection.do")
-	public String cbtTestDetail(Model model,@RequestParam String pc_idx, String tt_idx) {
+	public String cbtTestDetail(Model model,HttpSession session,@RequestParam String pc_idx, String tt_idx) {
 		logger.info("이의제기할 문제 고유번호 : " + pc_idx);
 		logger.info("시험 고유번호 : " + tt_idx);
+		String loginId = (String) session.getAttribute("loginId");
+		String page = "objection";
 		
-		model.addAttribute("tt_idx", tt_idx);
-		
-		ProblemDTO problemDto = service.problemDto(pc_idx);
-		if(problemDto != null) {
-			model.addAttribute("problemdto", problemDto);
+		if(loginId != null) {
+			model.addAttribute("tt_idx", tt_idx);
+			ProblemDTO problemDto = service.problemDto(pc_idx);
+			if(problemDto != null) {
+				model.addAttribute("problemdto", problemDto);
+			}
+		}else{
+			model.addAttribute("msg", "로그인 후 이용해 주세요.");
+			page = "login";
 		}
 		
-		return "objection";
+		return page;
 	}
 	
 	
@@ -49,14 +55,19 @@ public class ObjectionController {
 	public String objectionInsert(Model model,HttpSession session,@RequestParam String content, String pc_idx, String tt_idx) {
 		logger.info("이의제기 내용 및 문제 고유번호 :" +content + pc_idx);
 		logger.info("시험 고유번호 : " + tt_idx);
-			
 		String loginId = (String) session.getAttribute("loginId");
-		boolean success = service.objectionInsert(content,pc_idx,loginId);
-		String page ="";
-		if(success) {
-			logger.info("이의제기 내용 제출 완료");
-			page = "redirect:/myTestView.do?tt_idx="+tt_idx;
-		} 
+		
+		String page ="login";
+		if(loginId != null) {
+			boolean success = service.objectionInsert(content,pc_idx,loginId);
+			if(success) {
+				logger.info("이의제기 내용 제출 완료");
+				page = "redirect:/myTestView.do?tt_idx="+tt_idx;
+			} 
+		}else {
+			model.addAttribute("msg", "로그인 후 이용해 주세요.");
+		}
+		
 		return page; 	
 	 }
 	

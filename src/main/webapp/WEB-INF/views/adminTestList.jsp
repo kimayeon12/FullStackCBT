@@ -1,42 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<style>
-table {
-	border : 1px solid black;
-	border-collapse : collapse;
-	width: 100%;
-}
-
-th,td {
-	border : 1px solid black;
-	padding : 5px 10px; 
-}
-
-/*페이징*/ 
-.pageInfo{
-      list-style : none;
-      display: inline-block;
-    margin: 50px 0 0 100px;      
-  }
-  .pageInfo li{
-      float: left;
-    font-size: 20px;
-    margin-left: 18px;
-    padding: 7px;
-    font-weight: 500;
-  }
- a:link {color:black; text-decoration: none;}
- a:visited {color:black; text-decoration: none;}
- a:hover {color:black; text-decoration: underline;}
- 
- .active{
-      background-color: #cdd5ec;
-  }
-</style>
-
-<p>총 시험 수 : ${listCnt} 건</p>
-<form action="cbtFormList.do" method="get" id="form"> <!-- get으로  -->
+<p>총 시험 수 : <b>${listCnt}</b> 건</p>
+<form action="cbtFormList.do" method="get" id="form"> 
 	  <select name="su_idx" id="su_idx"> 
 		    <option value="">과목선택</option>
 			    <c:forEach items="${subjectList}" var="subjectList">
@@ -51,21 +17,29 @@ th,td {
 	  </select>
 
 
-	   <input type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
+	   <button style="float:right" type="submit" >검색</button>
+	   <input style="float:right" type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
 	    <!-- 페이징  -->
 	   <input type="hidden" name="pageNum" value="1"/>
-	   <button type="submit" >검색</button>
  </form>
   
   
   <table>
+	  <colgroup>
+			<col width="*"></col>
+			<col width="80"></col>
+			<col width="120"></col>
+			<col width="80"></col>
+			<col width="120"></col>
+			<col width="120"></col>
+		</colgroup>
     <thead>
         <tr>
             <th>과목명</th>
             <th>회차</th>
-            <th>회원아이디</th>
-            <th>제출일자</th>
+            <th>회원 아이디</th>
             <th>점수</th>
+            <th>제출일자</th>
             <th>제출상태</th>
         </tr>
     </thead>
@@ -76,11 +50,11 @@ th,td {
 		 	<c:forEach items="${testdto}" var="testdto">
 		        <tr>
 		            <td><a href="cbtTestDetail.do?tt_idx=${testdto.tt_idx}">${testdto.su_name}</a></td>
-		            <td>${testdto.tt_times}</td>
-		            <td>${testdto.mb_id}</td>
-		            <td>${testdto.tt_end_date}</td>
-		            <td>${testdto.tt_score}</td>
-		            <td>${testdto.tt_status}</td>
+		            <td align="center">${testdto.tt_times}회차</td>
+		            <td align="center">${testdto.mb_id}</td>
+		            <td align="center">${testdto.tt_score}점</td>
+		            <td align="center">${fn:substring(testdto.tt_end_date,0,10)}</td>
+		            <td align="center">${testdto.tt_status}</td>
 		        </tr>
 		 	</c:forEach>
 	     </c:when>
@@ -144,5 +118,7 @@ th,td {
 		        }
 		        
 		});
+		
+		
 	</script>
 </html>

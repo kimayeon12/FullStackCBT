@@ -2,6 +2,8 @@ package com.fullstack.cbt.controller;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpSession;
+
 public class Criteria {
 
 	/* 현재 페이지 */
@@ -22,7 +24,12 @@ public class Criteria {
     /* 스킵 할 게시물 수( (pageNum-1) * amount ) */
     private int skip;
     
-    /* 기본 생성자 -> 기봅 세팅 : pageNum = 1, amount = 10 */
+    
+    /*로그인 아이디*/
+    private String loginId;
+    
+
+	/* 기본 생성자 -> 기봅 세팅 : pageNum = 1, amount = 10 */
     public Criteria() {
         this(1,10);
     }
@@ -83,4 +90,12 @@ public class Criteria {
 				+", typeArr="+ Arrays.toString(typeArr)+"]";
 	}
     
+	  public String getLoginId() {
+			return loginId;
+		}
+
+		public void setLoginId(String loginId) {
+			this.loginId = loginId;
+		}
+	
 }

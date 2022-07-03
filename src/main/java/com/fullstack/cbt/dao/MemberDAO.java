@@ -3,6 +3,7 @@ package com.fullstack.cbt.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dto.MemberDTO;
 import com.fullstack.cbt.dto.MemberGradeDTO;
 
@@ -46,6 +47,11 @@ public interface MemberDAO {
     void pwChange(String id, String pw);
 
 	String gradeCheck(String loginId);
+
+	//페이징
+	public ArrayList<MemberDTO> getListPaging(Criteria cri);
+
+	public int getTotal();
 
 	
 

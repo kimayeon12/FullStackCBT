@@ -36,6 +36,21 @@
 	SELECT 	mb_id, mb_name, mb_email,mb_date,mb_grade FROM cbt_member 
 		ORDER BY mb_date DESC
 </select>
+
+<select id="getListPaging" resultType="com.fullstack.cbt.dto.MemberDTO">
+		SELECT 
+		mb_id
+		,mb_name
+		,mb_email
+		,mb_date
+		,mb_grade
+		FROM cbt_member limit #{skip},10 	
+	</select>
+
+<select id="getTotal" resultType="int">
+		SELECT count(mb_id) FROM cbt_member
+	</select>
+
 <select id="adminMemberDetail" parameterType="String"
 	resultType="com.fullstack.cbt.dto.MemberDTO">
 		SELECT * FROM cbt_member WHERE mb_id=#{mb_id}

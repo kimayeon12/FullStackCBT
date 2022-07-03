@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dao.MemberDAO;
 import com.fullstack.cbt.dto.MemberDTO;
 import com.fullstack.cbt.dto.MemberGradeDTO;
@@ -142,6 +143,18 @@ public class MemberService {
 		logger.info("로그인한 계정 권한 서비스 요청 ");
 		return dao.gradeCheck(loginId);
 	
+	}
+
+
+	public ArrayList<MemberDTO> getListPaging(Criteria cri) {
+		logger.info("전체 리스트 페이징 서비스 요청");
+		return dao.getListPaging(cri);
+	}
+
+
+	public int getTotal() {
+		logger.info("전체 게시글 수 가져오기 서비스 요청");
+		return dao.getTotal();
 	}
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fullstack.cbt.dto.MemberDTO;
 import com.fullstack.cbt.dto.MemberGradeDTO;
+import com.fullstack.cbt.dto.PageMakerDTO;
 import com.fullstack.cbt.service.MemberService;
 
 @Controller
@@ -80,6 +81,8 @@ public class MemberController {
 	public String logout(Model model,HttpSession session) {
 		session.removeAttribute("loginId");
         session.removeAttribute("loginName");
+        session.removeAttribute("loginGrade");
+        session.removeAttribute("isAdmin");
 		model.addAttribute("msg", "로그아웃 되었습니다.");
 		return "login";
 		}
@@ -261,7 +264,7 @@ public class MemberController {
 		
 		//회원관리 리스트 페이지 
 		@RequestMapping(value = "/adminMemberList.do", method = RequestMethod.GET)
-		public String adminMemberList(Model model) {
+		public String adminMemberList(Model model, HttpSession session,Criteria cri) {
 			ArrayList<MemberDTO>list=service.list();
 			logger.info("회원관리 리스트 페이지이동");
 			logger.info("리스트갯수:"+list.size());
@@ -269,7 +272,17 @@ public class MemberController {
 			
 			model.addAttribute("memberList", list);
 			
-			return "adminMemberList";
+			ArrayList<MemberDTO>memberList=service.getListPaging(cri);
+			model.addAttribute("memberList", memberList);
+			
+			int total=service.getTotal();
+			logger.info("전체 게시글 수 :" +total);
+			model.addAttribute("listCnt", total); 
+			
+			PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+			model.addAttribute("pageMaker",pageMake);
+			String page="adminMemberList";
+			return page;
 		}
 		
 		@RequestMapping(value ="/adminMemberDetail.do")

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<p>총 시험 수 : ${listCnt} 건</p>
+<p>총 시험 수 : <b>${listCnt}</b> 건</p>
 <form action="cbtFormList.do" method="get" id="form"> 
 	  <select name="su_idx" id="su_idx"> 
 		    <option value="">과목선택</option>

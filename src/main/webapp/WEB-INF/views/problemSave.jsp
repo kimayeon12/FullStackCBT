@@ -1,28 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
- <style>
-            table,th,td {
-	            border : 1px solid black;
-	            border-collapse : collapse;
-            }
-
-            th,td { 
-	            padding : 5px 10px;
-            }
-
-            td:nth-child(1), td:nth-child(3) {
-                background-color: #e0e0e0;
-            }
-
-            .problem {
-                width: 500px;
-                height: 150px;
-                border : 1px solid black;
-            }
-</style>
 <!--  폼 1개로 합친  버전  -->
-<p> ${listCnt}문제 보관 중입니다.</p>
+<p> 보관중인 문제 수 : <b>${listCnt}</b>건</p>
 <form action="problemSaveList.do" method="get" id="form">
 	  <select name="su_idx"> 
 	        <option value="">과목명</option>
@@ -30,31 +10,44 @@
 		        	<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx? 'selected="selected"' : ''}>${subjectList.su_name}</option>
 		        </c:forEach>
 	    </select>
-	 
+	 	
 	    <c:choose>
 	    <c:when test="${saveList.size()>0}">
 			    <c:forEach items="${saveList}" var="saveList">
 				    <table>
-				        <tr>
+					    <colgroup>
+							<col width="80"></col>
+							<col width="120"></col>
+							<col width="80"></col>
+							<col width="120"></col>
+						</colgroup>
+				        <tr align="center">
 				            <td>과목명</td>
 				            <td>${saveList.su_name}</td>
 				            <td>보관일자</td>
-				            <td>${saveList.ps_date}</td> 
+				            <td>${fn:substring(saveList.ps_date,0,19)}</td> 
 				        </tr>
 				    </table>
+				    
 				    <div class="problem"> <!--문제,4지선다,정답 영역-->
-				    	${saveList.pc_problem} 정답 : ${saveList.pc_answer}
-				    	<br/>
-				    	1. ${saveList.pc_answer1}	<br/>
-				    	2. ${saveList.pc_answer2}	<br/>
-				    	3. ${saveList.pc_answer3}	<br/>
-				    	4. ${saveList.pc_answer4}
+				    	 ${saveList.pc_problem}
+							정답 : 
+							<c:choose>
+							<c:when test="${saveList.pc_answer eq 1}">➀</c:when>
+							<c:when test="${saveList.pc_answer eq 2}">➁</c:when>
+							<c:when test="${saveList.pc_answer eq 3}">➂</c:when>
+							<c:when test="${saveList.pc_answer eq 4}">➃</c:when>
+							<c:otherwise>${saveList.pc_answer}</c:otherwise>
+							</c:choose>
+							<br/>
+						➀ ${saveList.pc_answer1}<br/>
+						➁ ${saveList.pc_answer2}<br/>
+						➂ ${saveList.pc_answer3}<br/>
+						➃ ${saveList.pc_answer4}<br/>
 				    </div>
 				    
-				    <div class="problem"><!-- 해설 영역-->
-				    	${saveList.pc_explan}
-				    </div>
-				    <input type="checkbox" name="chkArr" value="${saveList.ps_idx}"/>문제보관삭제
+				   <div class="explan">${fn:replace(testDetail.pc_explan,newLine, '<br />')}</div>
+				    <input type="checkbox" name="chkArr" value="${saveList.ps_idx}" />문제보관삭제
 			    </c:forEach>
 		   		<button type="submit">선택삭제</button>
 	    </c:when>

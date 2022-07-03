@@ -26,6 +26,9 @@ public class ProblemDTO {
 	private String su_name;
 	//과목 단원명 가져오기 테스트
 	private String sc_name;
+	private Timestamp ps_date;
+	private int ps_idx;
+	private int cnt;
 	
 	public int getTt_idx() {
 		return tt_idx;
@@ -143,15 +146,10 @@ public class ProblemDTO {
 	public void setMb_id(String mb_id) {
 		this.mb_id = mb_id;
 	}
-
-	private Date ps_date;
-	private int ps_idx;
-
-
-	public Date getPs_date() {
+	public Timestamp getPs_date() {
 		return ps_date;
 	}
-	public void setPs_date(Date ps_date) {
+	public void setPs_date(Timestamp ps_date) {
 		this.ps_date = ps_date;
 	}
 	public int getPs_idx() {
@@ -159,5 +157,11 @@ public class ProblemDTO {
 	}
 	public void setPs_idx(int ps_idx) {
 		this.ps_idx = ps_idx;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 }

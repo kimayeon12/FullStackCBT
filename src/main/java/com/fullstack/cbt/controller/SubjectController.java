@@ -31,13 +31,23 @@ public class SubjectController {
 	@RequestMapping(value = "/adminSubjectManagement.do")
 	public String smList(Model model, HttpSession session) {
 		
-		//String page = "login"; 로그인 페이지로 돌아가는 것 로그인 완성된후 주석해제 할 것
-		String page = "adminSubjectManagement";
+		String page = "login";
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		logger.info(isAdmin);
 		logger.info("과목 리스트 요청");
-		ArrayList<SubjectDTO> list = service.list();
-		logger.info("list 갯수 : "+list.size());
-		model.addAttribute("list",list);
-		
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin == null) {
+				model.addAttribute("msg","관리자 전용 서비스 입니다.");
+				page = "main";
+			}else {
+				ArrayList<SubjectDTO> list = service.list();
+				logger.info("list 갯수 : "+list.size());
+				page= "adminSubjectManagement";
+				model.addAttribute("list",list);
+			}
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
+		}
 		
 		return page;
 	}
@@ -45,9 +55,21 @@ public class SubjectController {
 	
 	
 	@RequestMapping(value = "/adminSubjectManagementRegister.go")
-	public String regpage() {
+	public String regpage(Model model, HttpSession session) {
 		logger.info("과목 등록 페이지 이동요청");
-		return "adminSubjectManagementRegister";
+		String page = "login";
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin == null) {
+				model.addAttribute("msg","관리자 전용 서비스 입니다.");
+				page = "main";
+			}else {
+				page= "adminSubjectManagementRegister";
+			}
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
+		}
+		return page;
 	}
 	
 	
@@ -88,15 +110,23 @@ public class SubjectController {
 	public String reviceform(Model model, HttpSession session,
 			@RequestParam String su_idx) {
 		
-		//추후 아이디 유효성 검사 추가할 것
-		String page = "adminSubjectManagementRevice";
+		String page = "login";
+		String isAdmin = (String) session.getAttribute("isAdmin");
 		logger.info("과목 관리 수정 상세 페이지 이동요청 : "+su_idx);
-		SubjectDTO dto = service.subdetail(su_idx);
-			if(dto != null) {
-				model.addAttribute("dto",dto);
-				page = "adminSubjectManagementRevice";
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin == null) {
+				model.addAttribute("msg","관리자 전용 서비스 입니다.");
+				page = "main";
+			}else {
+				SubjectDTO dto = service.subdetail(su_idx);
+				if(dto != null) {
+					model.addAttribute("dto",dto);
+					page = "adminSubjectManagementRevice";
+				}
 			}
-		
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
+		}
 		return page;
 	}
 	
@@ -155,22 +185,35 @@ public class SubjectController {
 	
 		
 		logger.info("과목단원명 리스트 요청");
-		ArrayList<SubjectChapterDTO> subList = service.subList();
+		String page = "login";
+		String isAdmin = (String) session.getAttribute("isAdmin");
 		
-		if(subList.size() > 0) {
-			logger.info("과목단원관리에서 과목 갯수 : "+subList.size());
-			model.addAttribute("subList",subList);
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin == null) {
+				model.addAttribute("msg","관리자 전용 서비스 입니다.");
+				page = "main";
+			}else {
+				page = "adminSubjectChapterManagement";
+				ArrayList<SubjectChapterDTO> subList = service.subList();
+				
+				if(subList.size() > 0) {
+					logger.info("과목단원관리에서 과목 갯수 : "+subList.size());
+					model.addAttribute("subList",subList);
+				}
+				
+				ArrayList<SubjectChapterDTO> chapList = service.chapList();
+				
+				if(chapList.size() > 0) {
+					logger.info("과목단원에서 과목단원 갯수 : "+chapList.size());
+					model.addAttribute("chapList",chapList);
+				}
+			}
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
 		}
 		
-		ArrayList<SubjectChapterDTO> chapList = service.chapList();
-		
-		if(chapList.size() > 0) {
-			logger.info("과목단원에서 과목단원 갯수 : "+chapList.size());
-			model.addAttribute("chapList",chapList);
-		}
 		
 		
-		String page = "adminSubjectChapterManagement";
 		return page;
 	}
 	
@@ -188,11 +231,23 @@ public class SubjectController {
 	public String chapregList(Model model, HttpSession session) {
 		
 		logger.info("과목 리스트 요청");
-		ArrayList<SubjectDTO> subjectList = service.subjectList();
-		String page = "adminSubjectChapterManagementRegister";
-		if(subjectList.size() > 0) {
-			logger.info("등록된 과목 : "+subjectList);
-			model.addAttribute("subjectList",subjectList);
+		String page = "login";
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin == null) {
+				model.addAttribute("msg","관리자 전용 서비스 입니다.");
+				page = "main";
+			}else {
+				ArrayList<SubjectDTO> subjectList = service.subjectList();
+				page = "adminSubjectChapterManagementRegister";
+				if(subjectList.size() > 0) {
+					logger.info("등록된 과목 : "+subjectList);
+					model.addAttribute("subjectList",subjectList);
+				}
+			}
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
 		}
 		
 		return page;
@@ -233,14 +288,25 @@ public class SubjectController {
 			) {
 		
 		logger.info("과목단원 수정 상세 페이지 요청 : "+sc_idx);
-		SubjectChapterDTO chapdto = service.subChapRevice(sc_idx);
-		model.addAttribute("chapdto", chapdto);
-		
-		SubjectDTO subjectselList = service.subjectselList(su_idx);
-		logger.info(su_idx);
-		model.addAttribute("subjectselList", subjectselList);
-		
-		return "adminSubjectChapterManagementRevice";
+		String page = "login";
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin == null) {
+				model.addAttribute("msg","관리자 전용 서비스 입니다.");
+				page = "main";
+			}else {
+				page = "adminSubjectChapterManagementRevice";
+				SubjectChapterDTO chapdto = service.subChapRevice(sc_idx);
+				model.addAttribute("chapdto", chapdto);
+				
+				SubjectDTO subjectselList = service.subjectselList(su_idx);
+				logger.info(su_idx);
+				model.addAttribute("subjectselList", subjectselList);
+			}
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
+		}
+		return page;
 	}
 	
 	

@@ -1,23 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<%@ include file="../../resources/inc/footer.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<style type="text/css">
-		.tg  {border-collapse:collapse;border-spacing:0;}
-		.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-		  overflow:hidden;padding:10px 5px;word-break:normal;}
-		.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-		  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-		.tg .tg2{background-color:#efefef;font-weight:bold;text-align:center;vertical-align:top}
-		.tg .tg1{background-color:#efefef;border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
-		.tg .tg3{text-align:left;vertical-align:top}
-		textarea {resize: none;}
+	<style>
+	
 	</style>
 </head>
 <body>
@@ -44,10 +35,12 @@
               </tr>
             </tbody>
             </table>
+            <br>
             <input type="submit" value="수정"/>
             <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.do'"/>
 	</form>  
 </body>
+<%@ include file="../../resources/inc/footer.jsp" %>
 
 <script>
 

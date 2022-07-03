@@ -1,22 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<%@ include file="../../resources/inc/footer.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>풀스택(Full-Stack) CBT</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<style type="text/css">
-		.tg  {border-collapse:collapse;border-spacing:0;}
-		.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-		  overflow:hidden;padding:10px 5px;word-break:normal;}
-		.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-		  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-		.tg .tg-zlqz{background-color:#c0c0c0;border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
-		.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
-		.tg .tg-3xi5{background-color:#ffffff;border-color:inherit;text-align:center;vertical-align:top}
+	<style>
+
  	</style>
 </head>
 <body>
@@ -37,7 +29,7 @@
         </thead>
    		<tbody>
               <tr>
-                <td class="tg1">과목단원명</td>
+                <td align="center">과목단원명</td>
                 <td>
                 <input type="text" id="chapter"/>
                 <button onclick="subChapOverlay()">중복확인</button>
@@ -45,9 +37,11 @@
               </tr>
     	</tbody>
 	</table>
+			<br>
             <input type="button" value="등록" onclick="subChapRegister()"/>
             <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.go'"/>
 </body>
+<%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 	var overChk = false;
 	
@@ -132,10 +126,6 @@
 		}else{
 			alert("중복체크를 진행해 주세요.");
 		}
-		
-		
-		
-		
 		
 	}
 	

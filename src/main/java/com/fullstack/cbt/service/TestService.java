@@ -102,14 +102,14 @@ public class TestService {
 		return dao.testResult(tt_idx);
 	}
 	
-	public ArrayList<TestDTO> testlist(String loginId) {
+	public ArrayList<TestDTO> myTestList(HashMap<String, Object> params) {
 		logger.info("시험 리스트 가져오기 서비스 요청");
-		return dao.testlist(loginId);
+		return dao.myTestList(params);
 	}
 
-	public ArrayList<TestDTO> selectedList(String su_idx, String tt_status, String loginId) {
-		logger.info("선택된 값에 따른 리스트 서비스 요청");
-		return dao.selectedList(su_idx,tt_status,loginId);
+	public int myTestTotal(HashMap<String, Object> params) {
+		logger.info("게시글 수 가져오기 서비스 요청");
+		return dao.myTestTotal(params);
 	}
 
 	public TestDTO testInfo(String tt_idx) {

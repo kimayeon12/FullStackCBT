@@ -39,7 +39,7 @@ th,td {
                </tr>
                <tr>
                    <th>이메일</th>
-                   <td><input type="text" name="mb_email" id="email" value="${memberList.mb_email}"/> <button type="button" onclick="overlayEmail()">중복체크</button></td>
+                   <td><input type="text" name="mb_email" id="email" value="${memberList.mb_email}"/> <button type="button" onclick="overlayEmail()">중복확인</button></td>
                </tr>
                <tr>
                    <th colspan="2">

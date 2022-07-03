@@ -4,6 +4,10 @@
     font-family:'Noto Sans KR',sans-serif;
 }
 
+html {
+	overflow-y:scroll;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -76,7 +80,7 @@ ul.answer {margin-top: 0.6em; padding: 0; position: relative;}
 #questionBox > li:not(:first-of-type), #btnPrev {display: none;}
 
 .answer li > input[type="radio"],
-table > tbody > tr > td > input[type="checkbox"] {
+#choice > table > tbody > tr > td > input[type="checkbox"] {
 	width: 0px;
 	height: 0px;
 	overflow: hidden;
@@ -88,8 +92,8 @@ table > tbody > tr > td > input[type="checkbox"] {
 	border: 1px solid #000;
 }
 
-table > tbody > tr > td > input[type="checkbox"]:before,
-table > tbody > tr > td > input[type="checkbox"]:checked:before {
+#choice > table > tbody > tr > td > input[type="checkbox"]:before,
+#choice > table > tbody > tr > td > input[type="checkbox"]:checked:before {
 	top: 16px;
 	left: 6px;
 	border: 1px solid #0000ff;
@@ -97,8 +101,8 @@ table > tbody > tr > td > input[type="checkbox"]:checked:before {
 
 .answer li > input[type="radio"]:before,
 .answer li > input[type="radio"]:checked:before,
-table > tbody > tr > td > input[type="checkbox"]:before,
-table > tbody > tr > td > input[type="checkbox"]:checked:before {
+#choice > table > tbody > tr > td > input[type="checkbox"]:before,
+#choice > table > tbody > tr > td > input[type="checkbox"]:checked:before {
 	position: absolute;
 	text-align: center;
 	cursor: pointer;
@@ -108,14 +112,14 @@ table > tbody > tr > td > input[type="checkbox"]:checked:before {
 	border-radius: 50%;
 }
 
-table > tbody > tr > td > input[type="checkbox"]:before,
-table > tbody > tr > td > input[type="checkbox"]:checked:before {
+#choice > table > tbody > tr > td > input[type="checkbox"]:before,
+#choice > table > tbody > tr > td > input[type="checkbox"]:checked:before {
 	color: #0000ff;
 	border: 1px solid #0000ff;
 }
 
 .answer li > input[type="radio"]:before,
-table > tbody > tr > td > input[type="checkbox"]:before {
+#choice > table > tbody > tr > td > input[type="checkbox"]:before {
 	content: attr(value);
 }
 
@@ -124,12 +128,12 @@ table > tbody > tr > td > input[type="checkbox"]:before {
 	background-color: #000;
 }
 
-table > tbody > tr > td > input[type="checkbox"]:checked:before {
+#choice > table > tbody > tr > td > input[type="checkbox"]:checked:before {
 	background-color: #0000ff;
 }
 
 .answer li > input[type="radio"]:checked:before,
-table > tbody > tr > td > input[type="checkbox"]:checked:before {
+#choice > table > tbody > tr > td > input[type="checkbox"]:checked:before {
 	content: attr(value);
 }
 
@@ -289,7 +293,7 @@ a:hover {color:black; text-decoration: underline;}
 }
 
 .answers {
-	margin-bottom:10px;
+	padding-bottom:20px;
 }
 
 .explan {
@@ -297,4 +301,15 @@ a:hover {color:black; text-decoration: underline;}
 	padding:10px;
 	width:100%;
 	border:1px dotted black;
+}
+
+#wrap > nav > ul {
+	list-style:none;
+}
+
+#wrap > nav > ul > li {
+	margin:5px;
+}
+#wrap > nav > #adminMenu {
+	margin-bottom:30px;
 }

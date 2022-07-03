@@ -1,49 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../resources/inc/header.jsp" %>
-<h1>회원가입 페이지</h1>
-<form action="join.do" method="post" onsubmit="return joinForm()">
-    <table>
-        <tr>
-            <th>아이디</th>
-            <td>
-            	<input type="text" id="id" name="mb_id" maxlength="20"/>
-            	<button type="button" onclick="overlayId()">중복체크</button>
-            </td>
-        </tr>
-        <tr>
-            <th>비밀번호</th>
-            <td>
-            	<input type="password" name="mb_pw" id="pw"  maxlength="20"/>
-            	영문,숫자,특수조합으로 8~20자로 작성하시오.
-            </td>
-        </tr>
-             <tr>
-            <th>비밀번호 확인</th>
-            <td>
-            	<input type="password"  id="pw2" maxlength="20"/>
-            </td>
-        </tr>
-        <tr>
-            <th>이름</th>
-            <td>
-            	<input type="text" name="mb_name" id="name"/>
-            </td>
-        </tr>
-        <tr>
-            <th>이메일</th>
-            <td>
-            	<input type="text" name="mb_email"  id="email" placeholder="예)cbt@example.com" />
-            	<button type="button" onclick="overlayEmail()">중복체크</button>
-            </td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="회원가입"/>
-            </th>
-        </tr>
-    </table>
- </form>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>풀스택(Full-Stack) CBT</title>
+		<script src="//code.jquery.com/jquery-latest.min.js"></script>
+		<link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
+		<link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
+    </head>
+    <body>
+        <div id="join">
+			<h1>회원가입</h1>
+			<form action="join.do" method="post" onsubmit="return joinForm()">
+			    <table>
+			        <tr>
+			            <th>아이디</th>
+			            <td>
+			            	<input type="text" id="id" name="mb_id" maxlength="20"/>
+			            	<button type="button" onclick="overlayId()">중복확인</button>
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>비밀번호</th>
+			            <td>
+			            	<input type="password" name="mb_pw" id="pw"  maxlength="20"/>
+			            	영문,숫자,특수조합으로 8~20자로 작성하시오.
+			            </td>
+			        </tr>
+			             <tr>
+			            <th>비밀번호 확인</th>
+			            <td>
+			            	<input type="password"  id="pw2" maxlength="20"/>
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>이름</th>
+			            <td>
+			            	<input type="text" name="mb_name" id="name"/>
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>이메일</th>
+			            <td>
+			            	<input type="text" name="mb_email"  id="email" placeholder="예)cbt@example.com" />
+			            	<button type="button" onclick="overlayEmail()">중복확인</button>
+			            </td>
+			        </tr>
+			        <tr>
+			            <th colspan="2">
+			                <input type="submit" value="회원가입"/>
+				         	<input type="button" value="취소" onclick="location.href='login.go'"/>
+			            </th>
+			        </tr>
+			    </table>
+			</form>
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 	var overChk= false;

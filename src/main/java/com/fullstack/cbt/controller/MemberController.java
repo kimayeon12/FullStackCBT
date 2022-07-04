@@ -265,94 +265,150 @@ public class MemberController {
 		//회원관리 리스트 페이지 
 		@RequestMapping(value = "/adminMemberList.do", method = RequestMethod.GET)
 		public String adminMemberList(Model model, HttpSession session,Criteria cri) {
-			ArrayList<MemberDTO>list=service.list();
-			logger.info("회원관리 리스트 페이지이동");
-			logger.info("리스트갯수:"+list.size());
-			model.addAttribute("listCnt",list.size());
+			String page ="login";
+			logger.info("관리자 로그인 : " + session.getAttribute("isAdmin"));
 			
-			model.addAttribute("memberList", list);
-			
-			ArrayList<MemberDTO>memberList=service.getListPaging(cri);
-			model.addAttribute("memberList", memberList);
-			
-			int total=service.getTotal();
-			logger.info("전체 게시글 수 :" +total);
-			model.addAttribute("listCnt", total); 
-			
-			PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-			model.addAttribute("pageMaker",pageMake);
-			String page="adminMemberList";
-			return page;
-		}
-		
-		@RequestMapping(value ="/adminMemberDetail.do")
-		public String adminMemberDetail(Model model, HttpSession session, @RequestParam String mb_id) {
-			logger.info("상세보기 요청: "+mb_id);
-			MemberDTO dto=service.detail(mb_id);
-			model.addAttribute("memberList",dto);
-			
-			//로그인한 사용자의 권한이 최고관리자가 아니면 최고관리자 등급을 안보이게 
-			String loginId = (String) session.getAttribute("loginId");
-			String grade = service.gradeCheck(loginId);
-			logger.info("로그인한 계정 권한 : " + grade);
-			model.addAttribute("mb_grade", grade);
-			
-			//회원권한변경내역
-			ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);
-			if(gradedto.size()>0) {
-				model.addAttribute("gradeUpdate", gradedto);
+			if(session.getAttribute("isAdmin") != null) {
+				//리스트 번호때문에 주석처리
+				//ArrayList<MemberDTO>list=service.list();
+				//logger.info("회원관리 리스트 페이지이동");
+				//logger.info("리스트갯수:"+list.size());
+				//model.addAttribute("listCnt",list.size());
+				
+				//model.addAttribute("memberList", list);
+				
+				//페이징처리해서 리스트 불러오기
+				ArrayList<MemberDTO>memberList=service.getListPaging(cri);
+				model.addAttribute("memberList", memberList);
+				int pageNum=cri.getPageNum();
+				model.addAttribute("pageNum",pageNum);
+				int total=service.getTotal();
+				logger.info("전체회원 리스트 수 :" +total);
+				model.addAttribute("listCnt", total);  //리스트 수 표시
+				
+				PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+				model.addAttribute("pageMaker",pageMake);
+				page="adminMemberList";
+			}else {
+				model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");
 			}
 			
-			return "adminMemberDetail";
+			return page;
+			
 		}
-		
+		//회원관리 수정
+		@RequestMapping(value ="/adminMemberDetail.do")
+		public String adminMemberDetail(Model model, HttpSession session, @RequestParam String mb_id) {
+			String page ="login";
+			logger.info("관리자 로그인: " + session.getAttribute("isAdmin"));
+			
+			if(session.getAttribute("isAdmin") != null) {
+				logger.info("상세보기 요청: "+mb_id);
+				MemberDTO dto=service.detail(mb_id);
+				model.addAttribute("memberList",dto);
+				
+				//로그인한 사용자의 권한이 최고관리자가 아니면 최고관리자 등급을 안보이게 
+				String loginId = (String) session.getAttribute("loginId");
+				String grade = service.gradeCheck(loginId);
+				logger.info("로그인한 계정 권한 : " + grade);
+				model.addAttribute("mb_grade", grade);
+				
+				
+				//회원권한변경내역
+				ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);
+				if(gradedto.size()>0) {
+					model.addAttribute("gradeUpdate", gradedto);
+				}
+				
+				page = "adminMemberDetail";
+				}else {
+					model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");
+					
+				}
+			
+			
+				return page;
+			}
+		//회원관리 수정에서 회원권한변경내역
 		@RequestMapping(value="/adminMemberUpdate.do")
         public String update(Model model, HttpSession session, @RequestParam HashMap<String, String> params) {
-		logger.info("회원수정요청:{}",params);
-		if((String) session.getAttribute("isAdmin") == "false") {
+			String page ="login";
+			logger.info("관리자 로그인 : " + session.getAttribute("isAdmin"));
 			
-		}
-		String mb_id = params.get("mb_id");
-		
-		
-        String loginId= (String) session.getAttribute("loginId");
-        
-		params.put("loginId",loginId);
-		service.update(params);
-		ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);
-		if(gradedto.size()>0) {
-			model.addAttribute("gradeUpdate", gradedto);
-		}
-		
-		
-		//회원테이블 UPDATE
-		for (MemberGradeDTO grade : gradedto) {
-			String mg_grade_after = grade.getMg_grade_after();
-			logger.info("변경된 회원 권한 : " +mg_grade_after);
-			service.changeGrade(mg_grade_after,mb_id);
-		}
-		//상세보기 내역
-		MemberDTO dto=service.detail(mb_id);
-		model.addAttribute("memberList",dto);
-		
-		
-			return "adminMemberDetail";
+			if(session.getAttribute("isAdmin") != null) {
+				logger.info("회원수정요청:{}",params);
+				if((String) session.getAttribute("isAdmin") != null) {
+					
+					String mb_id = params.get("mb_id");
+					
+					
+					String loginId= (String) session.getAttribute("loginId");
+					
+					params.put("loginId",loginId);
+					service.update(params);
+					ArrayList<MemberGradeDTO> gradedto =service.gradelist(mb_id);
+					if(gradedto.size()>0) {
+						model.addAttribute("gradeUpdate", gradedto);
+					}
+					
+					
+					//회원테이블 UPDATE
+					for (MemberGradeDTO grade : gradedto) {
+						String mg_grade_after = grade.getMg_grade_after();
+						logger.info("변경된 회원 권한 : " +mg_grade_after);
+						service.changeGrade(mg_grade_after,mb_id);
+					}
+					//상세보기 내역
+					MemberDTO dto=service.detail(mb_id);
+					model.addAttribute("memberList",dto);
+				}
+				
+				}else {
+					
+					model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");
+				}
 			
-		}
+				return "adminMemberDetail";
+			
+			}
 		
 		//옵션필터
 		@RequestMapping(value="/memberList.do")
-		public String memberList(Model model,@RequestParam String mb_grade, String searchOption, String search ) {
-			logger.info("옵션 확인: "+ mb_grade+searchOption+search);
-			model.addAttribute("mb_grade", mb_grade);
-			model.addAttribute("searchOption",searchOption);
+		public String memberList(Model model,HttpSession session,@RequestParam String mb_grade, String searchOption, String search, int pageNum ) {
+			String page ="login";
+			logger.info("관리자 로그인 : " + session.getAttribute("isAdmin"));
 			
-			ArrayList<MemberDTO>selectedList=service.selectedList(mb_grade,searchOption,search);
-			logger.info("리스트갯수:"+selectedList.size());
-			model.addAttribute("memberList", selectedList);
-			model.addAttribute("listCnt",selectedList.size());
-			
-			return "adminMemberList";
+			if(session.getAttribute("isAdmin") != null) {
+				logger.info("옵션 확인: "+ mb_grade+searchOption+search);
+				model.addAttribute("mb_grade", mb_grade);
+				model.addAttribute("searchOption",searchOption);
+				
+				//ArrayList<MemberDTO>selectedList=service.selectedList(mb_grade,searchOption,search);
+				//logger.info("리스트갯수:"+selectedList.size());
+				//model.addAttribute("memberList", selectedList);
+				//model.addAttribute("listCnt",selectedList.size());
+				
+				//옵션 페이징처리
+				int skip=(pageNum-1) * 10;
+				ArrayList<MemberDTO>dto = service.selectedList(mb_grade, searchOption, search,skip);
+				model.addAttribute("memberList",dto);
+				
+				int selectedTotal=service.selectedTotal(mb_grade, searchOption, search);
+				model.addAttribute("listCnt", selectedTotal);
+				logger.info("선택된 리스트 수:"+selectedTotal);
+				
+				model.addAttribute("pageNum",pageNum);
+				model.addAttribute("listCnt", selectedTotal); 
+				
+				PageMakerDTO pageMake2= new PageMakerDTO(pageNum, selectedTotal);
+				model.addAttribute("pageMaker", pageMake2);
+								
+				
+				page="adminMemberList";
+			}else {
+				model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");
+			}
+			return page;
 		}
 		
 		

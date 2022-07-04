@@ -92,9 +92,9 @@ public class MemberService {
 	}
 
 
-	public ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search) {
+	public ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search, int skip) {
 		logger.info("옵션 선택요청");
-		return dao.selectedList(mb_grade,searchOption,search);
+		return dao.selectedList(mb_grade,searchOption,search,skip);
 	}
 
 
@@ -147,14 +147,20 @@ public class MemberService {
 
 
 	public ArrayList<MemberDTO> getListPaging(Criteria cri) {
-		logger.info("전체 리스트 페이징 서비스 요청");
+		logger.info("전체 회원리스트 페이징 서비스 요청");
 		return dao.getListPaging(cri);
 	}
 
 
 	public int getTotal() {
-		logger.info("전체 게시글 수 가져오기 서비스 요청");
+		logger.info("전체 회원 수 가져오기 서비스 요청");
 		return dao.getTotal();
+	}
+
+
+	public int selectedTotal(String mb_grade, String searchOption, String search) {
+		logger.info("선택에 따라 회원 수 가져오기 서비스 요청");
+		return dao.selectedTotal(mb_grade, searchOption, search);
 	}
 
 

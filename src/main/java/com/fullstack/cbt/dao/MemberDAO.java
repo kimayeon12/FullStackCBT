@@ -28,7 +28,7 @@ public interface MemberDAO {
 
 	void changeGrade(String mb_id, String mg_grade_after);
 
-	ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search);
+	ArrayList<MemberDTO> selectedList(String mb_grade, String searchOption, String search, int skip);
 
     MemberDTO myDetail(String mb_id);
 
@@ -52,6 +52,8 @@ public interface MemberDAO {
 	public ArrayList<MemberDTO> getListPaging(Criteria cri);
 
 	public int getTotal();
+
+	int selectedTotal(String mb_grade, String searchOption, String search);
 
 	
 

@@ -35,18 +35,18 @@ textarea{
 </head>
 <body>
 	<h3>1:1게시판</h3>
-	<form action="inquiryUpdate.do" method="post" enctype="multipart/form-data" id="form">
+	<form action="inquiryUpdate.do" method="post" enctype="multipart/form-data" id="form" onsubmit="return inquiryUpdate()">
 	<table class="dto">
 		<tr>
 			<th>제목</th>
 			<td>
 				<input type="hidden" name="ib_idx" value="${dto.ib_idx}"/>
-				<input type="text" name ="ib_subject" value="${dto.ib_subject}">
+				<input type="text" name ="ib_subject" id="ib_subject" value="${dto.ib_subject}">
 			</td>
 		</tr>
         <tr>
 			<th>내용</th>
-			<td><textarea name="ib_content">${dto.ib_content}</textarea></td>
+			<td><textarea name="ib_content" id="ib_content">${dto.ib_content}</textarea></td>
 		</tr>
 		<tr>
 			<th>첨부파일</th>
@@ -92,6 +92,20 @@ function checkFile(f){
 	}
 	f.outerHTML = f.outerHTML;
 }		
+
+function inquiryUpdate()	{
+	
+	
+	if($('input[name="ib_subject"]').val()==""){
+		alert("제목을 입력해주세요");
+		$("#ib_subject").focus();
+		return false;
+	}else if($('#ib_content').val()==""){
+		alert("내용을 입력해주세요");
+		$("#ib_content").focus();
+	return false;
+	}
+}
  		
  </script>
     

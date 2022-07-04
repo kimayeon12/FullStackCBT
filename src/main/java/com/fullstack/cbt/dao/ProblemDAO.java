@@ -7,6 +7,7 @@ import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
+import com.fullstack.cbt.dto.TestAnswerDTO;
 
 public interface ProblemDAO {
 
@@ -37,6 +38,8 @@ public interface ProblemDAO {
 	ArrayList<ProblemDTO> selectedListPaging(String su_idx, String sc_idx, String mb_id, int skip);
 
 	int selectedTotal(String su_idx, String sc_idx, String mb_id);
+
+	ArrayList<ProblemDTO> answerRate();
 	
 
 }

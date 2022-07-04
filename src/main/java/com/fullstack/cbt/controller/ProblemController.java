@@ -20,6 +20,7 @@ import com.fullstack.cbt.dto.PageMakerDTO;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
+import com.fullstack.cbt.dto.TestAnswerDTO;
 import com.fullstack.cbt.dto.TestDTO;
 import com.fullstack.cbt.service.ProblemService;
 
@@ -116,6 +117,13 @@ public class ProblemController {
 						logger.info("등록된 과목 : "+subjectList);
 						model.addAttribute("subjectList", subjectList);					
 					}
+					//정답률 컨트롤러 일단 보류
+					ArrayList<ProblemDTO> answerRate = service.answerRate();
+					if(answerRate.size() > 0) {
+						logger.info("정답률 리스트 : "+answerRate);
+						model.addAttribute("problemList", answerRate);							
+					}
+					
 					/********** 페이징 처리하면서 리스트 불러오기 **********/
 					ArrayList<ProblemDTO> problemList = service.getListPaging(cri);
 					model.addAttribute("problemList", problemList);

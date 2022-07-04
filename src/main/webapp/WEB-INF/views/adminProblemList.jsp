@@ -48,7 +48,7 @@
 							<td>${problemList.sc_name}</td>
 							<td>${problemList.pc_problem}</td>
 							<td>${problemList.pc_difficulty}</td>
-							<td></td>
+							<td>${problemList.answerRate}</td>
 							<td>${problemList.mb_id}</td>
 							<td>${problemList.pc_date}</td>
 							<td></td>

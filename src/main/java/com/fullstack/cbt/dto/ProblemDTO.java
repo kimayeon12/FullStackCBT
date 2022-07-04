@@ -30,6 +30,15 @@ public class ProblemDTO {
 	private int ps_idx;
 	private int cnt;
 	
+	/*임시 정답률 테스트*/
+	private int answerRate;
+	
+	public int getAnswerRate() {
+		return answerRate;
+	}
+	public void setAnswerRate(int answerRate) {
+		this.answerRate = answerRate;
+	}
 	public int getTt_idx() {
 		return tt_idx;
 	}

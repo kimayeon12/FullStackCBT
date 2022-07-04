@@ -13,6 +13,7 @@ import com.fullstack.cbt.dao.ProblemDAO;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
+import com.fullstack.cbt.dto.TestAnswerDTO;
 
 @Service
 public class ProblemService {
@@ -90,6 +91,11 @@ public class ProblemService {
 	public int selectedTotal(String su_idx, String sc_idx, String mb_id) {
 		logger.info("선택에 따라  게시글 수 가져오기 서비스 요청");
 		return dao.selectedTotal(su_idx,sc_idx,mb_id);
+	}
+
+	public ArrayList<ProblemDTO> answerRate() {
+		logger.info("정답률 서비스 요청");
+		return dao.answerRate();
 	}
 	
 	

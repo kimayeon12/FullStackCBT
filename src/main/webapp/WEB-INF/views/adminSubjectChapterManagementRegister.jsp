@@ -6,19 +6,19 @@
         <thead>
             <tr>
                 <th class="tg2">과목명</th>
-                <th class="tg3">
+                <td class="tg3">
                    <select name="su_idx" id="subjectList">
                         <option value="0">과목선택</option>
                         <c:forEach items="${subjectList}" var="subjectList">
                         		<option value="${subjectList.su_idx}">${subjectList.su_name}</option>
                         </c:forEach>
                    </select> 
-                </th>
+                </td>
         	</tr>
         </thead>
    		<tbody>
               <tr>
-                <td align="center">과목단원명</td>
+                <th align="center">과목단원명</th>
                 <td>
                 <input type="text" id="chapter"/>
                 <button onclick="subChapOverlay()">중복확인</button>
@@ -42,6 +42,7 @@
 		console.log(subject);
 		if(subject==0){
 			alert("과목명을 선택해 주세요.");
+			$("#subjectList").focus();
 			return false;
 		}
 		
@@ -55,6 +56,7 @@
 		
 			if(chapter==""){
 				alert("과목단원명을 입력해 주세요.");
+				$("#chapter").focus();
 				return false;
 			}
 			$.ajax({
@@ -66,6 +68,7 @@
 					console.log(data);
 					if(data.subChapOverlay){
 						alert("이미 등록된 과목단원명 입니다.");
+						$("#chapter").val("");
 					}else{
 						alert("사용 가능한 과목단원명 입니다.");
 						overChk = true;
@@ -76,10 +79,10 @@
 	
 	function subChapRegister(){
 		console.log('과목단원명 등록');
-		var $subject = $("#subjectList option:selected").val()
-		console.log($subject);
-		var $chapter = $("#chapter").val()
-		console.log($chapter);
+		var subject = $("#subjectList option:selected").val()
+		console.log(subject);
+		var chapter = $("#chapter").val()
+		console.log(chapter);
 		console.log(overChk);
 		if(overChk) {
 			
@@ -89,8 +92,8 @@
 				type:'post',
 				url:'subChapReg.ajax',
 				data:{
-					subject:$subject,
-					chapter:$chapter
+					subject:subject,
+					chapter:chapter
 				},
 				dataType:'JSON',
 				success:function(data){
@@ -108,10 +111,12 @@
 				}
 			});
 			
-		} else if($subject==0){
+		} else if(subject==0){
 			alert("과목명을 선택해 주세요.");
-		}else if($chapter==""){
+			$("#subjectList").focus();
+		}else if(chapter==""){
 			alert("과목단원명을 입력해 주세요.");
+			$("#chapter").focus();
 		}else{
 			alert("중복체크를 진행해 주세요.");
 		}

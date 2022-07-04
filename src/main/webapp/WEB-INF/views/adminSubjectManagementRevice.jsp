@@ -7,16 +7,16 @@
 	            <thead>
 		            <tr>
 		                <th>과목명</th>
-		                <th>
+		                <td>
 		                	<input type="hidden" id="su_idx" name="su_idx" value="${dto.su_idx}"/>
 		                    <input type="text" id="subject" name="subject" value="${dto.su_name}"/>
 		                    <input type="button" id="subCheck" name="subCheck" value="중복확인" onclick="subOverlay()">
-		                </th>
+		                </td>
 		            </tr>
 	            </thead>
 	            <tbody>
 	            <tr>
-	                <td align="center">노출여부</td>
+	                <th>노출여부</th>
 	                <td>
 		                	<input type="checkbox" id="check" name="check" value="on" ${dto.su_is_blind eq 0? 'checked= "checked"' : ''} />	
 	                		체크 시 사용자 시험 응시 화면에 과목 선택 목록으로 노출됩니다.
@@ -29,6 +29,7 @@
 	        <input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>
 		</form>
 </body>
+<%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 	var overChk = false;
 	function subOverlay() {
@@ -36,6 +37,7 @@
 		console.log('중복 체크 : '+subject);
 		if(subject==""){
 			alert("과목명을 입력해 주세요.");
+			$("#subject").focus();
 			return false;
 		}
   		$.ajax({
@@ -47,6 +49,7 @@
   				console.log(data.suboverlay);
   				if(data.suboverlay){
   					alert("이미 등록된 과목명 입니다.");
+  					$("#subject").val("");
   				}else{
   					alert("사용 가능한 과목명 입니다.");
   					overChk = true;
@@ -61,6 +64,7 @@
 	function subjectUpdate() {
 		if($("#subject").val() == "") {
 			alert("과목명을 입력해 주세요.");
+			$("#subject").focus();
 			return false;
 		}else if(overChk == false){
 			alert("중복체크를 진행해 주세요.");
@@ -68,11 +72,6 @@
 		}else{
 			alert("수정이 완료 되었습니다.");
 		}
-	}
-	
-	var msg = "${msg}";
-	if(msg != ""){
-		alert(msg);
 	}
 	
 	/*

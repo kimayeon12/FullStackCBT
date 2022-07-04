@@ -38,3 +38,15 @@
 <script>
 
 </script>
+
+
+<!-- <c:forEach items="${chapList}" var="chapList">
+			     	<tr>
+			     		<c:if test="${chapList.su_idx eq subList.su_idx}">
+			     		<input type="hidden" name="su_idx" value="${chapList.su_idx}"/>
+			       		<td>${chapList.sc_name}</td>
+		       			<td align="center">${chapList.chapCnt}</td>
+		       			<td align="center"><input type="button" value="과목단원수정" onclick="location.href='adminSubjectChapterManagementRevice.do?sc_idx=${chapList.sc_idx}&su_idx=${chapList.su_idx}'"/></td>
+			     		</c:if>
+			     	</tr>
+			     </c:forEach> -->

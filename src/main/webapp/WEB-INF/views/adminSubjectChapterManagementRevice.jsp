@@ -1,32 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
+
 <h2>과목 단원 관리 - 수정</h2>
 	<form action ="subjectChapterUpdate.do" method="post" onsubmit="return subjectChapUpdate()">
         <table class="tg">
             <thead>
                 <tr>
-                    <th class="tg2">과목명</th>
-                    <th class="tg3">
+                    <th>과목명</th>
+                    <td>
                 		<input type="hidden" name="su_idx" value="${subjectselList.su_idx}"/>
-                       <input type="text" id="subject" name="subject" value="${subjectselList.su_name}" readonly/>
-                    </th>
+                       	<input type="text" id="subject" name="subject" value="${subjectselList.su_name}" readonly/>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tg1">과목단원명<td>
-                	<input type="hidden" name="chapCnt" value="${chapdto.chapCnt}"/>
-					<input type="hidden" name="sc_idx" value="${chapdto.sc_idx}"/>
-					<input type="text" id="subChapter" name="subChapter" value="${chapdto.sc_name}"/>
-                  	<input type="button" name="subCheck" value="중복확인" onclick="subChapReOverlay()">
-                </td>
-              </tr>
-            </tbody>
-            </table>
-            <br>
-            <input type="submit" value="수정"/>
-            <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.do'"/>
+        		</thead>
+			<tbody>
+       			<tr>
+       				<th>과목단원명</th>
+           			<td>
+            			<input type="hidden" name="chapCnt" value="${chapdto.chapCnt}"/>
+						<input type="hidden" name="sc_idx" value="${chapdto.sc_idx}"/>
+						<input type="text" id="subChapter" name="subChapter" value="${chapdto.sc_name}"/>
+              			<input type="button" name="subCheck" value="중복확인" onclick="subChapReOverlay()">
+              		</td>
+       			</tr>
+           	</tbody>
+		</table>
+        <br>
+        <input type="submit" value="수정"/>
+        <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.do'"/>
 	</form>  
 </body>
 <%@ include file="../../resources/inc/footer.jsp" %>

@@ -175,7 +175,11 @@
 	</sql>
 
 	<select id="answerRate" resultType="com.fullstack.cbt.dto.ProblemDTO">
-		select pc_idx,(select count(ta_is_answer) from cbt_test_answer where ta_is_answer="O" and pc_idx=cbt_problem_create.pc_idx)/(select count(pc_idx) from cbt_test_answer where pc_idx = cbt_problem_create.pc_idx)*100 as answerRate from cbt_problem_create where not (select count(ta_is_answer) from cbt_test_answer where ta_is_answer="O" and pc_idx=cbt_problem_create.pc_idx)/(select count(pc_idx) from cbt_test_answer where pc_idx = cbt_problem_create.pc_idx)*100 is null; 
+		SELECT 
+			pc_idx,
+			(SELECT COUNT(ta_is_answer) FROM cbt_test_answer WHERE ta_is_answer="O" AND pc_idx=cbt_problem_create.pc_idx)/(select count(pc_idx) FROM cbt_test_answer WHERE pc_idx = cbt_problem_create.pc_idx)*100 as answerRate 
+				FROM cbt_problem_create 
+					WHERE NOT (select count(ta_is_answer) FROM cbt_test_answer WHERE ta_is_answer="O" AND pc_idx=cbt_problem_create.pc_idx)/(select count(pc_idx) FROM cbt_test_answer WHERE pc_idx = cbt_problem_create.pc_idx)*100 IS NULL ORDER BY pc_idx DESC
 	</select>
 
 

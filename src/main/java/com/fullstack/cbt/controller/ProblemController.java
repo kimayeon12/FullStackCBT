@@ -121,12 +121,9 @@ public class ProblemController {
 					ArrayList<ProblemDTO> answerRate = service.answerRate();
 					if(answerRate.size() > 0) {
 						logger.info("정답률 리스트 : "+answerRate);
-						model.addAttribute("problemList", answerRate);							
+						model.addAttribute("problemList", answerRate);					
 					}
 					
-					/********** 페이징 처리하면서 리스트 불러오기 **********/
-					ArrayList<ProblemDTO> problemList = service.getListPaging(cri);
-					model.addAttribute("problemList", problemList);
 					
 					
 					int total = service.getTotal();

@@ -58,7 +58,6 @@ textarea{
 				<select name="ib_status"  id="status" >
                     <option value="1">답변상태</option>
                     <option value="2"${pageMaker.ib_status == '2' ? 'selected="selected"' : ''}>답변대기</option>
-                    <option value="3"${pageMaker.ib_status == '3' ? 'selected="selected"' : ''}>처리중</option>
                     <option value="4"${pageMaker.ib_status == '4' ? 'selected="selected"' : ''}>답변완료</option>
                 </select>
                 <select name="ib_searchOption" id="ib_searchOption">
@@ -89,10 +88,10 @@ textarea{
 			<tbody>
 				<c:forEach items="${inquiryList}" var="inquiryList">
 					<tr>
-						<td>${inquiryList.ib_idx}</td>
-						<td><a href="inquiryDetail?ib_idx=${inquiryList.ib_idx}">${inquiryList.ib_subject}</a></td>
-						<td>${fn:substring(inquiryList.ib_reg_date,0,10)}</td>
-						<td>
+						<td align="center">${inquiryList.ib_idx}</td>
+						<td ><a href="inquiryDetail?ib_idx=${inquiryList.ib_idx}">${inquiryList.ib_subject}</a></td>
+						<td align="center">${fn:substring(inquiryList.ib_reg_date,0,10)}</td>
+						<td  align="center" >
 							<c:choose>
 								<c:when test="${inquiryList.ib_status eq 3}">처리중</c:when>					
 								<c:when test="${inquiryList.ib_status eq 4}">답변완료</c:when>					

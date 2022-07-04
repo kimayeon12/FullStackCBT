@@ -55,12 +55,5 @@
 	        }
 
 	}
-	
-	var msg = "${msg}";
-	
-	if(msg != "") {
-		alert(msg);
-		location.href='findPw.go';
-	}
 	</script>
 </html>

@@ -4,9 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> 
-<link rel="stylesheet" href="resources/css/common.css" type="text/css">
+
 <style>
 table, th, td{
 		border: 1px solid black;
@@ -34,7 +32,7 @@ textarea{
 </head>
 <body>
 	<h3>1:1게시판</h3>
-	<form action="adminUpdate.do" method="post">
+	<form action="adminUpdate.do" method="post" onsubmit="return inquiryDetail()">
 		<input type="hidden" name="ib_answer_date" value="${dto.ib_answer_date}"/>
         <table class="dto">
            
@@ -49,7 +47,7 @@ textarea{
                     <th width=10%>아이디</th>
                     <td width=40%>${dto.mb_id}</td>
                     <th width=10%>등록일시</th>
-                    <td colspan="3">${dto.ib_reg_date}</td>
+                    <td colspan="3">${fn:substring(dto.ib_reg_date,0,19)}</td>
                 </tr>
                 <tr>
                     <th>내용</th>
@@ -77,18 +75,17 @@ textarea{
                     <td>
                     	<select name="ib_status" id="ib_status">
                         	<option value="2"${dto.ib_status eq 2? 'selected':''}>답변대기</option>
-                        	<option value="3"${dto.ib_status eq 3? 'selected':''}>처리중</option>
                        		<option value="4"${dto.ib_status eq 4? 'selected':''}>답변완료</option>
                         </select>
                     </td>
                 <th>답변관리자 아이디</th>
                     <td>${dto.ib_admin_id}</td>
                 <th>답변일시</th>
-                    <td>${dto.ib_answer_date}</td>
+                    <td>${fn:substring(dto.ib_answer_date,0,19)}</td>
                   
                 <tr>
                 	<th>답변내용</th>
-                    <td colspan="5"><textarea name="ib_answer">${dto.ib_answer}</textarea></td>
+                    <td colspan="5"><textarea name="ib_answer" id="ib_answer">${dto.ib_answer}</textarea></td>
                 </tr>
                 <tr>
                     <th>관리자 메모 </th>
@@ -99,12 +96,48 @@ textarea{
         
 
 		<input type="submit" value ="저장"/>
-	    <input type="button" value ="목록" onclick="location.href='adminInquiryList.go'"/>
+	    <input type="button" value ="목록" id="saveButton" onclick="location.href='adminInquiryList.go'"/>
 	</form>
 </body>
 <%@ include file="../../resources/inc/footer.jsp" %>
+<script>
+if($("#ib_status").val()=="2"){
+	
+	$("#ib_status").attr("disabled",false);
+	$('textarea[name="ib_answer"]').attr("disabled",false);
+	}
+if($("#ib_status").val()=="4"){
+	
+		$("#ib_status").attr("disabled",true);
+		$('textarea[name="ib_answer"]').attr("disabled",true);
+	}
+	
+	
 
-
-
+		
+function inquiryDetail()	{
+	
+		
+		if($("#ib_status").val()=="4"){
+			if($("#ib_answer").val()==""){
+				alert("내용을 입력해주세요");
+				$("#ib_answer").focus();
+				return false;
+				}
+	}else if($("#ib_status").val()=="2"){
+			if($("#ib_answer").val()!=""){
+				alert("답변상태를 변경해주세요");
+				$("#ib_status").focus();
+				return false;
+				}
+	}else {
+			alert("답변 완료되었습니다");
+		}
+		
+}
+	
 </script>
+
+
+
 </html>

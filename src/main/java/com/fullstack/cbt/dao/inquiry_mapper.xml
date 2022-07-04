@@ -68,27 +68,24 @@
 	UPDATE cbt_inquiry_board 
 	SET 
 		ib_memo = #{ib_memo}
-		,ib_status = #{ib_status}
+		
 		
 		<if test="ib_status == '2'.toString()">
 		,ib_admin_id = ''
 		,ib_answer = ''
 		,ib_answer_date='0000-00-00 00:00:00'
 		</if>
-		
-		<if test="ib_status == '3'.toString()">
-		,ib_admin_id = #{ib_admin_id}
-		</if>
-		
+
 		<if test="ib_status == '4'.toString() and ib_answer_date != null and ib_answer_date.equals('')">
 			,ib_answer_date=NOW()
 			,ib_answer=#{ib_answer}
-			
+			,ib_admin_id = #{ib_admin_id}
+			,ib_status = #{ib_status}
 		</if>
 	
 	WHERE ib_idx =#{ib_idx} 
-	AND (ib_admin_id = '' or ib_admin_id = #{ib_admin_id})
 	</update>
+	<!--  AND (ib_admin_id = '' or ib_admin_id = #{ib_admin_id})-->
 
 
 	
@@ -142,9 +139,7 @@
 		    	     <if test="ib_status == '2'.toString()">
 		                AND ib_status ='2'
 		            </if>
-		    	     <if test="ib_status == '3'.toString()">
-		                AND ib_status ='3'
-		            </if>	  
+		   
 		    	     <if test="ib_status == '4'.toString()">
 		                AND ib_status ='4'
 		            </if>	  	            	            	    
@@ -194,15 +189,9 @@
 	    </if>
 	    
 	    <if test="ib_status!=null">
-	    		<if test="ib_status == '1'.toString()">
-	               
-	            </if>
 	    	     <if test="ib_status == '2'.toString()">
 	                AND ib_status ='2' 
-	            </if>
-	    	     <if test="ib_status == '3'.toString()">
-	                AND ib_status ='3'
-	            </if>	  
+	            </if>  
 	    	     <if test="ib_status == '4'.toString()">
 	                AND ib_status ='4'
 	            </if>	  	            	            	    

@@ -34,24 +34,35 @@
 					</tr>
 				</table>
 			</form>
+		</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 	function findPw(){
-		var id = $('#id');
-		var name = $('#name');
-		var email =$('#email');
-			if(id.val()==""){
+		var $id = $('#id');
+		var $name = $('#name');
+		var $email =$('#email');
+		var expEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+			if($id.val()==""){
 	            alert("아이디를 입력해주세요.");
-	            id.focus();
+	            $id.focus();
 	            return false;
-			}else if(name.val()==""){
+	            
+			}if($name.val()==""){
 	            alert("이름을 입력해주세요.");
-	            name.focus();
+	            $name.focus();
 	            return false;
-			}else if(email.val()==""){
+	            
+			}if($email.val()==""){
 	           alert("이메일을 입력해주세요.");
-	           email.focus(); 
+	           $email.focus(); 
 	           return false;
+	        }
+			
+			if(!expEmail.test($email.val())){
+	        	alert("이메일 형식이 아닙니다.");
+	        	$email.val('');
+	        	$email.focus();
+	        	return false;  	
 	        }
 
 	}

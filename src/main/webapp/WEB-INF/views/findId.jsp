@@ -12,7 +12,7 @@
     <body>
         <div id="findId">
 			<h1>아이디 찾기</h1>
-			<form action="findId.do" method="post" onsubmit="return findId()">
+			<form action="findId.do" method="POST" onsubmit="return findId()">
 				<table>
 				   <tr>
 						<th>이름</th>
@@ -34,20 +34,30 @@
 					</tr>
 				</table>
 			</form>
+		</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 	function findId(){
-		var name = $('#name');
-		var email =$('#email');
-			if(name.val()==""){
-	            alert("이름을 입력해주세요.");
-	            name.focus();
-	            return false;
-			}else if(email.val()==""){
-	           alert("이메일을 입력해주세요.");
-	           email.focus(); 
-	           return false;
-	        }
+		var $name = $("#name");
+		var $email =$("#email");
+		var expEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+			
+		if($name.val()==""){
+           alert("이름을 입력해주세요.");
+           $name.focus();
+           return false;
+           
+		}if($email.val()==""){
+          alert("이메일을 입력해주세요.");
+          $email.focus();
+          return false;
+          
+		}if(!expEmail.test($email.val())){
+	       	alert("이메일 형식이 아닙니다.");
+	       	$email.val('');
+	       	$email.focus();
+	       	return false;  
+		}
 
 	}
 	</script>

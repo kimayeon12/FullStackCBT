@@ -54,7 +54,7 @@ th,td {
     <h2>탈퇴안내</h2>
     <p>회원탈퇴를 신청하기 전에 아래 내용을 꼭 확인해 주세요.
     <br>
-    사용하고 계신 아이디(아이디 들어갈곳)는 탈퇴할 경우 동일한 아이디로 재가입이 불가능합니다.
+    사용하고 계신 아이디는 탈퇴할 경우 동일한 아이디로 재가입이 불가능합니다.
     <br>
     탈퇴하시려면 현재 로그인 중인 계정의 비밀번호를 입력하셔야 탈퇴 가능합니다.
     </p>
@@ -118,6 +118,8 @@ th,td {
 				//console.log(data)
 				if(data.overlayEmail){
 					alert("사용중인 이메일 입니다.");
+					$email.val('');
+		    		$email.focus();
 				}else{
 					alert("사용 가능한 이메일 입니다.");
 					overChk3 = true;
@@ -144,6 +146,13 @@ th,td {
 	           $currentPw.focus();
 	           return false;
 	        }
+	        
+	        if($currentPw.val()!=$("#currentPw")){
+		           alert("비밀번호가 일치하지 않습니다.");
+		           $currentPw.focus();
+		           $currentPw.val('');
+		           return false;
+		        }
 	        
 	        if($pw.val()!=""||$pw2.val()!="") {
 	        	if($pw.val()=="") {
@@ -195,6 +204,7 @@ th,td {
 		}
 		
 		function memberDelete() {
+			
 			if($('input[name="mg_content"]').is(":checked") == false) {
 				alert("탈퇴 사유를 체크해 주세요.");
 				return false;
@@ -211,8 +221,9 @@ th,td {
 				$("#pass").focus();
 				return false;
 			}
-			
+						
 			if(!confirm("정말 회원탈퇴 하시겠습니까?")) {
+				
 				return false;
 			}
 		}

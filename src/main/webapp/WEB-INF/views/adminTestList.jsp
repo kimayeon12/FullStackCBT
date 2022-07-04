@@ -28,6 +28,7 @@
   
   <table>
 	  <colgroup>
+	  		<col width="60"></col>
 			<col width="*"></col>
 			<col width="80"></col>
 			<col width="120"></col>
@@ -37,6 +38,7 @@
 		</colgroup>
     <thead>
         <tr>
+        	<th>번호</th>
             <th>과목명</th>
             <th>회차</th>
             <th>회원 아이디</th>
@@ -51,6 +53,7 @@
 	     <c:when test="${testdto.size() >0}">
 		 	<c:forEach items="${testdto}" var="testdto">
 		        <tr>
+		        	<td align="center">${testdto.tt_idx}</td>
 		            <td><a href="cbtTestDetail.do?tt_idx=${testdto.tt_idx}">${testdto.su_name}</a></td>
 		            <td align="center">${testdto.tt_times}회차</td>
 		            <td align="center">${testdto.mb_id}</td>

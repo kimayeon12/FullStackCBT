@@ -2,20 +2,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 <p>총 시험 수 : <b>${listCnt}</b>건</p>
-<form action="myTestList.do" method="get" id="form">
-	<select name="su_idx">
-		<option value="">과목선택</option>
-		<c:forEach items="${subjectList}" var="subjectList">
-		<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
-		</c:forEach>
-	</select>
-
-	<select name="tt_status">
-		<option value="">제출상태</option>
-		<option value="제출완료" ${tt_status == '제출완료' ? 'selected="selected"' : ''}>제출완료</option>
-		<option value="시간초과 제출" ${tt_status == '시간초과 제출' ? 'selected="selected"' : ''}>시간초과 제출</option>
-	</select>
-</form>
+<div align="right">
+	<form action="myTestList.do" method="get" id="form">
+		<select name="su_idx">
+			<option value="">과목선택</option>
+			<c:forEach items="${subjectList}" var="subjectList">
+			<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
+			</c:forEach>
+		</select>
+	
+		<select name="tt_status">
+			<option value="">제출상태</option>
+			<option value="제출완료" ${tt_status == '제출완료' ? 'selected="selected"' : ''}>제출완료</option>
+			<option value="시간초과 제출" ${tt_status == '시간초과 제출' ? 'selected="selected"' : ''}>시간초과 제출</option>
+		</select>
+	</form>
+</div>
   
   
 <table>

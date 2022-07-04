@@ -281,7 +281,7 @@ public class TestController {
 	}	
 	
 	//내가 응시한 시험 
-	@RequestMapping(value = "/myTestList.do")
+	@RequestMapping(value = "/myTestList.do", method= RequestMethod.GET)
 	public String myTestList(Model model, HttpSession session, Criteria cri, @RequestParam HashMap<String, Object> params) {
 		String loginId = (String) session.getAttribute("loginId");
 		
@@ -338,7 +338,7 @@ public class TestController {
 	
 	
 	//상세보기 
-	@RequestMapping(value = "/myTestView.do")
+	@RequestMapping(value = "/myTestView.do", method= RequestMethod.GET)
 	public String myTestView(Model model, @RequestParam String tt_idx, HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");
 		

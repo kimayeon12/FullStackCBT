@@ -6,7 +6,7 @@
 		<meta charset="utf-8"/>
 		<title>풀스택(Full-Stack) CBT</title>
 		<script src="//code.jquery.com/jquery-latest.min.js"></script>
-		<link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
+		<link rel="stylesheet" href="../../resources/css/common.css" type="text/css"/>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
     </head>
     <body>

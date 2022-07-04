@@ -124,18 +124,14 @@ public class ProblemController {
 					ArrayList<ProblemDTO> answerRate = service.answerRate();
 					if(answerRate.size() > 0) {
 						logger.info("정답률 리스트 : "+answerRate);
-						model.addAttribute("problemList", answerRate);					
+						model.addAttribute("problemList", answerRate);							
 					}
 					
-<<<<<<< HEAD
-					
-=======
 					/********** 페이징 처리하면서 리스트 불러오기 **********/
 					ArrayList<ProblemDTO> problemList = service.getListPaging(cri);
 					model.addAttribute("problemList", problemList);
 					int pageNum=cri.getPageNum();//게시판 1번 부터 번호정렬 
 					model.addAttribute("pageNum",pageNum);//게시판 1번 부터 번호정렬
->>>>>>> origin/master
 					
 					int total = service.getTotal();
 					logger.info("전체 게시글 수 : " + total);
@@ -325,24 +321,3 @@ public class ProblemController {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ include file="../../resources/inc/header.jsp" %>
 
 <html>
 <head>
@@ -10,55 +10,58 @@
 
 <style>
 @charset "UTF-8";
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
+
+
+
+ .pageInfo_wrap{
+     margin-top: 30px;
+    text-align: left;
+ }
+  
+.pagination{
+  display: inline-block;
+ }
+.pagination a{
+	font-size:11px;
+  	color:black;
+  	float:left;
+  	padding:8px 16px;
+  	text-decoration: none;
 }
-	
-th, td{
-		padding: 5px 10px;
-}
-	
-table{
-		width: 80%;
-}
-	
-input[type='text']{
-		width: 100%;
-}
-	
-textarea{
-		width: 100%;
-		height: 150px;
-		resize: none;
-}
+
 </style>
 </head>
 <body>
 	
 
-	<h3>1:1게시판</h3>
-	
-		
+	<h3>1:1게시판 관리</h3>
 	<form method="get" name="form" id="form">	
 
 				<select name="ib_status"  id="status" >
-                    <option value="1">전체</option>
-                    <option value="2"${ib_status == '2' ? 'selected="selected"' : ''}>답변대기</option>
-                    <option value="3"${ib_status == '3' ? 'selected="selected"' : ''}>처리중</option>
-                    <option value="4"${ib_status == '4' ? 'selected="selected"' : ''}>답변완료</option>
+                    <option value="1">답변상태</option>
+                    <option value="2"${pageMaker.ib_status == '2' ? 'selected="selected"' : ''}>답변대기</option>
+                    <option value="3"${pageMaker.ib_status == '3' ? 'selected="selected"' : ''}>처리중</option>
+                    <option value="4"${pageMaker.ib_status == '4' ? 'selected="selected"' : ''}>답변완료</option>
                 </select>
                 <select name="ib_searchOption" id="ib_searchOption">
-                    <option value="all"${ib_searchOption == 'all' ? 'selected="selected"' : ''}> 전체</option>
-                    <option value="title" ${ib_searchOption == 'title' ? 'selected="selected"' : ''}> 제목</option>
-                    <option value="content" ${ib_searchOption == 'content' ? 'selected="selected"' : ''}> 내용</option>
+                    <option value="all"${pageMaker.ib_searchOption == 'all' ? 'selected="selected"' : ''}> 전체</option>
+                    <option value="title" ${pageMaker.ib_searchOption == 'title' ? 'selected="selected"' : ''}> 제목</option>
+                    <option value="idid" ${pageMaker.ib_searchOption == 'idid' ? 'selected="selected"' : ''}> 아이디</option>
                 </select>
-            <input  type="search" name="ib_keyword" value="${ib_keyword}" id="ib_memo">
-            <input type="submit" value="검색" onclick="javascript:form.action='adSelect';">
+            <input  type="search" name="ib_keyword" value="${pageMaker.ib_keyword}" id="ib_keyword">
+            <input type="submit" value="검색" onclick="javascript:form.action='adminInquiryList.go';">
+	
 	
 
-
 	<table>
+	<colgroup>
+		<col width="20"></col>
+		<col width="50"></col>
+		<col width="150"></col>
+		<col width="110"></col>
+		<col width="110"></col>
+		<col width="70"></col>
+	</colgroup>
 		<thead>
 			<tr>
 				<th><input type="checkbox" id="all"/></th>
@@ -78,7 +81,7 @@ textarea{
 						<td>${inquiryList.ib_idx}</td>
 						<td><a href="adminInquiryDetail?ib_idx=${inquiryList.ib_idx}">${inquiryList.ib_subject}</a></td>
 						<td>${inquiryList.mb_id}</td>
-						<td>${inquiryList.ib_reg_date}</td>
+						<td>${fn:substring(inquiryList.ib_reg_date,0,10)}</td>
 						<td>
 							<c:choose>
 								<c:when test="${inquiryList.ib_status eq 3}">처리중</c:when>					
@@ -93,16 +96,31 @@ textarea{
 	<input type="submit" id="adDelete" value="선택 삭제"onclick="javascript: form.action='adDelete';">
 	</form>
 	
+  
+
+	
+		 <!--페이징 -->
+    <div class="pageInfo_wrap" >
+        <div class="pageInfo_area">
+         ${pagination}
+        </div>
+    </div>
+  
+
+	  <form id="moveForm" method="get">
+	  	 <input type="hidden" name="pageNum" value="">
+	  </form>
     
 		
 </body>
+<%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 
 
 	
 $("#status").on("change", function(){ 
 	
-	 $("#form").attr("action", "adSelect");
+	 $("#form").attr("action", "adminInquiryList.go");
 	 $("#form").submit();
 	//var status = $("select[name='tt_status'] option:selected").val();
 	//console.log(status);
@@ -110,21 +128,9 @@ $("#status").on("change", function(){
 });	
 
 
-
-//$("#adDelete").on("click", function(){
-	//cofirm
-	
-//});
-
-//$(".pageInfo a").on("click", function(e){
-	
-	//e.preventDefault();
-    //$("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
-    //$("#moveForm").attr("action", "/adSelect");
-    //$("#moveForm").submit();
-        
-//});
-	
+if($('#adDelete').val(ib_idx)==""){
+	alert("과목을 선택해 주세요");
+}
 
 //function del(){
 	//var chkArr = [];

@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.fullstack.cbt.controller.Criteria;
+import com.fullstack.cbt.controller.PageMaker2;
 import com.fullstack.cbt.dao.InquiryDAO;
 import com.fullstack.cbt.dto.InquiryAttachDTO;
 import com.fullstack.cbt.dto.InquiryDTO;
@@ -29,6 +30,20 @@ public class InquiryService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired InquiryDAO dao;
+	
+	public void adUpdate(HashMap<String, String> params, HttpSession session) {
+		String ib_admin_id = (String) session.getAttribute("loginId");
+		
+		params.put("ib_admin_id", ib_admin_id);
+		
+		logger.info(params+" 서비스 수정 요청 서비스 ");
+		
+		int row =dao.adUpdate(params);
+		logger.info("서비스 수정된 데이터수" +row);
+		
+	}
+	
+	
 	
 	
 
@@ -76,16 +91,7 @@ public class InquiryService {
 		
 	}
 
-	public ArrayList<InquiryDTO> inquiryList() {
-		logger.info("리스트 서비스 요청");
-		return dao.inquiryList();
-	}
-	
-	
-	public ArrayList<InquiryDTO> adminInquiryList() {
-		logger.info("관리자.리스트 서비스 요청");
-		return dao.adminInquiryList();
-	}
+
 	
 	public void inquiryDetail(Model model, String ib_idx) {
 		InquiryDTO dto =dao.inquiryDetail(ib_idx);
@@ -122,15 +128,11 @@ public class InquiryService {
 		model.addAttribute("list",list);
 		
 	}
-	public void adUpdate(HashMap<String, String> params) {
-		logger.info(params+" 서비스 수정 요청 서비스 ");
-		int row =dao.adUpdate(params);
-		logger.info("서비스 수정된 데이터수" +row);
-		
-	}
+
 	public String update(MultipartFile[] files, HashMap<String, String> params, String ba_idx) {
 		
 		int ib_idx = Integer.parseInt(params.get("ib_idx"));
+		
 		
 		String[] arr = ba_idx.split(",");
 		for (int i = 0; i < arr.length; i++){
@@ -150,6 +152,7 @@ public class InquiryService {
 				}
 			}		
 		}
+	
 		
 		int row =dao.update(params);
 		
@@ -184,21 +187,33 @@ public class InquiryService {
 		return "redirect:adminInquiryList.go";
 	}
 
-
-	public ArrayList<InquiryDTO> adSearchList(String ib_status, String ib_searchOption, String ib_keyword) {
-			
-		return dao.adSearchList(ib_status,ib_searchOption,ib_keyword);//param 순서 확인
-	}
-
-	public ArrayList<InquiryDTO> searchList(String ib_status, String ib_searchOption, String ib_keyword) {
+	public int listPageCount(PageMaker2 pageMaker) {
 		
-		return dao.searchList(ib_status,ib_searchOption,ib_keyword);//param 순서 확인
+		return dao.listPageCount(pageMaker);
+	}
+	public ArrayList<InquiryDTO> inquirySearch(PageMaker2 pageMaker) {
+		
+		return dao.inquirySearch(pageMaker);
 	}
 
+	public int adListPageCount(PageMaker2 pageMaker) {
+		
+		return dao.adListPageCount(pageMaker);
+	}
 
+	public ArrayList<InquiryDTO> adInquirySearch(PageMaker2 pageMaker) {
+		
+		return dao.adInquirySearch(pageMaker);
+	}
 	
 
+
+
 	
+	
+	
+
+
 	
 	
 

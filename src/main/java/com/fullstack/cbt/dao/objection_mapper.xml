@@ -126,7 +126,7 @@
     
     <!-- 게시물 총 개숫 -->
     <select id="getTotal" resultType="int">
-        select count(*) from cbt_objection co
+        select count(*) from cbt_objection 
     </select>
 
 

@@ -90,6 +90,7 @@ public class ObjectionController {
 		//페이징 부분**************************
 		model.addAttribute("objectionList", service.getListPaging(cri));
 		int total = service.getTotal(cri);
+		model.addAttribute("listCnt", total);
 		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
 		model.addAttribute("pageMaker", pageMake);
 		
@@ -146,7 +147,7 @@ public class ObjectionController {
 		logger.info("objection : "+objectionDetail.getOj_content());
 		logger.info("objection : "+objectionDetail.getPc_problem());
 		
-		//처리상태 옵션 가져오기
+		/*처리상태 옵션 가져오기
 		logger.info("처리상태 가져오기");
 		ArrayList<ObjectionDTO> statusList = service.status();
 		
@@ -154,7 +155,7 @@ public class ObjectionController {
 			logger.info("처리상태 리스트:"+statusList);
 			model.addAttribute("statusList", statusList);
 		}
-		
+		*/
 		
 		model.addAttribute("objectionDetail", objectionDetail);
 		

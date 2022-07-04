@@ -36,19 +36,19 @@
 		<tr>
 			<th>정답</th>
 			<td>
-				<input type="radio" name="pc_answer" id="pc_answer" value="1" <c:if test="${problemDetail.pc_answer eq '1'}">checked</c:if>/>1
-				<input type="radio" name="pc_answer" id="pc_answer" value="2" <c:if test="${problemDetail.pc_answer eq '2'}">checked</c:if>/>2
-				<input type="radio" name="pc_answer" id="pc_answer" value="3" <c:if test="${problemDetail.pc_answer eq '3'}">checked</c:if>/>3
-				<input type="radio" name="pc_answer" id="pc_answer" value="4" <c:if test="${problemDetail.pc_answer eq '4'}">checked</c:if>/>4
+				<input type="radio" name="pc_answer" id="pc_answer" value="1" <c:if test="${problemDetail.pc_answer eq '1'}">checked</c:if>/>➊
+				<input type="radio" name="pc_answer" id="pc_answer" value="2" <c:if test="${problemDetail.pc_answer eq '2'}">checked</c:if>/>➋
+				<input type="radio" name="pc_answer" id="pc_answer" value="3" <c:if test="${problemDetail.pc_answer eq '3'}">checked</c:if>/>➌
+				<input type="radio" name="pc_answer" id="pc_answer" value="4" <c:if test="${problemDetail.pc_answer eq '4'}">checked</c:if>/>➍
 			</td>
 		</tr>
 		<tr>
 			<th>4지선다문항</th>
 			<td>
-				 ①: <input type="text" name="pc_answer1" id="pc_answer1" value="${problemDetail.pc_answer1}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer1}">checked</c:if>/><br>
-				 ②: <input type="text" name="pc_answer2" id="pc_answer2" value="${problemDetail.pc_answer2}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer2}">checked</c:if>/><br>
-				 ③: <input type="text" name="pc_answer3" id="pc_answer3" value="${problemDetail.pc_answer3}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer3}">checked</c:if>/><br>
-				 ④: <input type="text" name="pc_answer4" id="pc_answer4" value="${problemDetail.pc_answer4}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer4}">checked</c:if>/>
+				 ① <input type="text" name="pc_answer1" id="pc_answer1" value="${problemDetail.pc_answer1}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer1}">checked</c:if>/><br>
+				 ② <input type="text" name="pc_answer2" id="pc_answer2" value="${problemDetail.pc_answer2}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer2}">checked</c:if>/><br>
+				 ③ <input type="text" name="pc_answer3" id="pc_answer3" value="${problemDetail.pc_answer3}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer3}">checked</c:if>/><br>
+				 ④ <input type="text" name="pc_answer4" id="pc_answer4" value="${problemDetail.pc_answer4}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer4}">checked</c:if>/>
 			</td>
 		</tr>
 		<tr>
@@ -135,23 +135,23 @@ if($('select[name="su_idx"]').val()==""){
 		$("#pc_problem").focus();
 		return false;
 	}else if($(':radio[name="pc_answer"]:checked').length < 1){
-		alert("정답을 입력해 주세요");
+		alert("정답을 체크해 주세요");
 		pc_answer.focus();
 		return false;
 	}else if($('input[name="pc_answer1"]').val()==""){
-		alert("답안 1을 입력해 주세요");
+		alert("4지선다 1번 문항을 입력해 주세요");
 		$("#pc_answer1").focus();
 		return false;
 	}else if($('input[name="pc_answer2"]').val()==""){
-		alert("답안 2를 입력해 주세요");
+		alert("4지선다 2번 문항을 입력해 주세요");
 		$("#pc_answer2").focus();
 		return false;
 	}else if($('input[name="pc_answer3"]').val()==""){
-		alert("답안 3을 입력해 주세요");
+		alert("4지선다 3번 문항을 입력해 주세요");
 		$("#pc_answer3").focus();
 		return false;
 	}else if($('input[name="pc_answer4"]').val()==""){
-		alert("답안 4을 입력해 주세요");
+		alert("4지선다 3번 문항을 입력해 주세요");
 		$("#pc_answer4").focus();
 		return false;
 	}else if($('textarea[name="pc_explan"]').val()==""){
@@ -159,7 +159,7 @@ if($('select[name="su_idx"]').val()==""){
 		$("#pc_explan").focus();
 		return false;
 	}else if($(':radio[name="pc_difficulty"]:checked').length < 1){
-		alert("난이도를 입력해 주세요");
+		alert("난이도를 선택해 주세요");
 		pc_difficulty.focus();
 		return false;
 	}else{

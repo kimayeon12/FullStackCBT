@@ -14,6 +14,14 @@
     <br>
     <h2>탈퇴사유</h2>
     <table> 
+    	<colgroup>
+			<col width="*"></col>
+			<col width="80"></col>
+			<col width="120"></col>
+			<col width="80"></col>
+			<col width="120"></col>
+			<col width="120"></col>
+		</colgroup>
         <div>
              <input name="front" type="radio"/>
             서비스 불만족

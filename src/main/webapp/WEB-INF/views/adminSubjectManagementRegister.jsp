@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>풀스택(Full-Stack) CBT</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<style>
-        
-    </style>
-</head>
-<body>
 	<h2>과목 관리 - 등록</h2>
         <table>
        		<thead>

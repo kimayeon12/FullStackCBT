@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
@@ -40,7 +40,6 @@
 				<select name="ib_status"  id="status" >
                     <option value="1">답변상태</option>
                     <option value="2"${pageMaker.ib_status == '2' ? 'selected="selected"' : ''}>답변대기</option>
-                    <option value="3"${pageMaker.ib_status == '3' ? 'selected="selected"' : ''}>처리중</option>
                     <option value="4"${pageMaker.ib_status == '4' ? 'selected="selected"' : ''}>답변완료</option>
                 </select>
                 <select name="ib_searchOption" id="ib_searchOption">
@@ -77,16 +76,15 @@
 			
 				<c:forEach items="${inquiryList}" var="inquiryList" >
 					<tr>
-						<td><input type="checkbox" name="ib_idx" value="${inquiryList.ib_idx}"/></td>
-						<td>${inquiryList.ib_idx}</td>
-						<td><a href="adminInquiryDetail?ib_idx=${inquiryList.ib_idx}">${inquiryList.ib_subject}</a></td>
-						<td>${inquiryList.mb_id}</td>
-						<td>${fn:substring(inquiryList.ib_reg_date,0,10)}</td>
-						<td>
+						<td align="center"><input type="checkbox" name="ib_idx" value="${inquiryList.ib_idx}"/></td>
+						<td align="center">${inquiryList.ib_idx}</td>
+						<td ><a href="adminInquiryDetail?ib_idx=${inquiryList.ib_idx}">${inquiryList.ib_subject}</a></td>
+						<td align="center">${inquiryList.mb_id}</td>
+						<td align="center">${fn:substring(inquiryList.ib_reg_date,0,10)}</td>
+						<td align="center">
 							<c:choose>
-								<c:when test="${inquiryList.ib_status eq 3}">처리중</c:when>					
-								<c:when test="${inquiryList.ib_status eq 4}">답변완료</c:when>					
-								<c:otherwise>답변대기</c:otherwise>					
+								<c:when test="${inquiryList.ib_status eq 2}">답변대기</c:when>					
+								<c:when test="${inquiryList.ib_status eq 4}">답변완료</c:when>									
 							</c:choose>
 						</td>
 					</tr>
@@ -128,30 +126,32 @@ $("#status").on("change", function(){
 });	
 
 
-if($('#adDelete').val(ib_idx)==""){
-	alert("과목을 선택해 주세요");
-}
 
-//function del(){
-	//var chkArr = [];
-	//var ib_idx =$('input[type="checkbox"]:checked').val()
-	
-	//$('input[type="checkbox"]:checked').each(function(ib_idx){
-		//chkArr.push($(this).val());
-	//});
-	
-	//console.log(chkArr);
-	//location.href='adDelete'+ib_idx;
-	//let form = document.createElement('form');
-	//form.action = 'inquiryList';
-	//form.method = 'GET';
-	//form.submit}
+
+$("#adDelete").on("click",function(){
+
+	 
+	    var checked = $("input[type='checkbox']:checked");
+	  
+	    
+	    if(checked.length>0){
+	        if(confirm("정말로 삭제하시겠습니까 ?")){
+	        	$("#adDelete").submit(); 
+	            
+	        } else {
+	           checked.prop("checked",false);
+	           return false;
+	        }
+	    } else {
+	        alert("선택한 게시글이 없습니다.");
+	        return false;
+	    }
+
+	   });
 	
 	
 $("#all").on("click",function(){
-	$("input:checkbox").prop("checked", $(this).prop("checked"));
-
-	
+	$("input[type='checkbox']").prop("checked", $(this).prop("checked"));
 });
 
 	

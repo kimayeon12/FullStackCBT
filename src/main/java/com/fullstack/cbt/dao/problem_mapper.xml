@@ -77,68 +77,112 @@
 		WHERE pc_idx = #{pc_idx}			
 	</update>
 	
-	<!-- <select id="getTotal" resultType="int">
-		SELECT count(*) FROM cbt_problem_create
-	</select>
 	
-	<select id="list" resultType="com.fullstack.cbt.dto.ProblemDTO">
-		SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name  
-			FROM 
-				cbt_problem_create
-			NATURAL JOIN 
-				cbt_subject 
-			NATURAL JOIN 
-				cbt_subject_chapter
-			ORDER BY pc_idx DESC limit #{param1} offset #{param2}
-	</select>
-	
-	count할 때 (*:모든 컬럼)을 선택하면 속도가 느릴 수 있다. PK값을 넣어주자.
-	<select id="allCount" resultType="Integer">
-		SELECT COUNT(pc_idx) FROM cbt_problem_create
-	</select> -->
-	
-	<!-- 검색 조건문 -->
-	<sql id="criteria">
-		<trim prefix="where (" suffix=")" prefixOverrides="OR">
-			<foreach collection="typeArr" item="type">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'P'.toString()">
-							pc_problem like concat('%',#{keyword},'%')
-						</when>
-						<when test="type == 'W'.toString()">
-							mb_id like concat('%',#{keyword},'%')
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql>
+
 	
 	
     <!-- 게시물 목록(페이징) -->
     <select id="getListPaging" resultType="com.fullstack.cbt.dto.ProblemDTO">
-        SELECT pc_idx, su_idx, sc_idx, pc_problem, pc_difficulty, pc_date, su_name, sc_name, mb_id  
+        SELECT 
+        	pc_idx
+        	,su_idx
+        	,sc_idx
+        	,pc_problem
+        	,pc_difficulty
+        	,pc_date
+        	,su_name
+        	,sc_name
+        	,mb_id  
 			FROM 
 				cbt_problem_create
 			NATURAL JOIN 
 				cbt_subject 
 			NATURAL JOIN 
 				cbt_subject_chapter
-			<if test="keyword != null">
-				<include refid="criteria"></include>
-			</if>	
 			ORDER BY pc_idx desc 
-		LIMIT #{skip} , #{amount}
-        <!-- limit ((${pageNum}-1)*${amount}), ${amount} -->
+		LIMIT #{skip} , 10
     </select>
 	
 	<!-- 게시물 총 개숫 -->
     <select id="getTotal" resultType="int">
         select count(*) from cbt_problem_create
-        <if test="keyword != null">
-        	<include refid="criteria"></include>
-        </if>
     </select>
 
+	<select id="selectedListPaging" resultType="com.fullstack.cbt.dto.ProblemDTO">
+		SELECT 
+        	pc_idx
+        	,su_idx
+        	,sc_idx
+        	,pc_problem
+        	,pc_difficulty
+        	,pc_date
+        	,su_name
+        	,sc_name
+        	,mb_id  
+			FROM 
+				cbt_problem_create
+			NATURAL JOIN 
+				cbt_subject 
+			NATURAL JOIN 
+				cbt_subject_chapter
+			<include refid="selectedSql"></include>
+			ORDER BY pc_idx desc 
+		LIMIT #{param4} , 10
+	</select>
+	
+	<sql id="selectedSql">
+		<trim prefix="where" suffixOverrides="and">
+			<if test = "!param1.equals('')">
+				su_idx = #{param1} and
+			</if>
+		
+			<if test = "!param2.equals('')">
+				sc_idx = #{param2} and 
+			</if>
+		
+			<if test = "!param3.equals('')">
+				mb_id LIKE CONCAT('%',#{param3}, '%') and 
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="selectedTotal" resultType="int"  >
+		SELECT count(*)
+		FROM 
+			cbt_problem_create 
+		NATURAL JOIN 
+			cbt_subject  
+		NATURAL JOIN 
+			cbt_subject_chapter	
+		<include refid="totalSql"></include>
+		ORDER BY pc_idx DESC
+	</select>
+	
+	<sql id="totalSql">
+		<trim prefix="where" suffixOverrides="and">
+			<if test = "!param1.equals('')">
+				su_idx = #{param1} and
+			</if>
+		
+			<if test = "!param2.equals('')">
+				sc_idx = #{param2} and 
+			</if>
+		
+			<if test = "!param3.equals('')">
+				mb_id LIKE CONCAT('%',#{param3}, '%') and 
+			</if>
+		</trim>
+	</sql>
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

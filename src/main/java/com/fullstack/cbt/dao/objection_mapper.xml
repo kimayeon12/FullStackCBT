@@ -53,11 +53,19 @@
 
 <!-- 이의제기 등록(수정)하기  -->
 <update id="objectionUpdate" parameterType="hashmap">
-	UPDATE cbt_objection SET
-		oj_admin_id = #{oj_admin_id}
-		,oj_memo = #{oj_memo}
-		,oj_status = #{oj_status}
-		,oj_proc_date = now()
+	UPDATE cbt_objection 
+		SET
+			<if test="oj_status == '처리중'.toString()">
+				oj_admin_id = #{oj_admin_id}
+				,oj_status = #{oj_status}
+				,oj_memo = #{oj_memo}
+			</if>
+			<if test="oj_status == '처리완료'.toString()">
+				oj_status = #{oj_status}
+				,oj_memo = #{oj_memo}
+				,oj_admin_id = #{oj_admin_id}
+				,oj_proc_date = now()
+			</if>
 	WHERE oj_idx = #{oj_idx}			
 </update>
 
@@ -68,7 +76,7 @@
 	ON co.oj_idx = cpc.pc_idx AND oj_status = #{param1};
 </select> -->
 
-<select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+<!-- <select id="objectionSelectList" resultType="com.fullstack.cbt.dto.ObjectionDTO">
 	<![CDATA[
 		SELECT co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem, oj_idx 
 			FROM cbt_objection co INNER JOIN cbt_problem_create cpc 
@@ -109,25 +117,87 @@
                 )
             </if>	
 		</if>
-	</sql>
+	</sql> -->
 	
 	<!-- 게시물 목록(페이징) -->
     <select id="getListPaging" resultType="com.fullstack.cbt.dto.ObjectionDTO">
-        SELECT oj_idx, co.mb_id, oj_date, oj_status, oj_content, oj_admin_id, oj_memo, oj_proc_date, pc_problem 
+        SELECT 
+        	oj_idx
+        	,co.mb_id
+        	,oj_date
+        	,oj_status
+        	,oj_content
+        	,oj_admin_id
+        	,oj_memo
+        	,oj_proc_date
+        	,pc_problem 
 			FROM 
 				cbt_objection co 
 			INNER JOIN 
 				cbt_problem_create cpc 
 			ON co.pc_idx = cpc.pc_idx
 			ORDER BY oj_idx desc 
-		LIMIT #{skip} , #{amount}
-		
+		LIMIT #{skip} , 10
     </select>
     
     <!-- 게시물 총 개숫 -->
     <select id="getTotal" resultType="int">
-        select count(*) from cbt_objection 
+        select count(oj_idx) from cbt_objection 
     </select>
+    
+    <select id="selectedListPaging" resultType="com.fullstack.cbt.dto.ObjectionDTO">
+		SELECT
+			oj_idx
+        	,co.mb_id
+        	,oj_date
+        	,oj_status
+        	,oj_content
+        	,oj_admin_id
+        	,oj_memo
+        	,oj_proc_date
+        	,pc_problem 
+			FROM 
+				cbt_objection co 
+			INNER JOIN 
+				cbt_problem_create cpc
+			ON co.pc_idx = cpc.pc_idx
+			<include refid="selectedSql"></include>	 
+			ORDER BY oj_idx desc 
+		LIMIT #{param3} , 10
+	</select>
+    
+    <sql id="selectedSql">
+		<trim prefix="where" suffixOverrides="and">
+			<if test = "!param1.equals('')">
+				oj_status = #{param1} and
+			</if>
+		
+			<if test = "!param2.equals('')">
+				pc_problem LIKE CONCAT('%',#{param2}, '%') and 
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="selectedTotal" resultType="int">
+		SELECT count(*)
+		FROM 
+			cbt_objection co 
+		INNER JOIN 
+			cbt_problem_create cpc
+		ON co.pc_idx = cpc.pc_idx  
+		<include refid="totalSql"></include>
+		ORDER BY oj_idx DESC
+	</select>
 
+	<sql id="totalSql">
+		<trim prefix="where" suffixOverrides="and">
+			<if test = "!param1.equals('')">
+				oj_status = #{param1} and
+			</if>		
+			<if test = "!param2.equals('')">
+				pc_problem LIKE CONCAT('%',#{param2}, '%') and 
+			</if>
+		</trim>
+	</sql>
 
 </mapper>

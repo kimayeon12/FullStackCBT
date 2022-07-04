@@ -5,18 +5,21 @@
 	<div>총 이의제기 수:<b> ${listCnt}</b> </div>
 	<form action="objectionSelectList.do" method="get" id="detailForm">
 		<select name="oj_status" id="oj_status">
-			<option value="처리상태" ${oj_status == '' ? 'selected="selected"' : ''}>처리상태</option>
+			<option value="" ${oj_status == '' ? 'selected="selected"' : ''}>처리상태</option>
 			<option value="처리대기" ${oj_status == '처리대기' ? 'selected="selected"' : ''}>처리대기</option>
 			<option value="처리중" ${oj_status == '처리중' ? 'selected="selected"' : ''}>처리중</option>
 			<option value="처리완료" ${oj_status == '처리완료' ? 'selected="selected"' : ''}>처리완료</option>
 		</select>
-		<select name="oj_searchOption" id="oj_searchOption">
+		<%-- <select name="oj_searchOption" id="oj_searchOption">
 			<option value="all"${oj_searchOption == 'all' ? 'selected="selected"' : ''}>전체</option>
 			<option value="problem"${oj_searchOption == 'problem' ? 'selected="selected"' : ''}>문제</option>
 			<option value="userId"${oj_searchOption == 'userId' ? 'selected="selected"' : ''}>사용자아이디</option>			
-		</select>
-		<input type="text" name="keyword" value="${keyword}">
-		<input type="submit" value="검색" onclick="javascript:form.action='objectionSelectList.do';">
+		</select> --%>
+		
+		<button style="float:right" type="submit" >검색</button>
+		<input style="float:right" type="text" name="pc_problem" id="pc_problem" placeholder="문제를 입력해주세요." value="" required/>
+		<!-- 페이징 부분 -->
+		<input type="hidden" name="pageNum" value="1"/>
 	</form>
 	<table>
 		<thead>
@@ -65,10 +68,7 @@
         	</div>
     		<!-- 페이징 위해 만든 부분 이걸로 parameter 넘겨준다. -->
 	    	<form id="moveForm" method="get">
-	    		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-	        	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-	        	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-	        	<input type="hidden" name="type" value="${pageMaker.cri.type }">		
+	    		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">		
 	    	</form>
     	</div>
 
@@ -80,13 +80,19 @@ $("#oj_status").on("change", function(){
 	$("#detailForm").submit();
 });
 
-
+//클릭했을 때 페이징
 $(".pageInfo a").on("click", function(e){
 	
 	e.preventDefault();
-    $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
-    $("#moveForm").attr("action", "/objectionList.do");
-    $("#moveForm").submit();
+	if($("#oj_status").val()==""){
+	    $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
+	    $("#moveForm").attr("action", "/objectionList.do");
+	    $("#moveForm").submit();		
+	}else {
+		$("#detailForm").find('input[name="pageNum"]').val($(this).attr("href"));
+    	$("#detailForm").submit();
+	}
+	
     
 });
 

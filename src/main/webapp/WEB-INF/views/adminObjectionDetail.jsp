@@ -8,8 +8,9 @@
 				<tr>
 				  	<th>아이디</th>
 				  	<td>
+				  		${objectionDetail.mb_id}
 				  		<input type="hidden" name="oj_idx" value="${objectionDetail.oj_idx}"/>
-				  		<input type="text" name="mb_id" value="${objectionDetail.mb_id}" style="border:0 solid black;" readonly/>
+				  		<input type="hidden" name="mb_id" value="${objectionDetail.mb_id}"/>
 				  	</td>
 				</tr>
     		</thead>
@@ -17,19 +18,22 @@
 				<tr>
 					<th>문제</th>
 					<td>
-						<input type="text" name="pc_problem" value="${objectionDetail.pc_problem}" style="border:0 solid black;" readonly/>
+						${objectionDetail.pc_problem}
+						<input type="hidden" name="pc_problem" value="${objectionDetail.pc_problem}"/>
 					</td>
 				</tr>
 				<tr>
 				  	<th>이의제기 내용</th>
 				  	<td>
-				  		<input type="text" name="oj_content" value="${objectionDetail.oj_content}" style="border:0 solid black;" readonly/>
+				  		${objectionDetail.oj_content}
+				  		<input type="hidden" name="oj_content" value="${objectionDetail.oj_content}"/>
 				  	</td>
 				</tr>
 				<tr>
 				  	<th>이의제기 일시</th>
 				  	<td>
-				  		<input type="text" name="oj_date" value="${objectionDetail.oj_date}" style="border:0 solid black;" readonly/>
+				  		${objectionDetail.oj_date}
+				  		<input type="hidden" name="oj_date" value="${objectionDetail.oj_date}"/>
 				  	</td>
 				</tr>
    			 </tbody>
@@ -41,7 +45,8 @@
       			<tr>
         			<th>처리자 아이디</th>
        				<td>
-       					<input type="text" name="oj_admin_id" id="oj_admin_id" value="${objectionDetail.oj_admin_id}" style="border:0 solid black;" readonly/>
+       					${objectionDetail.oj_admin_id}
+       					<input type="hidden" name="oj_admin_id" id="oj_admin_id" value="${objectionDetail.oj_admin_id}"/>
        				</td>
      			 </tr>
     		</thead>
@@ -55,8 +60,9 @@
       			<tr>
         			<th>이의제기 처리일시</th>
         			<td>
-        				<input type="text" name="oj_proc_date" value="${objectionDetail.oj_proc_date}" style="border:0 solid black;" readonly/>
-        			</td>
+        				${objectionDetail.oj_proc_date}
+        				<input type="hidden" name="oj_proc_date" id="oj_proc_date" value="${objectionDetail.oj_proc_date}"/>
+        			</td>																														
       			</tr>
       			<tr>
        			 	<th>이의제기 처리상태</th>
@@ -104,6 +110,7 @@ if($("#oj_status").val()=="처리완료"){
 //이의제기 처리상태가 처리완료인 경우
 //- 5,7영역은 일반 텍스트로 각 정보 노출
 //- 8영역은 사라짐
+
 
 
 

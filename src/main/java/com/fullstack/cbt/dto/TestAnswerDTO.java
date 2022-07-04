@@ -9,7 +9,18 @@ public class TestAnswerDTO {
     private int tt_idx;
     private int pc_idx;
     
-    public int getTa_idx() {
+    /*정답률 컬럼 추가*/
+    private int answerRate;
+    
+    
+    
+    public int getAnswerRate() {
+		return answerRate;
+	}
+	public void setAnswerRate(int answerRate) {
+		this.answerRate = answerRate;
+	}
+	public int getTa_idx() {
         return ta_idx;
     }
     public void setTa_idx(int ta_idx) {

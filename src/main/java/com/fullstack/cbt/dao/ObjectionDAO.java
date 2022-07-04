@@ -15,17 +15,21 @@ public interface ObjectionDAO {
 
 	ArrayList<ObjectionDTO> objectionList();
 
-	ArrayList<ObjectionDTO> objectionSelectList(String oj_status, String oj_searchOption, String keyword);
+	//ArrayList<ObjectionDTO> objectionSelectList(String oj_status, String pc_problem);
 
 	public ArrayList<ObjectionDTO> getListPaging(Criteria cri);
 
-	public int getTotal(Criteria cri);
+	public int getTotal();
 
 	ObjectionDTO objectionDetail(String oj_idx);
 
 	ArrayList<ObjectionDTO> status();
 
 	int objectionUpdate(HashMap<String, Object> params);
+
+	ArrayList<ObjectionDTO> selectedListPaging(String oj_status, String pc_problem, int skip);
+
+	int selectedTotal(String oj_status, String pc_problem);
 
 
 }

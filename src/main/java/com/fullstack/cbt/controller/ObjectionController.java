@@ -97,6 +97,9 @@ public class ObjectionController {
 			/***************** 페이징 부분 *****************/
 			ArrayList<ObjectionDTO> objectionListpaging = service.getListPaging(cri);
 			model.addAttribute("objectionList", objectionListpaging);
+			int pageNum=cri.getPageNum();//게시판 1번 부터 번호정렬 
+			model.addAttribute("pageNum",pageNum);//게시판 1번 부터 번호정렬
+			
 			
 			int total = service.getTotal();
 			logger.info("전체 게시글 수 : " + total);
@@ -149,6 +152,9 @@ public class ObjectionController {
 			int skip = (pageNum -1) * 10;
 			ArrayList<ObjectionDTO> objectionSelectListPaging = service.selectedListPaging(oj_status,pc_problem,skip);
 			model.addAttribute("objectionList", objectionSelectListPaging);
+			int pageNum1=cri.getPageNum();//게시판 1번 부터 번호정렬 
+			model.addAttribute("pageNum",pageNum1);//게시판 1번 부터 번호정렬
+			
 			
 			int selectedTotal = service.selectedTotal(oj_status,pc_problem);
 			model.addAttribute("listCnt", selectedTotal);

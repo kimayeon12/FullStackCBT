@@ -2,28 +2,41 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 	<div>문제 출제 관리</div>
-	<div>총 문제수 : ${listCnt}</div>
+	<p>총 시험 수 : <b>${listCnt}</b> 건</p>
 		<form action="problemDetailList.do" method="get" id="subjectForm">
-			<select name="su_idx" id="subjectList" onchange="subjectListShow();">
-				<option value="">과목명</option>
-				<c:forEach items="${subjectList}" var="subjectList">
-					<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
-				</c:forEach>	
-			</select>
-			<select name="sc_idx"  id="subjectChapList" onchange="subjectChapProblemList();">
+
+			<button style="float:right" type="submit" >검색</button>
+		    <input style="float:right" type="text" name="pc_problem" id="pc_problem" placeholder="문제를 입력해주세요." value="${pc_problem}" required/>
+			<select style="float:right" name="sc_idx"  id="subjectChapList" onchange="subjectChapProblemList();">
 				<option value="">과목단원선택</option>
 				<c:forEach items="${subjectChapList}" var="subjectChapList">
 					<option value="${subjectChapList.sc_idx}" ${sc_idx == subjectChapList.sc_idx ? 'selected="selected"' : ''}>${subjectChapList.sc_name}</option>
 				</c:forEach>		
 			</select>
+			<select style="float:right" name="su_idx" id="subjectList" onchange="subjectListShow();">
+				<option value="">과목명</option>
+				<c:forEach items="${subjectList}" var="subjectList">
+					<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
+				</c:forEach>	
+			</select>
 			
-			<button style="float:right" type="submit" >검색</button>
-		    <input style="float:right" type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${mb_id}" required/>
 		    <!-- 페이징  -->
 		    <input type="hidden" name="pageNum" value="1"/>
 		</form>
 	
 		<table>
+		<colgroup>
+	  		<col width="60"></col>
+			<col width="60"></col>
+			<col width="60"></col>
+			<col width="*"></col>
+			<col width="70"></col>
+			<col width="70"></col>
+			<col width="70"></col>
+			<col width="70"></col>
+			<col width="70"></col>
+			<col width="70"></col>
+		</colgroup>
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -41,17 +54,17 @@
 			<tbody>
 				<c:choose>
 				<c:when test="${problemList.size() >0}">
-					<c:forEach items="${problemList}" var="problemList">
+					<c:forEach items="${problemList}" var="problemList" varStatus="i">
 						<tr>
-							<td>${problemList.pc_idx}</td>
-							<td>${problemList.su_name}</td>
-							<td>${problemList.sc_name}</td>
+							<td align="center">${listCnt - (pageNum-1)*10 - i.index}</td>
+							<td align="center">${problemList.su_name}</td>
+							<td align="center">${problemList.sc_name}</td>
 							<td>${problemList.pc_problem}</td>
-							<td>${problemList.pc_difficulty}</td>
-							<td>${problemList.answerPercent}</td>
-							<td>${problemList.mb_id}</td>
-							<td>${problemList.pc_date}</td>
-							<td>${problemList.saveCnt}</td>
+							<td align="center">${problemList.pc_difficulty}</td>
+							<td align="center">${problemList.answerPercent}%</td>
+							<td align="center">${problemList.mb_id}</td>
+							<td align="center">${fn:substring(problemList.pc_date,0,10)}</td>
+							<td align="center">${problemList.saveCnt} 명</td>
 							<td><input class="move" type="button" value="수정하기" onclick="location.href='problemUpdate.go?pc_idx=${problemList.pc_idx}&su_idx=${problemList.su_idx}'"/></td>
 						</tr>
 					</c:forEach>
@@ -63,10 +76,7 @@
 	     		</c:otherwise>
 			</c:choose>
 			</tbody>
-		</table>
-		
-	    <input type="button" style="float:right" value="새로운 문제 출제" onclick="location.href='problem.go'"/>
-		
+		</table>		
 		<!-- 아래는 페이징 위해 만든 부분 -->
 		<div class="pageInfo_wrap" >
         	<div class="pageInfo_area">
@@ -91,7 +101,7 @@
 	    		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">	
 	    	</form>
     	</div>
-
+		<input type="button" style="float:right" value="새로운 문제 출제" onclick="location.href='problem.go'"/>
 	
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>

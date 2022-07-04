@@ -7,6 +7,7 @@
           	<tr>
               	<th>과목명</th>
                   <td>
+                  	<input type="hidden" name="mb_id" value="mb_id"/>
                   	<select name="su_idx" id="subjectList">
                     	<option value="">과목명</option>
                    		<c:forEach items="${subjectList}" var="subjectList">
@@ -33,19 +34,19 @@
                 <tr>
                      <th>정답</th>
                      <td>
-                         <input type="radio" name="pc_answer" id="pc_answer" value="1"/>1
-                         <input type="radio" name="pc_answer" id="pc_answer" value="2"/>2
-                         <input type="radio" name="pc_answer" id="pc_answer" value="3"/>3
-                         <input type="radio" name="pc_answer" id="pc_answer" value="4"/>4
+                         <input type="radio" name="pc_answer" id="pc_answer" value="1"/>➊
+                         <input type="radio" name="pc_answer" id="pc_answer" value="2"/>➋
+                         <input type="radio" name="pc_answer" id="pc_answer" value="3"/>➌
+                         <input type="radio" name="pc_answer" id="pc_answer" value="4"/>➍
                      </td>
                  </tr>
                  <tr>
                       <th>4지선다문항</th>
                       <td>
-                          ①: <input type="text" name="pc_answer1" id="pc_answer1"/><br>
-                          ②: <input type="text" name="pc_answer2" id="pc_answer2"/><br>
-                          ③: <input type="text" name="pc_answer3" id="pc_answer3"/><br>
-                          ④: <input type="text" name="pc_answer4" id="pc_answer4"/>
+                          ① <input type="text" name="pc_answer1" id="pc_answer1"/><br>
+                          ② <input type="text" name="pc_answer2" id="pc_answer2"/><br>
+                          ③ <input type="text" name="pc_answer3" id="pc_answer3"/><br>
+                          ④ <input type="text" name="pc_answer4" id="pc_answer4"/>
                        </td>
                   </tr>
                   <tr>
@@ -63,7 +64,7 @@
                   <tr>
                        <th colspan="2">
                            <input type="submit" value="출제"/>
-                           <input type="button" value="목록" onclick="location.href='adminProblemList.go'"/>
+                           <input type="button" value="목록" onclick="location.href='/problemList.do'"/>
                        </th>
                    </tr>
              </table>
@@ -134,23 +135,23 @@ if($('select[name="su_idx"]').val()==""){
 		$("#pc_problem").focus();
 		return false;
 	}else if($(':radio[name="pc_answer"]:checked').length < 1){
-		alert("정답을 입력해 주세요");
+		alert("정답을 체크해 주세요");
 		pc_answer.focus();
 		return false;
 	}else if($('input[name="pc_answer1"]').val()==""){
-		alert("답안 1을 입력해 주세요");
+		alert("4지선다 1번 문항을 입력해 주세요");
 		$("#pc_answer1").focus();
 		return false;
 	}else if($('input[name="pc_answer2"]').val()==""){
-		alert("답안 2를 입력해 주세요");
+		alert("4지선다 2번 문항을 입력해 주세요");
 		$("#pc_answer2").focus();
 		return false;
 	}else if($('input[name="pc_answer3"]').val()==""){
-		alert("답안 3을 입력해 주세요");
+		alert("4지선다 3번 문항을 입력해 주세요");
 		$("#pc_answer3").focus();
 		return false;
 	}else if($('input[name="pc_answer4"]').val()==""){
-		alert("답안 4을 입력해 주세요");
+		alert("4지선다 4번 문항을 입력해 주세요");
 		$("#pc_answer4").focus();
 		return false;
 	}else if($('textarea[name="pc_explan"]').val()==""){
@@ -158,7 +159,7 @@ if($('select[name="su_idx"]').val()==""){
 		$("#pc_explan").focus();
 		return false;
 	}else if($(':radio[name="pc_difficulty"]:checked').length < 1){
-		alert("난이도를 입력해 주세요");
+		alert("난이도를 선택해 주세요");
 		pc_difficulty.focus();
 		return false;
 	}else{

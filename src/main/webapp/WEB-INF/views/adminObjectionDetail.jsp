@@ -32,7 +32,7 @@
 				<tr>
 				  	<th>이의제기 일시</th>
 				  	<td>
-				  		${objectionDetail.oj_date}
+				  		${fn:substring(objectionDetail.oj_date,0,19)}
 				  		<input type="hidden" name="oj_date" value="${objectionDetail.oj_date}"/>
 				  	</td>
 				</tr>
@@ -51,16 +51,16 @@
      			 </tr>
     		</thead>
     		<tbody>
-      			<tr>
+      			<%-- <tr>
         			<th>관리자 메모</th>
         			<td>
         				<textarea name="oj_memo" >${objectionDetail.oj_memo}</textarea>
         			</td>
-      			</tr>
+      			</tr> --%>
       			<tr>
         			<th>이의제기 처리일시</th>
         			<td>
-        				${objectionDetail.oj_proc_date}
+        				${fn:substring(objectionDetail.oj_proc_date,0,19)}
         				<input type="hidden" name="oj_proc_date" id="oj_proc_date" value="${objectionDetail.oj_proc_date}"/>
         			</td>																														
       			</tr>

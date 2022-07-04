@@ -3,6 +3,8 @@ package com.fullstack.cbt.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ public class ProblemService {
 
 	public void problemWrite(HashMap<String, Object> params) {
 		logger.info("문제등록 서비스 요청");
+		//String mb_id = (String)session.getAttribute("loginId");
 		int success = dao.problemWrite(params);
 		logger.info("문제 등록 성공 여부 : "+ success);		
 	}
@@ -83,14 +86,14 @@ public class ProblemService {
         return dao.getTotal();
     }
 
-	public ArrayList<ProblemDTO> selectedListPaging(String su_idx, String sc_idx, String mb_id, int skip) {
+	public ArrayList<ProblemDTO> selectedListPaging(String su_idx, String sc_idx, String pc_problem, int skip) {
 		logger.info("전체 리스트 페이징 서비스 요청");
-		return dao.selectedListPaging(su_idx, sc_idx, mb_id,skip);
+		return dao.selectedListPaging(su_idx, sc_idx, pc_problem,skip);
 	}
 
-	public int selectedTotal(String su_idx, String sc_idx, String mb_id) {
+	public int selectedTotal(String su_idx, String sc_idx, String pc_problem) {
 		logger.info("선택에 따라  게시글 수 가져오기 서비스 요청");
-		return dao.selectedTotal(su_idx,sc_idx,mb_id);
+		return dao.selectedTotal(su_idx,sc_idx,pc_problem);
 	}
 
 	public ArrayList<ProblemDTO> answerRate() {

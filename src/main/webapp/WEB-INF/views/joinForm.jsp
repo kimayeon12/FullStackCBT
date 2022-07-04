@@ -55,6 +55,7 @@
 			        </tr>
 			    </table>
 			</form>
+		</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 	var overChk= false;
@@ -69,16 +70,16 @@
 			$.ajax({
 				type:'get',
 				url:'overlayId.ajax',
-				data:{
-					chkmb_id:id
-					},
+				data:{chkmb_id:id},
 				datatype:"JSON",
 				success:function(data){
 					//console.log(data);
 					if(data.overlayId){
-						alert("사용중인 아이디 입니다.")
+						alert("사용중인 아이디 입니다.");
+						$("#id").val("");
+						$("#id").focus();
 					}else{
-						alert("사용 가능한 아이디 입니다.")
+						alert("사용 가능한 아이디 입니다.");
 						overChk = true;
 					}
 				},
@@ -88,7 +89,8 @@
 			});
 			
 		}else{
-			alert("아이디는 영문 숫자 조합으로 4~20자로 작성해주세요.")
+			alert("아이디는 영문 숫자 조합으로 4~20자로 작성해주세요.");
+			id.focus();
 			return false;	
 		}
 	}
@@ -96,29 +98,36 @@
 	var overChk2=false;
 	
 	function overlayEmail(){
-		var email=$("#email").val();
-		console.log("이메일중복체크:"+email);
-		
-		$.ajax({
-			type:'get',
-			url:'overlayEmail.ajax',
-			data:{
-				chkmb_email:email
-			},
-			datatype:"JSON",
-			success:function(data){
-				//console.log(data);
-				if(data.overlayEmail){
-					alert("사용중인 이메일 입니다.")
-				}else{
-					alert("사용가능한 이메일입니다.")
-					overChk2= true;
-				}
-			},
-			error:function(e){
-				console.log(e);
+		var $email=$("#email");
+		var expEmail = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+		console.log("이메일중복체크:"+$email);
+		if($email.val()==""){
+			alert("이메일을 입력해 주세요.");
+		}else if(!expEmail.test($email.val())){
+			alert("이메일 형식이 아닙니다.");
+			}else{
+				$.ajax({
+					type:'get',
+					url:'overlayEmail.ajax',
+					data:{
+						chkmb_email:$email.val()
+					},
+					datatype:"JSON",
+					success:function(data){
+						//console.log(data);
+						if(data.overlayEmail){
+							alert("사용중인 이메일 입니다.");
+							$("#email").val("");
+							$("#email").focus();
+						}else{
+							alert("사용가능한 이메일입니다.");	
+						}
+					},
+					error:function(e){
+						console.log(e);
+					}
+				});
 			}
-		});
 	}
 	
 		function joinForm(){
@@ -135,40 +144,45 @@
 	            alert("아이디를 입력해주세요.");
 	            $id.focus();
 	            return false;
-	        }else if($pw.val()==""){
+	        }
+	        if($pw.val()==""){
 	           alert("비밀번호를 입력해주세요.");
 	           $pw.focus();
 	           return false;
-	        }else if(!expPw.test($pw.val())){
+	        }
+	        if(!expPw.test($pw.val())){
 	        	alert("비밀번호는 8 ~ 20자 영문, 숫자, 특수문자를 최소 한가지씩 조합으로 작성해주세요.");
 	        	$pw.val('');
 	        	$pw2.val('');
 	        	$pw.focus();
 	        	return false;  	
-	        }else if($pw2.val()==""){
+	        }
+	        if($pw2.val()==""){
 	           alert("비밀번호 확인을 입력해주세요.");
 	           $pw2.focus();
 	           return false;	
-	        }else if($pw.val()!==$pw2.val()){
+	        }
+	        if($pw.val()!==$pw2.val()){
 	        	alert("비밀번호가 일치하지 않습니다.");
 	        	$pw2.val('');
 	        	$pw2.focus();
 	        	return false;
-	        }else if ($name.val()==""){
+	        }
+	        if ($name.val()==""){
 	        	alert("이름을 입력해주세요.");
 	        	$name.focus();
 	        	return false;
-	        }else if($email.val()==""){
+	        }
+	        if($email.val()==""){
 	        	alert("이메일을 입력해주세요.");
 	        	$email.focus();
 	        	return false;
-	        }else if(!expEmail.test($email.val())){
+	        }
+	        if(!expEmail.test($email.val())){
 	        	alert("이메일 형식이 아닙니다.");
 	        	$email.val('');
 	        	$email.focus();
 	        	return false;  	
-	        }else{
-	        	console.log("회원가입요청");
 	        }
 	        
 	        

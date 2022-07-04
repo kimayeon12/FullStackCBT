@@ -148,7 +148,7 @@ public class MemberController {
         model.addAttribute("msg", msg);
 		
 	 
-	 	return "login";
+	 	return "findId";
 		
 	}
 		

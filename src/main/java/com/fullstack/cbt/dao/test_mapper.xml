@@ -4,7 +4,7 @@
 <mapper namespace="com.fullstack.cbt.dao.TestDAO">
 
 	<select id="subjectList" resultType="com.fullstack.cbt.dto.SubjectDTO">
-		SELECT a.su_idx, a.su_name, COUNT(a.su_idx) FROM cbt_subject a JOIN cbt_problem_create b ON a.su_idx = b.su_idx WHERE su_is_blind <![CDATA[ < ]]> 1 GROUP BY a.su_idx HAVING COUNT(a.su_idx) <![CDATA[ > ]]> 10
+		SELECT a.su_idx, a.su_name, COUNT(a.su_idx) FROM cbt_subject a JOIN cbt_problem_create b ON a.su_idx = b.su_idx WHERE su_is_blind <![CDATA[ < ]]> 1 GROUP BY a.su_idx HAVING COUNT(a.su_idx) <![CDATA[ >= ]]> 10
 	</select>
 	
 	<select id="subjectChapterList" parameterType="String" resultType="com.fullstack.cbt.dto.SubjectChapterDTO">

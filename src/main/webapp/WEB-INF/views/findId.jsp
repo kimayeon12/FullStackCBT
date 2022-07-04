@@ -50,12 +50,5 @@
 	        }
 
 	}
-	
-	var msg = "${msg}";
-	
-	if(msg != "") {
-		alert(msg);
-		location.href='findId.go';
-	}
 	</script>
 </html>

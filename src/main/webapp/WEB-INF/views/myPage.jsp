@@ -129,12 +129,6 @@ th,td {
 		});
 	
 	}
-	
-		var msg = "${msg}";
-	
-		if(msg !=""){
-			alert(msg);	
-		};
 		
 		function myPage(){
 			var $currentPw = $("#currentPw");

@@ -21,8 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMethodMappingNamingStrategy;
 
 import com.fullstack.cbt.dto.InquiryDTO;
-import com.fullstack.cbt.dto.PageMakerDTO;
-import com.fullstack.cbt.dto.ProblemDTO;
+
 import com.fullstack.cbt.service.InquiryService;
 
 
@@ -40,20 +39,26 @@ public class InquiryController {
 	
 	// 1대1 게시판 리스트 
 	@RequestMapping(value = "/inquiryList.go",method = RequestMethod.GET)
-	public String list(Model model,HttpSession session) {
+	public String list(Model model,PageMaker2 pageMaker,HttpSession session) {
 		
-		if(session.getAttribute("loginId")!=null) {
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if(loginId != null) {
 		logger.info(" 리스트 요청");
-		ArrayList<InquiryDTO>inquiryList=service.inquiryList();
 		
-			if(inquiryList.size() > 0) {
-				logger.info("list size : "+inquiryList.size());
-				model.addAttribute("inquiryList", inquiryList);
-				}
-			}else { 
-				model.addAttribute("msg","로그인을 다시해주세요");
+		pageMaker.setTotalCount(service.listPageCount(pageMaker));
+        ArrayList<InquiryDTO> list = service.inquirySearch(pageMaker);	           
+
+        String pagination=pageMaker.paginationHtml("inquiryList.go");
+        
+        model.addAttribute("inquiryList", list);
+        model.addAttribute("pageMaker", pageMaker);
+        model.addAttribute("pagination", pagination);
+		}else {
+				model.addAttribute("msg", "로그인 후 이용해 주세요.");
+			
+				return "login";
 			}
-		
 		return "inquiryList";
 		}
 	
@@ -69,16 +74,21 @@ public class InquiryController {
 	public String write(Model model, MultipartFile[] files, 
 			@RequestParam HashMap<String, String> params,HttpSession session) {		
 		logger.info("글쓰기 요청 : "+session+"님"+params);
-		
 		return service.write(files,params,session);
 		}	
 		
 	//1대1 게시판 상세보기 	
 	@RequestMapping(value = "/inquiryDetail")
-	public String detail(Model model, @RequestParam String ib_idx) {
-		logger.info("상세보기 요청 : "+ib_idx);
-		service.inquiryDetail(model, ib_idx);
-			
+	public String detail(Model model, @RequestParam String ib_idx,HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if(loginId != null) {
+			logger.info("상세보기 요청 : "+ib_idx);
+			service.inquiryDetail(model, ib_idx);
+		}else {
+			model.addAttribute("msg", "로그인 후 이용해 주세요.");
+			return "login";
+		}
 			
 		return "inquiryDetail";
 		}
@@ -93,86 +103,115 @@ public class InquiryController {
 	
 	//1대1 게시판 삭제
 		@RequestMapping(value = "/inquiryDelete")
-		public String delete(Model model, @RequestParam String ib_idx) {		
-			logger.info("삭제 요청 : "+ib_idx);
-			service.inquiryDelte(ib_idx);
+		public String delete(Model model, @RequestParam String ib_idx,HttpSession session) {
+			String loginId = (String) session.getAttribute("loginId");
 			
+			if(loginId != null) {
+				logger.info("삭제 요청 : "+ib_idx);
+				service.inquiryDelte(ib_idx);
+			}else {
+				model.addAttribute("msg", "로그인 후 이용해 주세요.");
+				return "login";
+			}
 			return "redirect:inquiryList.go";
 		}
 		
 	//1대1 게시판 수정(업로드+파일삭제+글)
 	@RequestMapping(value = "/inquiryUpdate.do")
 	public String update(Model model, MultipartFile[] files, 
-			@RequestParam HashMap<String, String> params,@RequestParam String ba_idx) {		
+			@RequestParam HashMap<String, String> params,@RequestParam String ba_idx) {	
+			
+	
+
 			logger.info("수정 요청 : "+params);
 			logger.info(ba_idx);
-			
-
+		
 			return service.update(files,params,ba_idx);
 		}	
 	
-	//1대1 게시판 검색  
-		@RequestMapping(value = "/inquirySearch",method = RequestMethod.GET)
-		public String inquirySearch(Model model,@RequestParam String ib_searchOption,String ib_keyword
-			,String ib_status) {			
-
-
-
-		logger.info("상태값:"+ib_status+"/검색옵션:"+ib_searchOption+"/키워드:"+ib_keyword);
-
-
-		model.addAttribute("ib_status",ib_status);
-		model.addAttribute("ib_searchOption",ib_searchOption);
-		model.addAttribute("ib_keyword",ib_keyword);
+	
 		
 		
-		ArrayList<InquiryDTO>searchList=service.searchList(ib_status,ib_searchOption,ib_keyword);
-		if(searchList.size() > 0) {
-			logger.info("1대1 게시판리스트 검색갯수 : "+searchList.size());
-			model.addAttribute("inquiryList",searchList);
-			
-		}
-		
-		return "inquiryList";
-	}
-		
-		
-		
+	
+	
+	
+	
+	
+	
 	//하단 관리자  
 	
-	
-	
-		
 	// 관리자 1대1 게시판 리스트 
 	@RequestMapping(value = "/adminInquiryList.go",method = RequestMethod.GET)
-	public String adminInquiryList(Model model) {			
-	
-		logger.info("관리자 리스트 요청");
-		ArrayList<InquiryDTO>adminInquiryList=service.adminInquiryList();
-		if(adminInquiryList.size() > 0) {
-			logger.info("adminlist size : "+adminInquiryList.size());
-			model.addAttribute("inquiryList", adminInquiryList);
+	public String adminInquiryList(Model model,HttpSession session,PageMaker2 pageMaker) {	
+		
+		
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin ==null) {
+				model.addAttribute("msg","관리자 서비스입니다");
+				return "main";
+			}else {
+				pageMaker.setTotalCount(service.adListPageCount(pageMaker));
+		        ArrayList<InquiryDTO> list = service.adInquirySearch(pageMaker);	           
+
+		        String pagination=pageMaker.paginationHtml("adminInquiryList.go");
+		        
+		        model.addAttribute("inquiryList", list);
+		        model.addAttribute("pageMaker", pageMaker);
+		        model.addAttribute("pagination", pagination);
+			
+			}
+		}else {
+			model.addAttribute("msg", "로그인 후 이용해 주세요.");
+			
+			return "login";
 		}
-	
 		
 		return "adminInquiryList";
 	}	
 	//관리자 1대1 게시판 상세보기
 	@RequestMapping(value = "/adminInquiryDetail")
-	public String adminInquiryDetail(Model model, @RequestParam String ib_idx) { 	
-		logger.info("상세보기 요청 : "+ib_idx);
-		service.adminInquiryDetail(model, ib_idx);
+	public String adminInquiryDetail(Model model, @RequestParam String ib_idx,HttpSession session) { 	
+		String isAdmin = (String) session.getAttribute("isAdmin");
+		
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin ==null) {
+				model.addAttribute("msg","관리자 서비스입니다");
+				return "main";
+			}else {	
+				logger.info("관리자 리스트 요청");
+				logger.info("상세보기 요청 : "+ib_idx);
+				service.adminInquiryDetail(model, ib_idx);
+				}
+		}else {
+			model.addAttribute("msg", "로그인 후 이용해 주세요.");
+			
+			return "login";
+		}
 		return "adminInquiryDetail";
 	}
 
 	//관리자1대1 게시판  수정
 	@RequestMapping(value = "/adminUpdate.do")
-	public String adUpdate(Model model, @RequestParam HashMap<String, String> params){
-		logger.info("수정 요청");
-		logger.info("params :{}",params);
+	public String adUpdate(Model model, @RequestParam HashMap<String, String> params,HttpSession session){
+		String isAdmin = (String) session.getAttribute("isAdmin");
 		
-		
-		service.adUpdate(params);
+		if(session.getAttribute("loginId") != null) {
+			if(isAdmin ==null) {
+				model.addAttribute("msg","관리자 서비스입니다");
+				return "main";
+			}else {	
+				logger.info("수정 요청");
+				logger.info("날짜" + params.get("ib_answer_date"));
+				logger.info("params :{}",params);
+				service.adUpdate(params,session);
+			}
+		}else {
+			model.addAttribute("msg", "로그인 후 이용해 주세요.");
+			
+			return "login";
+		}
 		
 		return "redirect:adminInquiryList.go";
 	}
@@ -189,31 +228,7 @@ public class InquiryController {
 		return service.adDelete(ib_idx);
 	}
 
-	//관리자 1대1게시판  검색 
-	@RequestMapping(value = "/adSelect",method = RequestMethod.GET)
-	public String adSelect(Model model,@RequestParam String ib_searchOption,String ib_keyword
-			,String ib_status) {			
 	
-	
-	
-	logger.info("상태값:"+ib_status+"/검색옵션:"+ib_searchOption+"/키워드:"+ib_keyword);
-
-		model.addAttribute("ib_status",ib_status);
-		model.addAttribute("ib_searchOption",ib_searchOption);
-		model.addAttribute("ib_keyword",ib_keyword);
-		
-		
-		ArrayList<InquiryDTO>adSearchList=service.adSearchList(ib_status,ib_searchOption,ib_keyword);
-		if(adSearchList.size() > 0) {
-			logger.info("1대1 게시판(관리자) 리스트 검색갯수 : "+adSearchList.size());
-			model.addAttribute("inquiryList",adSearchList);
-			
-		
-		}
-		
-		
-		return "adminInquiryList";
-	}
 
 	
 

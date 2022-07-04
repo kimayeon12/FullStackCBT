@@ -54,7 +54,7 @@ textarea{
 			<tr>
 				<th colspan="2">
 					<input type="submit" value="글쓰기"/>
-					<input type="button" value="리스트" onclick="location.href='/'"/>
+					<input type="button" value="리스트" onclick="location.href='inquiryList.go'"/>
 				</th>
 			</tr>			
 		</table>

@@ -58,7 +58,8 @@ textarea{
 				<c:forEach var="dto" items="${list}" >
 								<p>
 									<a href="#this" >${dto.ba_org_name}</a>
-									<input type="checkbox"  name="ba_idx" value="${dto.ba_idx}"/>				
+									<input type="checkbox"  name="ba_idx" value="${dto.ba_idx}"/>
+									체크시 파일삭제				
 								</p>
 				</c:forEach>			
 			   

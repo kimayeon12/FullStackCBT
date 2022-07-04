@@ -4,23 +4,15 @@
 <mapper namespace="com.fullstack.cbt.dao.InquiryDAO">
 
 	
-	<select id="inquiryList" resultType="com.fullstack.cbt.dto.InquiryDTO">
-			SELECT ib_idx,ib_subject,ib_reg_date,ib_status FROM cbt_inquiry_board ORDER BY ib_idx DESC 
-	</select>
-	
 
-	<select id="adminInquiryList" resultType="com.fullstack.cbt.dto.InquiryDTO">
-			SELECT ib_idx,ib_subject,mb_id,ib_reg_date,ib_status FROM cbt_inquiry_board
-			ORDER BY ib_idx DESC;
-	</select>
 
 	<insert id="write" 
 		useGeneratedKeys="true"
 		keyColumn="ib_idx"
 		keyProperty="ib_idx"
 		parameterType="com.fullstack.cbt.dto.InquiryDTO">
-		INSERT INTO cbt_inquiry_board(ib_subject, ib_content,mb_id)
-			VALUES(#{ib_subject},#{ib_content},#{mb_id})
+		INSERT INTO cbt_inquiry_board(ib_subject, ib_content,mb_id,ib_status)
+			VALUES(#{ib_subject},#{ib_content},#{mb_id},'2')
 	</insert>
 
 	<insert id="fileWrite">
@@ -74,109 +66,156 @@
  	
  	<update id="adUpdate" parameterType="hashmap" >
 	UPDATE cbt_inquiry_board 
-	SET ib_status =#{ib_status},ib_answer =#{ib_answer},ib_memo =#{ib_memo},ib_answer_date =NOW(),ib_admin_id =#{ib_admin_id} 
-	WHERE ib_idx =#{ib_idx}
+	SET 
+		ib_memo = #{ib_memo}
+		,ib_status = #{ib_status}
+		
+		<if test="ib_status == '2'.toString()">
+		,ib_admin_id = ''
+		,ib_answer = ''
+		,ib_answer_date='0000-00-00 00:00:00'
+		</if>
+		
+		<if test="ib_status == '3'.toString()">
+		,ib_admin_id = #{ib_admin_id}
+		</if>
+		
+		<if test="ib_status == '4'.toString() and ib_answer_date != null and ib_answer_date.equals('')">
+			,ib_answer_date=NOW()
+			,ib_answer=#{ib_answer}
+			
+		</if>
+	
+	WHERE ib_idx =#{ib_idx} 
+	AND (ib_admin_id = '' or ib_admin_id = #{ib_admin_id})
 	</update>
 
 
-
-
-
-	<!-- 1대1 게시판(관리자) 검색 리스트 -->
-	<select id="adSearchList" resultType="com.fullstack.cbt.dto.InquiryDTO">
-		<![CDATA[
-			SELECT ib_idx,ib_subject,mb_id,ib_reg_date,ib_status FROM cbt_inquiry_board		
-			WHERE ib_idx > 0
-		]]>
- 		  <include refid="adSearchSql"></include>		
-		ORDER BY ib_idx DESC 
-	</select>
-		<sql id="adSearchSql">
-	    <if test="param2 !=null">	    
-	            <if test="param2 == 'title'.toString()">
-	                AND ib_subject like CONCAT('%', #{param3}, '%')
-	            </if>
-	     
-	            <if test="param2 == 'content'.toString()">
-	                AND ib_content like CONCAT('%', #{param3}, '%')
-	            </if>
-	             
-	            <if test="param2 == 'all'.toString()">
-	                AND ( 
-	                   
-	                     ib_subject like CONCAT('%', #{param3}, '%')
-	                    OR
-	                     ib_content like CONCAT('%', #{param3}, '%')
-	                )
-	            </if>	             
-	    </if>
-	    
-	    <if test="param1!=null">
-	    		<if test="param1 == '1'.toString()">
-	               
-	            </if>
-	    	     <if test="param1 == '2'.toString()">
-	                AND ib_status ='2' 
-	            </if>
-	    	     <if test="param1 == '3'.toString()">
-	                AND ib_status ='3'
-	            </if>	  
-	    	     <if test="param1 == '4'.toString()">
-	                AND ib_status ='4'
-	            </if>	  	            	            	    
-	    </if>
-	    
-	</sql>
 	
 	
 	
 	<!-- 1대1 게시판 검색 리스트 -->
-	<select id="searchList" resultType="com.fullstack.cbt.dto.InquiryDTO">
-		<![CDATA[
-			SELECT ib_idx,ib_subject,ib_reg_date,ib_status FROM cbt_inquiry_board		
-			WHERE ib_idx > 0
-		]]>
- 		  <include refid="searchSql"></include>		
-		ORDER BY ib_idx DESC 
-	</select>
+	<!-- 페이징검색 -->
 	
+		<select id="listPageCount" resultType="int">
+		<![CDATA[
+			SELECT COUNT(ib_idx) FROM cbt_inquiry_board WHERE ib_idx > 0 		
+		]]>
+		
+		<include refid="newSearchSql"></include>
+		</select>
 
-		<sql id="searchSql">
-	    <if test="param2 !=null">	    
-	            <if test="param2 == 'title'.toString()">
-	                AND ib_subject like CONCAT('%', #{param3}, '%')
+
+		<select id="inquirySearch" resultType="com.fullstack.cbt.dto.InquiryDTO">
+			<![CDATA[
+				SELECT ib_idx,ib_subject,ib_reg_date,ib_status FROM cbt_inquiry_board		
+				
+				WHERE ib_idx > 0
+			]]>
+			  
+			  <include refid="newSearchSql"></include>		
+			
+			ORDER BY ib_idx DESC limit #{pageStart}, #{perPageNum}
+		</select>
+	
+		<sql id="newSearchSql">
+		    <if test="ib_searchOption !=null">	    
+		            <if test="ib_searchOption == 'title'.toString()">
+		                AND ib_subject like CONCAT('%', #{ib_keyword}, '%')
+		            </if>
+		     
+		            <if test="ib_searchOption == 'content'.toString()">
+		                AND ib_content like CONCAT('%', #{ib_keyword}, '%')
+		            </if>
+		             
+		            <if test="ib_searchOption == 'all'.toString()">
+		                AND ( 
+		                   
+		                     ib_subject like CONCAT('%', #{ib_keyword}, '%')
+		                    OR
+		                     ib_content like CONCAT('%', #{ib_keyword}, '%')
+		                )
+		            </if>	             
+		    </if>
+		    
+		    <if test="ib_status!=null">
+		    	     <if test="ib_status == '2'.toString()">
+		                AND ib_status ='2'
+		            </if>
+		    	     <if test="ib_status == '3'.toString()">
+		                AND ib_status ='3'
+		            </if>	  
+		    	     <if test="ib_status == '4'.toString()">
+		                AND ib_status ='4'
+		            </if>	  	            	            	    
+		    </if>
+		    
+		</sql>
+	 
+
+
+
+	<!-- 1대1 게시판(관리자) 검색 리스트 -->
+		<select id="adInquirySearch" resultType="com.fullstack.cbt.dto.InquiryDTO">
+			<![CDATA[
+				SELECT ib_idx,ib_subject,mb_id,ib_reg_date,ib_status FROM cbt_inquiry_board		
+				WHERE ib_idx > 0
+			]]>
+	 		  <include refid="adSearchSql"></include>		
+			ORDER BY ib_idx DESC limit #{pageStart}, #{perPageNum}
+		</select>
+		
+		<select id="adListPageCount" resultType="int">
+			<![CDATA[
+				SELECT COUNT(ib_idx) FROM cbt_inquiry_board WHERE ib_idx > 0 		
+			]]>
+			
+			<include refid="adSearchSql"></include>
+		</select>
+
+		<sql id="adSearchSql">
+	    <if test="ib_searchOption !=null">	    
+	            <if test="ib_searchOption == 'title'.toString()">
+	                AND ib_subject like CONCAT('%', #{ib_keyword}, '%')
 	            </if>
 	     
-	            <if test="param2 == 'content'.toString()">
-	                AND ib_content like CONCAT('%', #{param3}, '%')
+	            <if test="ib_searchOption == 'idid'.toString()">
+	                AND mb_id like CONCAT('%', #{ib_keyword}, '%')
 	            </if>
 	             
-	            <if test="param2 == 'all'.toString()">
+	            <if test="ib_searchOption == 'all'.toString()">
 	                AND ( 
 	                   
-	                     ib_subject like CONCAT('%', #{param3}, '%')
+	                     ib_subject like CONCAT('%', #{ib_keyword}, '%')
 	                    OR
-	                     ib_content like CONCAT('%', #{param3}, '%')
+	                     mb_id like CONCAT('%', #{ib_keyword}, '%')
 	                )
 	            </if>	             
 	    </if>
 	    
-	    <if test="param1!=null">
-	    		<if test="param1 == '1'.toString()">
+	    <if test="ib_status!=null">
+	    		<if test="ib_status == '1'.toString()">
 	               
 	            </if>
-	    	     <if test="param1 == '2'.toString()">
+	    	     <if test="ib_status == '2'.toString()">
 	                AND ib_status ='2' 
 	            </if>
-	    	     <if test="param1 == '3'.toString()">
+	    	     <if test="ib_status == '3'.toString()">
 	                AND ib_status ='3'
 	            </if>	  
-	    	     <if test="param1 == '4'.toString()">
+	    	     <if test="ib_status == '4'.toString()">
 	                AND ib_status ='4'
 	            </if>	  	            	            	    
 	    </if>
 	    
 	</sql>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

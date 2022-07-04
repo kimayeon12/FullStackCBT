@@ -35,6 +35,7 @@ textarea{
 <body>
 	<h3>1:1게시판</h3>
 	<form action="adminUpdate.do" method="post">
+		<input type="hidden" name="ib_answer_date" value="${dto.ib_answer_date}"/>
         <table class="dto">
            
                 <tr>
@@ -84,6 +85,7 @@ textarea{
                     <td>${dto.ib_admin_id}</td>
                 <th>답변일시</th>
                     <td>${dto.ib_answer_date}</td>
+                  
                 <tr>
                 	<th>답변내용</th>
                     <td colspan="5"><textarea name="ib_answer">${dto.ib_answer}</textarea></td>
@@ -102,9 +104,7 @@ textarea{
 </body>
 <%@ include file="../../resources/inc/footer.jsp" %>
 
- <script>    
- //var date = new Date();  
- //$('.dateview1').html(moment(date).format('YYYY MM DD HH:mm:ss'));
+
 
 </script>
 </html>

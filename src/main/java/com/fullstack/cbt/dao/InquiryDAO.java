@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.fullstack.cbt.controller.Criteria;
+import com.fullstack.cbt.controller.PageMaker2;
 import com.fullstack.cbt.dto.InquiryAttachDTO;
 import com.fullstack.cbt.dto.InquiryDTO;
 
@@ -15,9 +17,6 @@ public interface InquiryDAO {
 	
 
 
-
-
-	ArrayList<InquiryDTO> inquiryList();
 
 
 	int write(InquiryDTO dto);
@@ -35,14 +34,10 @@ public interface InquiryDAO {
 	int del(String ib_idx);
 
 
-	ArrayList<InquiryDTO> adminInquiryList();
-
-
 	InquiryDTO adminInquiryDetail(String ib_idx);
 
 
 	ArrayList<InquiryAttachDTO> adminPhotoList(String ib_idx);
-
 
 	
 
@@ -63,7 +58,26 @@ public interface InquiryDAO {
 	ArrayList<InquiryDTO> adSearchList(String ib_keyword, String ib_searchOption, String ib_status);
 
 
-	ArrayList<InquiryDTO> searchList( String ib_keyword, String ib_searchOption, String ib_status);
+	
+	//사용자 리스트 검색
+
+	ArrayList<InquiryDTO> inquirySearch(PageMaker2 pageMaker);
+
+	int listPageCount(PageMaker2 pageMaker);
+	
+	//관리자 리스트 검색
+
+	ArrayList<InquiryDTO> adInquirySearch(PageMaker2 pageMaker);
+	
+	int adListPageCount(PageMaker2 pageMaker);
+
+
+	
+
+
+	
+
+	
 
 
 

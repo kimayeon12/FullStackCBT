@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 	<h3>이의제기 관리</h3>
-	<div>총 이의제기 수: ${objectionList.size()} </div>
+	<div>총 이의제기 수:<b> ${listCnt}</b> </div>
 	<form action="objectionSelectList.do" method="get" id="detailForm">
 		<select name="oj_status" id="oj_status">
 			<option value="처리상태" ${oj_status == '' ? 'selected="selected"' : ''}>처리상태</option>
@@ -23,7 +23,7 @@
 			<tr>
 				<th>문제</th>
 				<th>아이디</th>
-				<th>제출일자</th>
+				<th>이의제기 일자</th>
 				<th>처리상태</th>
 			</tr>
 		</thead>
@@ -31,9 +31,9 @@
 			<c:forEach items="${objectionList}" var="objectionList">
 				<tr>
 					<td><a href="/adminObjectionDetail.go?oj_idx=${objectionList.oj_idx}">${objectionList.pc_problem}</a></td>
-					<td>${objectionList.mb_id}</td>
-					<td>${objectionList.oj_date}</td>
-					<td>
+					<td align="center">${objectionList.mb_id}</td>
+					<td align="center">${fn:substring(objectionList.oj_date,0,10)}</td>
+					<td align="center">
 						<c:choose>
 							<c:when test="${objectionList.oj_status eq '처리대기'}">처리대기</c:when>
 							<c:when test="${objectionList.oj_status eq '처리중'}">처리중</c:when>

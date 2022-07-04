@@ -27,7 +27,7 @@
 				  	</td>
 				</tr>
 				<tr>
-				  	<th>이의제기 일자</th>
+				  	<th>이의제기 일시</th>
 				  	<td>
 				  		<input type="text" name="oj_date" value="${objectionDetail.oj_date}" style="border:0 solid black;" readonly/>
 				  	</td>
@@ -41,7 +41,7 @@
       			<tr>
         			<th>처리자 아이디</th>
        				<td>
-       					<input type="text" name="oj_admin_id" value="${objectionDetail.oj_admin_id}" style="border:0 solid black;" readonly/>
+       					<input type="text" name="oj_admin_id" id="oj_admin_id" value="${objectionDetail.oj_admin_id}" style="border:0 solid black;" readonly/>
        				</td>
      			 </tr>
     		</thead>
@@ -49,11 +49,11 @@
       			<tr>
         			<th>관리자 메모</th>
         			<td>
-        				<input type="text" name="oj_memo" value="${objectionDetail.oj_memo}"/>
+        				<textarea name="oj_memo" >${objectionDetail.oj_memo}</textarea>
         			</td>
       			</tr>
       			<tr>
-        			<th>이의제기 처리일자</th>
+        			<th>이의제기 처리일시</th>
         			<td>
         				<input type="text" name="oj_proc_date" value="${objectionDetail.oj_proc_date}" style="border:0 solid black;" readonly/>
         			</td>
@@ -61,24 +61,49 @@
       			<tr>
        			 	<th>이의제기 처리상태</th>
          			<td>
-           				<select name="oj_status">
-           					<option value="">처리상태</option>
-		         			<c:forEach items="${statusList}" var="item">
-        	     				<option value="${item.oj_status}" ${item.oj_status eq objectionDetail.oj_status ? 'selected' : ''}>${item.oj_status}</option>
-		           			</c:forEach>	
+           				<select name="oj_status" id="oj_status">
+		         				<option value="" >처리상태</option>
+								<option value="처리대기" ${objectionDetail.oj_status == '처리대기' ? 'selected="selected"' : ''}>처리대기</option>
+								<option value="처리중" ${objectionDetail.oj_status == '처리중' ? 'selected="selected"' : ''}>처리중</option>
+								<option value="처리완료" ${objectionDetail.oj_status == '처리완료' ? 'selected="selected"' : ''}>처리완료</option>           			
            				</select>
          			</td>
        			</tr>
 	 		</tbody>
 		</table>
-	   	<input type="submit" value="저장"/>
+	   	<input type="submit" id="saveButton" value="저장"/>
 		<input type="button" value="목록" onclick="location.href='objectionList.do'"/>
 		</form>   
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
+//이의제기 처리상태가 처리대기 일 경우
+//관리자메모, 이의제기 처리상태, 저장버튼 활성화(5,7,8)
 
+var loginId = "${loginId}";
+if($("#oj_status").val()=="처리중"){
+	if(loginId != $("#oj_admin_id").val()){
+		$('textarea[name="oj_memo"]').attr("disabled",true);
+		$("#oj_status").attr("disabled",true);
+		$("#saveButton").attr("disabled",true);
+	}else{
+		$('textarea[name="oj_memo"]').attr("disabled",false);
+		$("#oj_status").attr("disabled",false);
+		$("#saveButton").attr("disabled",false);
+	}
+}
 
+if($("#oj_status").val()=="처리완료"){
+	$( 'textarea' ).contents().unwrap().wrap( '<p></p>' );
+	$("#oj_status").attr("disabled",true);
+	$("#saveButton").attr("type","hidden");
+}
+//이의제기 처리상태가 처리중인 경우
+//- 처리자 아이디와 로그인 계정이 다르면 5,7,8영역 비활성화
+//- 처리자 아이디와 로그인 계정이 일치하면 5,7,8영역 활성화
 
+//이의제기 처리상태가 처리완료인 경우
+//- 5,7영역은 일반 텍스트로 각 정보 노출
+//- 8영역은 사라짐
 
 
 

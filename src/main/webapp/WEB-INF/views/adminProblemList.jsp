@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 	<div>문제 출제 관리</div>
-	<div>총 문제수 : </div>
-		<form action="problemList.do" method="get" id="subjectForm">
+	<div>총 문제수 : ${listCnt}</div>
+		<form action="problemDetailList.do" method="get" id="subjectForm">
 			<select name="su_idx" id="subjectList" onchange="subjectListShow();">
 				<option value="">과목명</option>
 				<c:forEach items="${subjectList}" var="subjectList">
@@ -16,6 +16,11 @@
 					<option value="${subjectChapList.sc_idx}" ${sc_idx == subjectChapList.sc_idx ? 'selected="selected"' : ''}>${subjectChapList.sc_name}</option>
 				</c:forEach>		
 			</select>
+			
+			<button style="float:right" type="submit" >검색</button>
+		    <input style="float:right" type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${mb_id}" required/>
+		    <!-- 페이징  -->
+		    <input type="hidden" name="pageNum" value="1"/>
 		</form>
 	
 		<table>
@@ -34,36 +39,34 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${problemList}" var="problemList">
-					<tr>
-						<td>${problemList.pc_idx}</td>
-						<td>${problemList.su_name}</td>
-						<td>${problemList.sc_name}</td>
-						<td>${problemList.pc_problem}</td>
-						<td>${problemList.pc_difficulty}</td>
-						<td></td>
-						<td>${problemList.mb_id}</td>
-						<td>${problemList.pc_date}</td>
-						<td></td>
-						<td><input class="move" type="button" value="수정하기" onclick="location.href='problemUpdate.go?pc_idx=${problemList.pc_idx}&su_idx=${problemList.su_idx}'"/></td>
-					</tr>
-				</c:forEach>
+				<c:choose>
+				<c:when test="${problemList.size() >0}">
+					<c:forEach items="${problemList}" var="problemList">
+						<tr>
+							<td>${problemList.pc_idx}</td>
+							<td>${problemList.su_name}</td>
+							<td>${problemList.sc_name}</td>
+							<td>${problemList.pc_problem}</td>
+							<td>${problemList.pc_difficulty}</td>
+							<td>${problemList.answerRate}</td>
+							<td>${problemList.mb_id}</td>
+							<td>${problemList.pc_date}</td>
+							<td></td>
+							<td><input class="move" type="button" value="수정하기" onclick="location.href='problemUpdate.go?pc_idx=${problemList.pc_idx}&su_idx=${problemList.su_idx}'"/></td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+	     			<tr>
+	     				<td colspan="10" style="text-align: center">찾으시는 데이터가 없습니다.</td>
+	     			</tr>
+	     		</c:otherwise>
+			</c:choose>
 			</tbody>
 		</table>
 		
-		<!-- 검색을 위한 부분 -->
-		<div class="search_wrap">
-	        <div class="search_area">
-	        	<select name="type">
-					<option value="PW" <c:out value="${pageMaker.cri.type eq 'PW'?'selected':'' }"/>>전체<option>
-					<option value="P" <c:out value="${pageMaker.cri.type eq 'P'?'selected':'' }"/>>문제</option>
-					<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
-	            </select>
-	            <input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-	            <button>검색</button>
-	        </div>
-	    </div>
-	    
+	    <input type="button" style="float:right" value="새로운 문제 출제" onclick="location.href='problem.go'"/>
+		
 		<!-- 아래는 페이징 위해 만든 부분 -->
 		<div class="pageInfo_wrap" >
         	<div class="pageInfo_area">
@@ -74,7 +77,7 @@
 	                </c:if>
  					<!-- 각 번호 페이지 버튼 -->
                 	<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                    	<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
+                    	<li class='pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }'><a href="${num}">${num}</a></li>
                 	</c:forEach>
                 	<!-- 다음페이지 버튼 -->
 	                <c:if test="${pageMaker.next}">
@@ -82,19 +85,17 @@
 	                </c:if>			
  				</ul> 
         	</div>
+    		
     		<!-- 페이징 위해 만든 부분 이걸로 parameter 넘겨준다. -->
 	    	<form id="moveForm" method="get">
-	    		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-	        	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-	        	<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-	        	<input type="hidden" name="type" value="${pageMaker.cri.type }">		
+	    		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">	
 	    	</form>
     	</div>
 
-	<input type="button" value="새로운 문제 출제" onclick="location.href='adminProblemWrite.go'"/>
+	
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
-
+/* 파라미터 전송 */
 function subjectListShow(){
 	$("#subjectForm").submit();	
 }	
@@ -108,38 +109,16 @@ function subjectChapProblemList(){
 $(".pageInfo a").on("click", function(e){
 	
 	e.preventDefault();
-    $("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
-    $("#moveForm").attr("action", "/problemList.do");
-    $("#moveForm").submit();
+    if($("#su_idx").val()=="" && $("#sc_idx").val()=="" && $("#mb_id").val()==""){
+		$("#moveForm").find("input[name='pageNum']").val($(this).attr("href"));
+	    $("#moveForm").attr("action", "/problemList.do");
+	    $("#moveForm").submit();    	
+    }else{
+    	$("#subjectForm").find('input[name="pageNum"]').val($(this).attr("href"));
+    	$("#subjectForm").submit();
+    }
         
 });
-
-
-
-/* 검색 */
-$(".search_area button").on("click", function(e){
-	e.preventDefault();
-
-	let type = $(".search_area select").val();
-    let keyword = $(".search_area input[name='keyword']").val();
-    
-    if(!type){
-        alert("검색 종류를 선택하세요.");
-        return false;
-    }
-    
-    if(!keyword){
-        alert("키워드를 입력하세요.");
-        return false;
-    }
-    
-    $("#moveForm").find("input[name='type']").val(type);
-	$("#moveForm").find("input[name='keyword']").val(keyword);
-	$("#moveForm").find("input[name='pageNum']").val(1);
-	$("#moveForm").submit();
-}); 
-
-
 
 
 

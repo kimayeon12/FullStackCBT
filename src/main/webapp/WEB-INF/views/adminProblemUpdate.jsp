@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 <div>문제 출제 관리 - 수정</div>
-	<form action="problemUpdate.do" method="get">
+	<form action="problemUpdate.do" method="get" onsubmit="return checkSubmit()">
 	<table>
 		<tr>
 			<th>과목명</th>
@@ -29,36 +29,38 @@
 		</tr>
 		<tr>
 			<th>문제</th>
-			<td><textarea name="pc_problem">${problemDetail.pc_problem}</textarea></td>
+			<td>
+				<input type="text" name="pc_problem" id="pc_problem" value="${problemDetail.pc_problem}">
+			</td>
 		</tr>
 		<tr>
 			<th>정답</th>
 			<td>
-				<input type="radio" name="pc_answer" value="1" <c:if test="${problemDetail.pc_answer eq '1'}">checked</c:if>/>1
-				<input type="radio" name="pc_answer" value="2" <c:if test="${problemDetail.pc_answer eq '2'}">checked</c:if>/>2
-				<input type="radio" name="pc_answer" value="3" <c:if test="${problemDetail.pc_answer eq '3'}">checked</c:if>/>3
-				<input type="radio" name="pc_answer" value="4" <c:if test="${problemDetail.pc_answer eq '4'}">checked</c:if>/>4
+				<input type="radio" name="pc_answer" id="pc_answer" value="1" <c:if test="${problemDetail.pc_answer eq '1'}">checked</c:if>/>1
+				<input type="radio" name="pc_answer" id="pc_answer" value="2" <c:if test="${problemDetail.pc_answer eq '2'}">checked</c:if>/>2
+				<input type="radio" name="pc_answer" id="pc_answer" value="3" <c:if test="${problemDetail.pc_answer eq '3'}">checked</c:if>/>3
+				<input type="radio" name="pc_answer" id="pc_answer" value="4" <c:if test="${problemDetail.pc_answer eq '4'}">checked</c:if>/>4
 			</td>
 		</tr>
 		<tr>
 			<th>4지선다문항</th>
 			<td>
-				 ①: <input type="text" name="pc_answer1" value="${problemDetail.pc_answer1}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer1}">checked</c:if>/><br>
-				 ②: <input type="text" name="pc_answer2" value="${problemDetail.pc_answer2}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer2}">checked</c:if>/><br>
-				 ③: <input type="text" name="pc_answer3" value="${problemDetail.pc_answer3}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer3}">checked</c:if>/><br>
-				 ④: <input type="text" name="pc_answer4" value="${problemDetail.pc_answer4}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer4}">checked</c:if>/>
+				 ①: <input type="text" name="pc_answer1" id="pc_answer1" value="${problemDetail.pc_answer1}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer1}">checked</c:if>/><br>
+				 ②: <input type="text" name="pc_answer2" id="pc_answer2" value="${problemDetail.pc_answer2}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer2}">checked</c:if>/><br>
+				 ③: <input type="text" name="pc_answer3" id="pc_answer3" value="${problemDetail.pc_answer3}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer3}">checked</c:if>/><br>
+				 ④: <input type="text" name="pc_answer4" id="pc_answer4" value="${problemDetail.pc_answer4}" <c:if test="${problemDetail.pc_answer1 eq problemDetail.pc_answer4}">checked</c:if>/>
 			</td>
 		</tr>
 		<tr>
 			<th>해설</th>
-			<td><textarea name="pc_explan">${problemDetail.pc_explan}</textarea></td>
+			<td><textarea name="pc_explan" id="pc_explan">${problemDetail.pc_explan}</textarea></td>
         </tr>
 		<tr>
 			<th>난이도</th>
 			<td>
-				<input type="radio" name="pc_difficulty" value="상" <c:if test="${fn:contains(problemDetail.pc_difficulty, '상')}">checked</c:if>/>상
-				<input type="radio" name="pc_difficulty" value="중" <c:if test="${fn:contains(problemDetail.pc_difficulty, '중')}">checked</c:if>/>중
-				<input type="radio" name="pc_difficulty" value="하" <c:if test="${fn:contains(problemDetail.pc_difficulty, '하')}">checked</c:if>/>하
+				<input type="radio" name="pc_difficulty" id="pc_difficulty" value="상" <c:if test="${fn:contains(problemDetail.pc_difficulty, '상')}">checked</c:if>/>상
+				<input type="radio" name="pc_difficulty" id="pc_difficulty" value="중" <c:if test="${fn:contains(problemDetail.pc_difficulty, '중')}">checked</c:if>/>중
+				<input type="radio" name="pc_difficulty" id="pc_difficulty" value="하" <c:if test="${fn:contains(problemDetail.pc_difficulty, '하')}">checked</c:if>/>하
 			</td>
 		</tr>
 		<tr>
@@ -114,7 +116,57 @@ function drawSubjectChapList(subjectChapList){
 	
 }
 
+function checkSubmit(){
 
+	var pc_answer = $("#pc_answer");
+	
+	var pc_difficulty = $("#pc_difficulty");
+	
+if($('select[name="su_idx"]').val()==""){
+		alert("과목을 선택해 주세요");
+		$("#subjectList").focus();
+		return false;
+	}else if($('select[name="sc_idx"]').val()==""){
+		alert("과목 단원을 선택해 주세요");
+		$("#subjectChapList").focus();
+		return false;
+	}else if($('input[name="pc_problem"]').val()==""){
+		alert("문제를 입력해 주세요");
+		$("#pc_problem").focus();
+		return false;
+	}else if($(':radio[name="pc_answer"]:checked').length < 1){
+		alert("정답을 입력해 주세요");
+		pc_answer.focus();
+		return false;
+	}else if($('input[name="pc_answer1"]').val()==""){
+		alert("답안 1을 입력해 주세요");
+		$("#pc_answer1").focus();
+		return false;
+	}else if($('input[name="pc_answer2"]').val()==""){
+		alert("답안 2를 입력해 주세요");
+		$("#pc_answer2").focus();
+		return false;
+	}else if($('input[name="pc_answer3"]').val()==""){
+		alert("답안 3을 입력해 주세요");
+		$("#pc_answer3").focus();
+		return false;
+	}else if($('input[name="pc_answer4"]').val()==""){
+		alert("답안 4을 입력해 주세요");
+		$("#pc_answer4").focus();
+		return false;
+	}else if($('textarea[name="pc_explan"]').val()==""){
+		alert("해설을 입력해 주세요");
+		$("#pc_explan").focus();
+		return false;
+	}else if($(':radio[name="pc_difficulty"]:checked').length < 1){
+		alert("난이도를 입력해 주세요");
+		pc_difficulty.focus();
+		return false;
+	}else{
+		alert("문제가 등록 되었습니다.");
+	}
+	
+}
 
 
 

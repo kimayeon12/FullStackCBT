@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 	<div>문제출제관리 - 출제</div>
-	<form action="problemWrite.do" method="get">
+	<form action="problemWrite.do" method="get" onsubmit="return checkSubmit()">
       	<table>
           	<tr>
               	<th>과목명</th>
@@ -26,36 +26,38 @@
                </tr>
                <tr>
                     <th>문제</th>
-                    <td><textarea rows="15" cols="30" name="pc_problem"></textarea></td>
+                    <td>
+                    	<input type="text" name="pc_problem" id="pc_problem">
+                    </td>
                 </tr>
                 <tr>
                      <th>정답</th>
                      <td>
-                         <input type="radio" name="pc_answer" value="1"/>1
-                         <input type="radio" name="pc_answer" value="2"/>2
-                         <input type="radio" name="pc_answer" value="3"/>3
-                         <input type="radio" name="pc_answer" value="4"/>4
+                         <input type="radio" name="pc_answer" id="pc_answer" value="1"/>1
+                         <input type="radio" name="pc_answer" id="pc_answer" value="2"/>2
+                         <input type="radio" name="pc_answer" id="pc_answer" value="3"/>3
+                         <input type="radio" name="pc_answer" id="pc_answer" value="4"/>4
                      </td>
                  </tr>
                  <tr>
                       <th>4지선다문항</th>
                       <td>
-                          ①: <input type="text" name="pc_answer1"/><br>
-                          ②: <input type="text" name="pc_answer2"/><br>
-                          ③: <input type="text" name="pc_answer3"/><br>
-                          ④: <input type="text" name="pc_answer4"/>
+                          ①: <input type="text" name="pc_answer1" id="pc_answer1"/><br>
+                          ②: <input type="text" name="pc_answer2" id="pc_answer2"/><br>
+                          ③: <input type="text" name="pc_answer3" id="pc_answer3"/><br>
+                          ④: <input type="text" name="pc_answer4" id="pc_answer4"/>
                        </td>
                   </tr>
                   <tr>
                        <th>해설</th>
-                       <td><textarea rows="5" cols="30" name="pc_explan"></textarea></td>
+                       <td><textarea rows="5" cols="30" name="pc_explan" id="pc_explan"></textarea></td>
                   </tr>
                   <tr>
                        <th>난이도</th>
                        <td>
-                            <input type="radio" name="pc_difficulty" value="상"/>상
-                            <input type="radio" name="pc_difficulty" value="중"/>중
-                            <input type="radio" name="pc_difficulty" value="하"/>하
+                            <input type="radio" name="pc_difficulty" id="pc_difficulty" value="상"/>상
+                            <input type="radio" name="pc_difficulty" id="pc_difficulty" value="중"/>중
+                            <input type="radio" name="pc_difficulty" id="pc_difficulty" value="하"/>하
                         </td>
                   </tr>
                   <tr>
@@ -89,12 +91,11 @@ $("select[name='su_idx']").on("change", function(){
 			}else{
 				alert("세부과목을 등록해 주세요");
 				//세부 과목 등록 페이지로 변경
-				//location.href='/';
+				location.href='/adminSubjectChapterManagement.do';
 			}
 		},
 		error:function(error){
 			console.log(error);
-			console.log("에러다");
 		}
 	});
 	
@@ -112,6 +113,59 @@ function drawSubjectChapList(subjectChapList){
 	
 }
 
+
+
+function checkSubmit(){
+
+	var pc_answer = $("#pc_answer");
+	
+	var pc_difficulty = $("#pc_difficulty");
+	
+if($('select[name="su_idx"]').val()==""){
+		alert("과목을 선택해 주세요");
+		$("#subjectList").focus();
+		return false;
+	}else if($('select[name="sc_idx"]').val()==""){
+		alert("과목 단원을 선택해 주세요");
+		$("#subjectChapList").focus();
+		return false;
+	}else if($('input[name="pc_problem"]').val()==""){
+		alert("문제를 입력해 주세요");
+		$("#pc_problem").focus();
+		return false;
+	}else if($(':radio[name="pc_answer"]:checked').length < 1){
+		alert("정답을 입력해 주세요");
+		pc_answer.focus();
+		return false;
+	}else if($('input[name="pc_answer1"]').val()==""){
+		alert("답안 1을 입력해 주세요");
+		$("#pc_answer1").focus();
+		return false;
+	}else if($('input[name="pc_answer2"]').val()==""){
+		alert("답안 2를 입력해 주세요");
+		$("#pc_answer2").focus();
+		return false;
+	}else if($('input[name="pc_answer3"]').val()==""){
+		alert("답안 3을 입력해 주세요");
+		$("#pc_answer3").focus();
+		return false;
+	}else if($('input[name="pc_answer4"]').val()==""){
+		alert("답안 4을 입력해 주세요");
+		$("#pc_answer4").focus();
+		return false;
+	}else if($('textarea[name="pc_explan"]').val()==""){
+		alert("해설을 입력해 주세요");
+		$("#pc_explan").focus();
+		return false;
+	}else if($(':radio[name="pc_difficulty"]:checked').length < 1){
+		alert("난이도를 입력해 주세요");
+		pc_difficulty.focus();
+		return false;
+	}else{
+		alert("문제가 등록 되었습니다.");
+	}
+	
+}
 </script>
 </html>
 

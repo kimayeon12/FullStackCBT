@@ -7,6 +7,7 @@ import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
+import com.fullstack.cbt.dto.TestAnswerDTO;
 
 public interface ProblemDAO {
 
@@ -32,7 +33,13 @@ public interface ProblemDAO {
     public ArrayList<ProblemDTO> getListPaging(Criteria cri);
     
     /* 게시판 총 갯수 */
-    public int getTotal(Criteria cri);
+    public int getTotal();
+
+	ArrayList<ProblemDTO> selectedListPaging(String su_idx, String sc_idx, String mb_id, int skip);
+
+	int selectedTotal(String su_idx, String sc_idx, String mb_id);
+
+	ArrayList<ProblemDTO> answerRate();
 	
 
 }

@@ -13,6 +13,7 @@ import com.fullstack.cbt.dao.ProblemDAO;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
 import com.fullstack.cbt.dto.SubjectDTO;
+import com.fullstack.cbt.dto.TestAnswerDTO;
 
 @Service
 public class ProblemService {
@@ -72,15 +73,30 @@ public class ProblemService {
 
 	 /* 게시판 목록(페이징 적용) */
     public ArrayList<ProblemDTO> getListPaging(Criteria cri){
-    	
+    	logger.info("전체 리스트 페이징 서비스 요청");
 		return dao.getListPaging(cri);
     }
     
     /* 게시물 총 갯수 */
-    public int getTotal(Criteria cri) {
-        
-        return dao.getTotal(cri);
+    public int getTotal() {
+    	logger.info("전체 게시글 수 가져오기 서비스 요청");
+        return dao.getTotal();
     }
+
+	public ArrayList<ProblemDTO> selectedListPaging(String su_idx, String sc_idx, String mb_id, int skip) {
+		logger.info("전체 리스트 페이징 서비스 요청");
+		return dao.selectedListPaging(su_idx, sc_idx, mb_id,skip);
+	}
+
+	public int selectedTotal(String su_idx, String sc_idx, String mb_id) {
+		logger.info("선택에 따라  게시글 수 가져오기 서비스 요청");
+		return dao.selectedTotal(su_idx,sc_idx,mb_id);
+	}
+
+	public ArrayList<ProblemDTO> answerRate() {
+		logger.info("정답률 서비스 요청");
+		return dao.answerRate();
+	}
 	
 	
 }

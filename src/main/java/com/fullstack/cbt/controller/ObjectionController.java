@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fullstack.cbt.dto.ObjectionDTO;
 import com.fullstack.cbt.dto.PageMakerDTO;
 import com.fullstack.cbt.dto.ProblemDTO;
+import com.fullstack.cbt.dto.TestDTO;
 import com.fullstack.cbt.service.ObjectionService;
 
 @Controller
@@ -78,59 +79,92 @@ public class ObjectionController {
 	
 	//이의제기 관리 리스트 + 페이징
 	@RequestMapping(value = "/objectionList.do", method = RequestMethod.GET)
-	public String objectionList(Model model, Criteria cri) {
+	public String objectionList(Model model, Criteria cri, HttpSession session) {
 		
-		logger.info("이의제기 관리 리스트 요청");
-		ArrayList<ObjectionDTO> objectionList = service.objectionList();
-		if(objectionList.size() > 0) {
-			logger.info("list size : "+objectionList.size());
-			model.addAttribute("objectionList", objectionList);
+		
+		String page ="login";
+		logger.info("관리자 로그인 ? : " + session.getAttribute("isAdmin"));
+		String adminId = (String) session.getAttribute("isAdmin");
+		
+		
+		if(adminId != null) {
+			logger.info("이의제기 관리 리스트 요청");
+			ArrayList<ObjectionDTO> objectionList = service.objectionList();
+			if(objectionList.size() > 0) {
+				logger.info("list size : "+objectionList.size());
+				model.addAttribute("objectionList", objectionList);
+			}			
+			/***************** 페이징 부분 *****************/
+			ArrayList<ObjectionDTO> objectionListpaging = service.getListPaging(cri);
+			model.addAttribute("objectionList", objectionListpaging);
+			
+			int total = service.getTotal();
+			logger.info("전체 게시글 수 : " + total);
+			model.addAttribute("listCnt", total);
+			
+			PageMakerDTO pageMake = new PageMakerDTO(cri, total);
+			model.addAttribute("pageMaker", pageMake);			
+			
+			page = "adminObjectionList";
+		}else {
+			model.addAttribute("msg", "관리자 계정 로그인이 필요한 서비스 입니다.");
 		}
 		
-		//페이징 부분**************************
-		model.addAttribute("objectionList", service.getListPaging(cri));
-		int total = service.getTotal(cri);
-		model.addAttribute("listCnt", total);
-		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-		model.addAttribute("pageMaker", pageMake);
-		
-		return "adminObjectionList";
+		return page;
+	
 	}
+	
+	
+	
 	
 	
 	//이의제기 셀렉트 리스트 + 페이징
 	@RequestMapping(value = "/objectionSelectList.do")
-	public String objectionSelectList(Model model, @RequestParam String oj_status, String oj_searchOption
-			, String keyword, Criteria cri) {
+	public String objectionSelectList(Model model, HttpSession session, Criteria cri, @RequestParam String oj_status, String pc_problem
+			, int pageNum) {
 		
-		logger.info("이의제기 셀렉트 리스트 요청 :"+oj_status+oj_searchOption+keyword);
-		model.addAttribute("oj_status", oj_status);
-		model.addAttribute("oj_searchOption", oj_searchOption);
-		model.addAttribute("keyword", keyword);
-		
-		//등록된 이의제기 전체 리스트, 처리상태를 선택 시 전체리스트를 보여주자
+		/*등록된 이의제기 전체 리스트, 처리상태를 선택 시 전체리스트를 보여주자
 		ArrayList<ObjectionDTO> objectionList = service.objectionList();
 		if(oj_status == "") {
 			model.addAttribute("objectionList", objectionList);
-		}
-		
-		ArrayList<ObjectionDTO> objectionSelectList = service.objectionSelectList(oj_status,oj_searchOption,keyword);
+		}*/
+		/*
+		ArrayList<ObjectionDTO> objectionSelectList = service.objectionSelectList(oj_status,pc_problem);
 		if(objectionSelectList.size() > 0) {
 			logger.info("list size : "+objectionSelectList.size());
 			model.addAttribute("objectionList", objectionSelectList);
+		}*/
+		
+		String page ="login";
+		logger.info("관리자 로그인 ? : " + session.getAttribute("isAdmin"));
+		String adminId = (String) session.getAttribute("isAdmin");
+		
+		if(adminId != null) {
+			
+			logger.info("이의제기 셀렉트 리스트 요청 :"+oj_status+pc_problem);
+			model.addAttribute("oj_status", oj_status);
+			model.addAttribute("pc_problem", pc_problem);
+			
+			/***************** 페이징 부분 *****************/
+			int skip = (pageNum -1) * 10;
+			ArrayList<ObjectionDTO> objectionSelectListPaging = service.selectedListPaging(oj_status,pc_problem,skip);
+			model.addAttribute("objectionList", objectionSelectListPaging);
+			
+			int selectedTotal = service.selectedTotal(oj_status,pc_problem);
+			model.addAttribute("listCnt", selectedTotal);
+			logger.info("선택된 게시글 수 : " + selectedTotal);
+			
+			//생성자 (int pageNum, int total)
+			PageMakerDTO pageMake2 = new PageMakerDTO(pageNum, selectedTotal);
+			model.addAttribute("pageMaker", pageMake2);					
+		
+			page = "adminObjectionList";
+		}else {
+			model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");
 		}
 		
-		//페이징 부분**************************
 		
-		
-		model.addAttribute("objectionList", service.getListPaging(cri)); 
-		int total = service.getTotal(cri); 
-		PageMakerDTO pageMake = new PageMakerDTO(cri, total);
-		model.addAttribute("pageMaker", pageMake);
-		
-		 
-		
-		return "adminObjectionList";
+		return page;
 	}
 	
 	
@@ -140,12 +174,29 @@ public class ObjectionController {
 	// *************** 이의제기 수정 상세보기 *************** 
 	
 	@RequestMapping(value = "/adminObjectionDetail.go")
-	public String objectionDetailGo(Model model, @RequestParam String oj_idx) {
+	public String objectionDetailGo(Model model, HttpSession session, @RequestParam String oj_idx) {
 		
-		logger.info("이의제기 상세 페이지 이동요청 : "+oj_idx);
-		ObjectionDTO objectionDetail = service.objectionDetail(oj_idx);
-		logger.info("objection : "+objectionDetail.getOj_content());
-		logger.info("objection : "+objectionDetail.getPc_problem());
+		String page ="login";
+		logger.info("관리자 로그인 ? : " + session.getAttribute("isAdmin"));
+		String adminId = (String) session.getAttribute("isAdmin");
+		
+		if(adminId != null) {
+
+			logger.info("이의제기 상세 페이지 이동요청 : "+oj_idx);
+			ObjectionDTO objectionDetail = service.objectionDetail(oj_idx);
+			logger.info("objection : "+objectionDetail.getOj_content());
+			logger.info("objection : "+objectionDetail.getPc_problem());
+			
+			model.addAttribute("objectionDetail", objectionDetail);
+			
+			
+			page = "adminObjectionDetail";
+			
+		}else {
+			model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");
+		}
+		
+		return page;
 		
 		/*처리상태 옵션 가져오기
 		logger.info("처리상태 가져오기");
@@ -156,29 +207,33 @@ public class ObjectionController {
 			model.addAttribute("statusList", statusList);
 		}
 		*/
-		
-		model.addAttribute("objectionDetail", objectionDetail);
-		
-		
-		return "adminObjectionDetail";
 	}
 	
 	//이의제기 저장하기
 	@RequestMapping(value = "/objectionUpdate.do")
 	public String objectionUpdate(Model model,HttpSession session, @RequestParam HashMap<String, Object> params) {
 		
-		logger.info("이의제기 저장 요청");
 		
-		//로그인 아이디
-		String loginId = (String) session.getAttribute("loginId");
-		params.put("oj_admin_id",  loginId);
-		model.addAttribute("loginId", loginId);
+		String page ="login";
+		logger.info("관리자 로그인 ? : " + session.getAttribute("isAdmin"));
+		String adminId = (String) session.getAttribute("isAdmin");
 		
-		logger.info("params: {}", params);
+		if(adminId != null) {
+			logger.info("이의제기 저장 요청");
+			//로그인 아이디
+			String loginId = (String) session.getAttribute("loginId");
+			params.put("oj_admin_id",  loginId);
+			model.addAttribute("loginId", loginId);
+			
+			logger.info("params: {}", params);
+			service.objectionUpdate(params);			
 		
-		service.objectionUpdate(params);
+			page = "redirect:/adminObjectionDetail.go?oj_idx="+params.get("oj_idx");
+		}else {
+			model.addAttribute("msg","관리자 계정 로그인이 필요한 서비스입니다.");		
+		}
 		
-		return "redirect:/adminObjectionDetail.go?oj_idx="+params.get("oj_idx");
+		return page;
 	}
 	
 	

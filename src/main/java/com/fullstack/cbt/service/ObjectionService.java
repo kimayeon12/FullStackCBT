@@ -42,13 +42,11 @@ public class ObjectionService {
 		logger.info("이의제기 리스트 요청");
 		return dao.objectionList();
 	}
-
-	public ArrayList<ObjectionDTO> objectionSelectList(String oj_status, String oj_searchOption, String keyword) {
+	/*
+	public ArrayList<ObjectionDTO> objectionSelectList(String oj_status, String pc_problem) {
 		logger.info("이의제기 셀렉트 리스트 요청");
-		return dao.objectionSelectList(oj_status, oj_searchOption, keyword);
-
-		
-	}
+		return dao.objectionSelectList(oj_status, pc_problem);		
+	}*/
 
 	/* 게시판 목록(페이징 적용) */
 	public ArrayList<ObjectionDTO> getListPaging(Criteria cri) {
@@ -56,8 +54,8 @@ public class ObjectionService {
 		return dao.getListPaging(cri);
     }
 	/* 페이징 총 게시글 수 구하기*/
-	public int getTotal(Criteria cri) {
-		return dao.getTotal(cri);
+	public int getTotal() {
+		return dao.getTotal();
     }
 	
 	/* 이의제기 상세보기 */
@@ -76,6 +74,17 @@ public class ObjectionService {
 		int success = dao.objectionUpdate(params);
 		logger.info("수정된 데이터 수 : "+ success);
 		
+	}
+	
+	/* 셀렉트 페이징 */
+	public ArrayList<ObjectionDTO> selectedListPaging(String oj_status, String pc_problem, int skip) {
+		logger.info("전체 리스트 페이징 서비스 요청");
+		return dao.selectedListPaging(oj_status, pc_problem,skip);
+	}
+
+	public int selectedTotal(String oj_status, String pc_problem) {
+		logger.info("선택에 따라  게시글 수 가져오기 서비스 요청");
+		return dao.selectedTotal(oj_status,pc_problem);
 	}
 
 }

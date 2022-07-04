@@ -87,7 +87,7 @@
 	</select>
 	
 
-	<select id="selectedListPaging" resultType="com.fullstack.cbt.dto.TestDTO"  >
+	<select id="selectedListPaging" resultType="com.fullstack.cbt.dto.TestDTO">
 		SELECT 
 		tt_idx
 		,su_idx

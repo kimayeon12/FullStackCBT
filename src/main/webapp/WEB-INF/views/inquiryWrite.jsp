@@ -1,45 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="resources/css/common.css" type="text/css">
-<style>
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-}
-	
-th, td{
-		padding: 5px 10px;
-}
-	
-table{
-		width: 80%;
-}
-	
-input[type='text']{
-		width: 100%;
-}
-	
-textarea{
-		width: 100%;
-		height: 150px;
-		resize: none;
-}
-</style>
-</head>
-<body>
-	<h3>글쓰기</h3>
+	<h1>1:1게시판 - 글쓰기</h1>
 	<form action="inquiryWrite.do" method="post" enctype="multipart/form-data" onsubmit="return inquiryWrite()">
 	
 	
 		<table class="ib">
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="ib_subject" id="ib_subject"/></td>
+				<td><input type="text" name="ib_subject" id="ib_subject" style="width:99%;"/></td>
 			</tr>
 
 			<tr>
@@ -54,7 +23,7 @@ textarea{
 			<tr>
 				<th colspan="2">
 					<input type="submit" value="글쓰기"/>
-					<input type="button" value="리스트" onclick="location.href='inquiryList.go'"/>
+					<input type="button" value="목록" onclick="location.href='inquiryList.go'"/>
 				</th>
 			</tr>			
 		</table>

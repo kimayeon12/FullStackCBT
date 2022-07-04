@@ -2,46 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../../resources/inc/header.jsp" %>
-
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="resources/css/common.css" type="text/css">
-<style>
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-}
-	
-th, td{
-		padding: 5px 10px;
-}
-	
-table{
-		width: 80%;
-}
-	
-input[type='text']{
-		width: 100%;
-}
-	
-textarea{
-		width: 100%;
-		height: 150px;
-		resize: none;
-}
-</style>
-</head>
-<body>
-	<h3>1:1게시판</h3>
+	<h1>1:1게시판 - 수정</h1>
 	<form action="inquiryUpdate.do" method="post" enctype="multipart/form-data" id="form" onsubmit="return inquiryUpdate()">
 	<table class="dto">
 		<tr>
 			<th>제목</th>
 			<td>
 				<input type="hidden" name="ib_idx" value="${dto.ib_idx}"/>
-				<input type="text" name ="ib_subject" id="ib_subject" value="${dto.ib_subject}">
+				<input type="text" name ="ib_subject" id="ib_subject" value="${dto.ib_subject}" style="width:99%;"/>
 			</td>
 		</tr>
         <tr>

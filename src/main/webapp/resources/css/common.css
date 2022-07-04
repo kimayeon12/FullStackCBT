@@ -11,6 +11,7 @@ html {
 body {
     margin: 0;
     padding: 0;
+    font-size: 15px;
 }
 
 table {
@@ -28,10 +29,41 @@ table tr td {
 	padding:10px;
 	border:1px solid #787878;
 }
+input[type="text"], input[type="password"], textarea {
+	padding:5px;
+	outline:none;
+	border-width:1px;
+	border-style:solid;
+}
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+	background-color:#fafafa;
+}
+input[type="submit"], button[type="submit"] {
+	padding:5px 10px;
+	font-size:12px;
+	outline:none;
+	border:none;
+	color:#fff;
+	background-color:#0000ff;
+}
+input[type="button"], button[type="button"] {
+	padding:5px 10px;
+	font-size:12px;
+	outline:none;
+	border:none;
+	color:#fff;
+	background-color:#333;
+}
+select {
+	padding:5px;
+	outline:none;
+	font-size:12px;
+}
 textarea {
 	width:100%;
 	height:100px;
 	resize:none;
+	overflow-y:scroll;
 }
 p > b{
 	color:#0000ff;
@@ -56,17 +88,29 @@ p > b{
 #wrap > #container > aside {
     text-align: right;
 }
+#wrap > #container > aside > span {
+    font-size:11px;
+    color:#c8c8c8;
+}
 
 #wrap > nav #logo {
     margin: 0;
     text-align: center;
 }
 
-#wrap > nav #logo > a {
-    text-decoration: none;
-    color: #333;
+#wrap > nav #logo > img {
+    max-width:120px;
 }
 
+ol > li, .problem > span{
+	font-family:'Batangche';
+	font-size:15px;
+}
+.problem > em {
+	color:#ff0000;
+	font-size:18px;
+	font-style:none;
+}
 #timer {
 	margin-bottom:30px;
 	display:block;
@@ -141,7 +185,7 @@ ul.answer {margin-top: 0.6em; padding: 0; position: relative;}
 	position: absolute;
 	cursor: pointer;
 	top: -0.2em;
-	left: 1.6em;
+	left: 2.4em;
 }
 
 .answer li > input[type="radio"]:checked + label {
@@ -154,13 +198,14 @@ ol#questionBox > li {
 
 #answerBox {
 	position: fixed;
-	top: 5%;
-	right: 5%;
+	top: 7%;
+	right: 7%;
 }
 
 #answerBox > p {
 	margin: 0;
 	text-align: center;
+	font-size:18px;
 	background-color: #ececec;
 }
 
@@ -174,7 +219,8 @@ ol#questionBox > li {
 #noProblem {
 	position: fixed;
 	top: 1%;
-	right: 5%;
+	right: 7%;
+	font-size:18px;
 }
 
 #noProblem > em {
@@ -230,7 +276,7 @@ table {
 .pageInfo{
     list-style : none;
     display: inline-block;
-    margin: 50px 0 0 100px;      
+    margin-top: 30px;
   }
 .pageInfo li{
     float: left;
@@ -245,6 +291,23 @@ a:hover {color:black; text-decoration: underline;}
 
 .active{
       background-color: #cdd5ec;
+}
+
+/* 페이징2 CSS */
+ .pageInfo_wrap{
+     margin-top: 30px;
+    text-align: left;
+ }
+  
+.pagination{
+  display: inline-block;
+ }
+.pagination a{
+	font-size:11px;
+  	color:black;
+  	float:left;
+  	padding:8px 16px;
+  	text-decoration: none;
 }
 
 /* 검색 부분 */
@@ -299,7 +362,6 @@ a:hover {color:black; text-decoration: underline;}
 .explan {
 	margin-bottom:10px;
 	padding:10px;
-	width:100%;
 	border:1px dotted black;
 }
 
@@ -311,5 +373,10 @@ a:hover {color:black; text-decoration: underline;}
 	margin:5px;
 }
 #wrap > nav > #adminMenu {
-	margin-bottom:30px;
+    margin: 0px 30px 0 30px;
+    padding:10px 0px 30px 10px;
+    background-color: #333;
+}
+#wrap > nav > #adminMenu a {
+    color:#ffff00;
 }

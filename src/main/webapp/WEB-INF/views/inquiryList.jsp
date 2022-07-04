@@ -1,59 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="resources/css/common.css" type="text/css">
-<style>
-@charset "UTF-8";
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-}
-	
-th, td{
-		padding: 5px 10px;
-}
-	
-table{
-		width: 80%;
-}
-	
-input[type='text']{
-		width: 100%;
-}
-	
-textarea{
-		width: 100%;
-		height: 150px;
-		resize: none;
-}
- .pageInfo_wrap{
-     margin-top: 30px;
-    text-align: left;
- }
-  
-.pagination{
-  display: inline-block;
- }
-.pagination a{
-	font-size:11px;
-  	color:black;
-  	float:left;
-  	padding:8px 16px;
-  	text-decoration: none;
-}
-
-
-</style>
-</head>
-<body>
-	
-	<h3>1:1 게시판</h3>
-	<form action="inquiryList.go" method="get" id="search">	
+	<h1>1:1게시판 - 목록</h1>
+	<div align="right">
+		<form action="inquiryList.go" method="get" id="search">	
 
 				<select name="ib_status"  id="status" >
                     <option value="1">답변상태</option>
@@ -68,7 +18,8 @@ textarea{
             <input type="search" name="ib_keyword" value="${pageMaker.ib_keyword}" id="ib_keyword">
              <input type="hidden" name="pageNum" value="1"/>
             <input type="submit" value="검색">
-	</form>
+		</form>
+	</div>
 	
 
 		<table>
@@ -104,7 +55,6 @@ textarea{
 			
 		</table>
 	
-	<input type="button" value ="글쓰기" onclick ="location.href='inquiryWrite.go'"/>
 	
 		 <!--페이징 -->
     <div class="pageInfo_wrap" >
@@ -112,6 +62,7 @@ textarea{
          ${pagination}
         </div>
     </div>
+	<div align="right"><input type="button" value ="글쓰기" onclick ="location.href='inquiryWrite.go'"/></div>
   
 
 	  <form id="moveForm" method="get">

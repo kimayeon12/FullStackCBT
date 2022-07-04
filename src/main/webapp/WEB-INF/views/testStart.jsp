@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<h3>응시하고 싶은 과목을 선택해 주세요</h3>
+<h1>시험 응시</h1>
+<div align="center">
+	<h2>응시하고 싶은 과목을 선택해 주세요</h2>
     <p>시험은 랜덤으로 총 10문제 출제되며, 제한시간(10분)이 초과되면 자동 제출됩니다.</p>
     
    
@@ -14,6 +16,7 @@
         </select>
         <input type="submit" value="시험시작"/> 
     </form>
+</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
    <script>
  

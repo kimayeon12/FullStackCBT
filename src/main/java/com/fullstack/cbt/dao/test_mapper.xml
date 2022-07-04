@@ -59,7 +59,7 @@
 	</select>
 	
 	<select id="getTestTimes" resultType="int">
-		SELECT MAX(tt_times) + 1 FROM cbt_test WHERE su_idx = #{param1} AND mb_id = #{param2} AND LEFT(tt_start_date, 4) = LEFT(CURDATE(), 4)
+		SELECT IFNULL(MAX(tt_times), 0) + 1 FROM cbt_test WHERE su_idx = #{param1} AND mb_id = #{param2} AND LEFT(tt_start_date, 4) = LEFT(CURDATE(), 4)
 	</select>
 	
 	<select id="getProblemAnswer" parameterType="int" resultType="int">

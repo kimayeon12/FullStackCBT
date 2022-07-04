@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-	<div>문제출제관리 - 출제</div>
+	<h1>문제출제관리 - 출제</h1>
 	<form action="problemWrite.do" method="get" onsubmit="return checkSubmit()">
       	<table>
+			<colgroup>
+				<col width="150"></col>
+				<col width="*"></col>
+			</colgroup>
           	<tr>
               	<th>과목명</th>
                   <td>
@@ -28,7 +32,7 @@
                <tr>
                     <th>문제</th>
                     <td>
-                    	<input type="text" name="pc_problem" id="pc_problem">
+                    	<input type="text" name="pc_problem" id="pc_problem" style="width:99%;"/>
                     </td>
                 </tr>
                 <tr>
@@ -43,10 +47,10 @@
                  <tr>
                       <th>4지선다문항</th>
                       <td>
-                          ① <input type="text" name="pc_answer1" id="pc_answer1"/><br>
-                          ② <input type="text" name="pc_answer2" id="pc_answer2"/><br>
-                          ③ <input type="text" name="pc_answer3" id="pc_answer3"/><br>
-                          ④ <input type="text" name="pc_answer4" id="pc_answer4"/>
+                          ① <input type="text" name="pc_answer1" id="pc_answer1" style="width:90%;"/><br>
+                          ② <input type="text" name="pc_answer2" id="pc_answer2" style="width:90%;"/><br>
+                          ③ <input type="text" name="pc_answer3" id="pc_answer3" style="width:90%;"/><br>
+                          ④ <input type="text" name="pc_answer4" id="pc_answer4" style="width:90%;"/>
                        </td>
                   </tr>
                   <tr>

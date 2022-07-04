@@ -6,8 +6,8 @@
     <thead>
         <tr>
         	<th>아이디</th>
-            <th>시험시작시간</th>
-            <th>시험제출시간</th>
+            <th>시험시작일시</th>
+            <th>시험제출일시</th>
             <th>점수</th>
             <th>제출상태</th>
         </tr>
@@ -17,7 +17,7 @@
         	<td>${testInfo.mb_id}</td>
             <td>${fn:substring(testInfo.tt_start_date,0,19)}</td>
             <td>${fn:substring(testInfo.tt_end_date,0,19)}</td>
-            <td>${testInfo.tt_score}</td>
+            <td>${testInfo.tt_score}점</td>
             <td>${testInfo.tt_status}</td>
         </tr>
     </tbody>

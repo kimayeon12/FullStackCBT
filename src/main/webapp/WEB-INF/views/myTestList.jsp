@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
+<h1>내가 응시한 시험 - 목록</h1>
 <p>총 시험 수 : <b>${listCnt}</b>건</p>
 <div align="right">
 	<form action="myTestList.do" method="get" id="form">

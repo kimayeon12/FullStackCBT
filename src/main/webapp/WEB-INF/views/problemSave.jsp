@@ -22,9 +22,9 @@
 							<col width="120"></col>
 						</colgroup>
 				        <tr align="center">
-				            <td>과목명</td>
+				            <th>과목명</th>
 				            <td>${saveList.su_name}</td>
-				            <td>보관일자</td>
+				            <th>보관일자</th>
 				            <td>${fn:substring(saveList.ps_date,0,19)}</td> 
 				        </tr>
 				    </table>

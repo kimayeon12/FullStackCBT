@@ -14,26 +14,28 @@
         <div id="wrap">
             <nav>
 				<p id="logo"><a href="javascript:;">풀스택(Full-Stack) CBT</a></p>
-				<ul>
-                    <!-- 관리자 메뉴 -->
+                <c:if test="${sessionScope.isAdmin.equals('true')}">
+				<ul id="adminMenu">
                     <li><a href="adminMain.do">메인</a></li>
                     <li><a href="cbtList.do">CBT 시험관리</a></li>
                     <li><a href="problemList.do">문제 출제 관리</a></li>
-                    <li><a href="javascript:;">과목 관리</a></li>
-                    <li><a href="javascript:;">과목 단원 관리</a></li>
+                    <li><a href="adminSubjectManagement.do">과목 관리</a></li>
+                    <li><a href="adminSubjectChapterManagement.do">과목 단원 관리</a></li>
                     <li><a href="adminMemberList.do">회원 관리</a></li>
-                    <li><a href="javascript:;">이의제기 관리</a></li>
-                    <li><a href="javascript:;">1:1게시판 관리</a></li>
-					
-                    <!-- 사용자 메뉴 -->
+                    <li><a href="objectionList.do">이의제기 관리</a></li>
+                    <li><a href="adminInquiryList.go">1:1게시판 관리</a></li>
+                </ul>
+                </c:if>
+				
+                <ul>
 					<li><a href="main.go">메인</a></li>
                     <li><a href="testStart.do">시험 응시</a></li>
                     <li><a href="myTestList.do">내가 응시한 시험</a></li>
-                    <li><a href="javascript:;">문제 보관함</a></li>
-                    <li><a href="javascript:;">1:1게시판</a></li>
+                    <li><a href="problemSave.do">문제 보관함</a></li>
+                    <li><a href="inquiryList.go">1:1게시판</a></li>
 				</ul>
 			</nav>
             <div id="container">
 				<c:if test="${sessionScope.loginId != null}">
-                <aside><strong>${sessionScope.loginName}(${sessionScope.loginId})</strong>님 <a href="myPage.do">내정보</a> | <a href="logout.do">로그아웃</a> <c:if test="${sessionScope.isAdmin eq true}"><a href="adminMain.do" target="_blank">관리자페이지</a></c:if><c:if test="${sessionScope.isAdmin eq false}"><a href="main.go" target="_blank">사용자페이지</a></c:if></aside>
+                <aside><strong>${sessionScope.loginName}(${sessionScope.loginId})</strong>님 <a href="myPage.do">내정보</a> | <a href="logout.do">로그아웃</a> <c:if test="${sessionScope.isAdmin.equals('true')}"><a href="adminMain.do" target="_blank">관리자페이지</a></c:if><c:if test="${!sessionScope.isAdmin.equals('true')}"><a href="main.go" target="_blank">사용자페이지</a></c:if></aside>
 				</c:if>

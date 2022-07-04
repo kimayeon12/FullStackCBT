@@ -1,30 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../resources/inc/header.jsp" %>
-<h1>새 비밀번호 설정</h1>
-<h2>비밀번호는 DB에 암호화 되어 저장되므로 새로운 비밀번호를 설정해야 합니다.</h2>
-<form action="pwChange.do" method="post" onsubmit="return pwChange()">
-	<table>
-        <tr>
-			<th>아이디</th>
-			<td>${mb_id}</td>
-		</tr>
-        <tr>
-			<th>새 비밀번호</th>
-			<td><input type="password" name="pw" id="pw"/></td>
-		</tr>
-        <tr>
-			<td>새 비밀번호 확인</td>
-			<td><input type="password" name="pw2" id="pw2"/></td>
-		</tr>
-        <tr>
-			<th colspan="2">
-			<input type="submit" value="비밀번호 설정"/>
-            <input type="button" value="취소"/>
-			</th>
-		</tr>
-	</table>
-</form>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>풀스택(Full-Stack) CBT</title>
+		<script src="//code.jquery.com/jquery-latest.min.js"></script>
+		<link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
+		<link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
+    </head>
+    <body>
+        <div id="findPw">
+			<h1>새 비밀번호 설정</h1>
+			<h4>비밀번호는 DB에 암호화 되어 저장되므로 새로운 비밀번호를 설정해야 합니다.</h4>
+			<form action="pwChange.do" method="post" onsubmit="return pwChange()">
+				<table>
+			        <tr>
+						<th>아이디</th>
+						<td>${mb_id}</td>
+					</tr>
+			        <tr>
+						<th>새 비밀번호</th>
+						<td><input type="password" name="pw" id="pw"/></td>
+					</tr>
+			        <tr>
+						<th>새 비밀번호 확인</th>
+						<td><input type="password" name="pw2" id="pw2"/></td>
+					</tr>
+			        <tr>
+						<th colspan="2">
+							<input type="submit" value="비밀번호 설정"/>
+				            <input type="button" value="취소" onclick="location.href='login.go'"/>
+						</th>
+					</tr>
+				</table>
+			</form>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 	function pwChange(){

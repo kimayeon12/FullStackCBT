@@ -19,37 +19,37 @@
 	</li>
 </c:forEach>
 </ol>
-	<input type="button" value="이전문제" id="btnPrev"/>
-	<input type="button" value="다음문제" id="btnNext"/>
-	<input type="submit" value="답안제출"/>
-</form>
-<p id="noProblem">풀지 않은 문제 : <em>10</em>개</p>
-<div id="answerBox">
-	<p>답안지</p>
-	<div>
-		<table>
-			<tbody>
-			<c:forEach begin="1" end="10" step="1" varStatus="status">
-				<tr data="q${status.index}">
-					<th><a href="#">${status.index}</a></th>
-					<td data="a${status.index}_1"><input type="checkbox" value="1"></td>
-					<td data="a${status.index}_2"><input type="checkbox" value="2"></td>
-					<td data="a${status.index}_3"><input type="checkbox" value="3"></td>
-					<td data="a${status.index}_4"><input type="checkbox" value="4"></td>
-				</tr>
-			</c:forEach>
-			</tbody>
-		</table>
+	<div align="center">
+		<input type="button" value="이전문제" id="btnPrev"/>
+		<input type="button" value="다음문제" id="btnNext"/>
 	</div>
-</div>
+	<p id="noProblem">풀지 않은 문제 : <em>10</em>개</p>
+	<div id="answerBox">
+		<p>답안지</p>
+		<div id="choice">
+			<table>
+				<tbody>
+				<c:forEach begin="1" end="10" step="1" varStatus="status">
+					<tr data="q${status.index}">
+						<th><a href="#">${status.index}</a></th>
+						<td data="a${status.index}_1"><input type="checkbox" value="1"></td>
+						<td data="a${status.index}_2"><input type="checkbox" value="2"></td>
+						<td data="a${status.index}_3"><input type="checkbox" value="3"></td>
+						<td data="a${status.index}_4"><input type="checkbox" value="4"></td>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		<div align="right"><input type="submit" value="답안제출"/></div>
+	</div>
+</form>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 		var currentProblem = 1;
 		var beforeChecked = -1;
 		
 		function test() {
-			beforeChecked = -1;
-			
 			if($('ul.answer > li > input:checked').length < 10 && !confirm("풀지 않은 문제가 있습니다. 정말 제출하시겠습니까?")) {
 				var noProblem = 0;
 				
@@ -70,8 +70,6 @@
 		}
 		
 		$('#btnPrev').on('click', function() {
-			beforeChecked = -1;
-			
 			currentProblem--;
 			
 			if(currentProblem <= 1) {
@@ -79,14 +77,15 @@
 				
 				$(this).hide();
 			}
-
+			
+			beforeChecked = $('#q'+currentProblem+' input[type="radio"]:checked').parent().index();
+			
 			$('#btnNext').show();
 			$('#questionBox > li').hide();
 			$('#questionBox > li').eq(currentProblem - 1).show();
 		});
 		
 		$('#btnNext').on('click', function() {
-			beforeChecked = -1;
 			
 			currentProblem++;
 			
@@ -96,14 +95,14 @@
 				$(this).hide();
 			}
 			
+			beforeChecked = $('#q'+currentProblem+' input[type="radio"]:checked').parent().index();
+			
 			$('#btnPrev').show();
 			$('#questionBox > li').hide();
 			$('#questionBox > li').eq(currentProblem - 1).show();
 		});
 
 		$('#answerBox > div > table > tbody > tr > th > a').on('click', function() {
-			beforeChecked = -1;
-			
 			currentProblem = parseInt($(this).closest('tr').attr('data').replace('q', ''));
 			
 			$('#btnPrev, #btnNext').show();
@@ -117,6 +116,8 @@
 
 				$('#btnNext').hide();
 			}
+			
+			beforeChecked = $('#q'+currentProblem+' input[type="radio"]:checked').parent().index();
 			
 			$('#questionBox > li').hide();
 			$('#questionBox > li').eq(currentProblem - 1).show();

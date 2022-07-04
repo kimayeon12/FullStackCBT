@@ -33,18 +33,18 @@ textarea{
 </head>
 <body>
 	<h3>글쓰기</h3>
-	<form action="inquiryWrite.do" method="post" enctype="multipart/form-data">
+	<form action="inquiryWrite.do" method="post" enctype="multipart/form-data" onsubmit="return inquiryWrite()">
 	
 	
 		<table class="ib">
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="ib_subject"/></td>
+				<td><input type="text" name="ib_subject" id="ib_subject"/></td>
 			</tr>
 
 			<tr>
 				<th>내용</th>
-				<td><textarea name="ib_content"></textarea></td>
+				<td><textarea name="ib_content" id="ib_content"></textarea></td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
@@ -79,6 +79,20 @@ function checkFile(f){
 	f.outerHTML = f.outerHTML;
 	}
 }		
+		
+function inquiryWrite()	{
+		
+		
+		if($('input[name="ib_subject"]').val()==""){
+			alert("제목을 입력해주세요");
+			$("#ib_subject").focus();
+			return false;
+		}else if($('#ib_content').val()==""){
+			alert("내용을 입력해주세요");
+			$("#ib_content").focus();
+		return false;
+		}
+}
 		
 </script>
 </html>

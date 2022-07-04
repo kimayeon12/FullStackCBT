@@ -24,7 +24,7 @@
 				        <tr align="center">
 				            <th>과목명</th>
 				            <td>${saveList.su_name}</td>
-				            <th>보관일자</th>
+				            <th>보관일시</th>
 				            <td>${fn:substring(saveList.ps_date,0,19)}</td> 
 				        </tr>
 				    </table>
@@ -107,6 +107,7 @@ $("button").on("click",function(){
     
     if(checked.length>0){
         if(confirm("선택한 문제를 보관함에서 삭제 하시겠습니까?")){
+        	alert("삭제가 완료되었습니다.");
         	$("#form").submit(); 
             
         } else {

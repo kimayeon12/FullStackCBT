@@ -10,7 +10,7 @@
     문제에 대한 오류 및 의견은 '내가 응시한 시험' 상세보기에서 문제별로 이의제기 가능합니다.<br/>
     문제보관함에서 원하는 문제를 보관하는 기능도 사용해보세요
  </p>
- <button onclick="location.href='/'">메인으로 가기</button> 
+ <button onclick="location.href='/main.go'">메인으로 가기</button> 
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 	</script>

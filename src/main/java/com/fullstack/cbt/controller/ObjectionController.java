@@ -165,9 +165,15 @@ public class ObjectionController {
 	
 	//이의제기 저장하기
 	@RequestMapping(value = "/objectionUpdate.do")
-	public String objectionUpdate(Model model, @RequestParam HashMap<String, Object> params) {
+	public String objectionUpdate(Model model,HttpSession session, @RequestParam HashMap<String, Object> params) {
 		
 		logger.info("이의제기 저장 요청");
+		
+		//로그인 아이디
+		String loginId = (String) session.getAttribute("loginId");
+		params.put("oj_admin_id",  loginId);
+		model.addAttribute("loginId", loginId);
+		
 		logger.info("params: {}", params);
 		
 		service.objectionUpdate(params);

@@ -120,8 +120,8 @@
 	
 	
 	<select id="selectedTotal" resultType="int"  >
-		SELECT count(*)
-		FROM cbt_subject NATURAL JOIN cbt_test  
+		SELECT count(tt_idx)
+		FROM  cbt_test  
 		<include refid="totalSql"></include>
 		ORDER BY tt_idx DESC
 	</select>

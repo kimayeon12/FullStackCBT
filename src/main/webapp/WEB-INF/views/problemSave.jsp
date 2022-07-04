@@ -4,7 +4,7 @@
 <!--  폼 1개로 합친  버전  -->
 <p> 보관중인 문제 수 : <b>${listCnt}</b>건</p>
 <form action="problemSaveList.do" method="get" id="form">
-	  <select name="su_idx"> 
+	  <select name="su_idx" style="float:right"> 
 	        <option value="">과목명</option>
 		        <c:forEach items="${subjectList}" var="subjectList">
 		        	<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx? 'selected="selected"' : ''}>${subjectList.su_name}</option>

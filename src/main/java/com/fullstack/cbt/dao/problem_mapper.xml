@@ -84,22 +84,25 @@
     <!-- 게시물 목록(페이징) -->
     <select id="getListPaging" resultType="com.fullstack.cbt.dto.ProblemDTO">
         SELECT 
-        	pc_idx
-        	,su_idx
-        	,sc_idx
-        	,pc_problem
-        	,pc_difficulty
-        	,pc_date
-        	,su_name
-        	,sc_name
-        	,mb_id  
-			FROM 
-				cbt_problem_create
-			NATURAL JOIN 
-				cbt_subject 
-			NATURAL JOIN 
-				cbt_subject_chapter
-			ORDER BY pc_idx desc 
+        	a.pc_idx 
+        	,a.su_idx 
+        	,a.sc_idx 
+        	,a.pc_problem 
+        	,a.pc_difficulty 
+        	,a.pc_date 
+        	,b.su_name 
+        	,c.sc_name 
+        	,a.mb_id  
+        	,(SELECT CEIL((SELECT COUNT(ta_idx) FROM cbt_test_answer WHERE pc_idx = a.pc_idx AND ta_is_answer = 'O') / (SELECT COUNT(ta_idx) FROM cbt_test_answer WHERE pc_idx = a.pc_idx) * 100)) as answerPercent 
+        	,(select count(ps_idx) from cbt_problem_save where pc_idx= a.pc_idx) as saveCnt 
+        	
+		FROM 
+			cbt_problem_create as a 
+		NATURAL JOIN 
+			cbt_subject as b 
+		NATURAL JOIN 
+			cbt_subject_chapter as c 
+		ORDER BY a.pc_idx DESC
 		LIMIT #{skip} , 10
     </select>
 	
@@ -109,24 +112,27 @@
     </select>
 
 	<select id="selectedListPaging" resultType="com.fullstack.cbt.dto.ProblemDTO">
-		SELECT 
-        	pc_idx
-        	,su_idx
-        	,sc_idx
-        	,pc_problem
-        	,pc_difficulty
-        	,pc_date
-        	,su_name
-        	,sc_name
-        	,mb_id  
-			FROM 
-				cbt_problem_create
-			NATURAL JOIN 
-				cbt_subject 
-			NATURAL JOIN 
-				cbt_subject_chapter
+        SELECT 
+        	a.pc_idx 
+        	,a.su_idx 
+        	,a.sc_idx 
+        	,a.pc_problem 
+        	,a.pc_difficulty 
+        	,a.pc_date 
+        	,b.su_name 
+        	,c.sc_name 
+        	,a.mb_id  
+        	,(SELECT CEIL((SELECT COUNT(ta_idx) FROM cbt_test_answer WHERE pc_idx = a.pc_idx AND ta_is_answer = 'O') / (SELECT COUNT(ta_idx) FROM cbt_test_answer WHERE pc_idx = a.pc_idx) * 100)) as answerPercent 
+        	,(select count(ps_idx) from cbt_problem_save where pc_idx= a.pc_idx) as saveCnt 
+        	
+		FROM 
+			cbt_problem_create as a 
+		NATURAL JOIN 
+			cbt_subject as b 
+		NATURAL JOIN 
+			cbt_subject_chapter as c 
 			<include refid="selectedSql"></include>
-			ORDER BY pc_idx desc 
+		ORDER BY a.pc_idx DESC
 		LIMIT #{param4} , 10
 	</select>
 	
@@ -147,28 +153,24 @@
 	</sql>
 	
 	<select id="selectedTotal" resultType="int"  >
-		SELECT count(*)
+		SELECT COUNT(pc_idx)
 		FROM 
 			cbt_problem_create 
-		NATURAL JOIN 
-			cbt_subject  
-		NATURAL JOIN 
-			cbt_subject_chapter	
 		<include refid="totalSql"></include>
 		ORDER BY pc_idx DESC
 	</select>
 	
 	<sql id="totalSql">
 		<trim prefix="where" suffixOverrides="and">
-			<if test = "!param1.equals('')">
+			<if test = "param1 != null and !param1.equals('')">
 				su_idx = #{param1} and
 			</if>
 		
-			<if test = "!param2.equals('')">
+			<if test = "param2 != null and !param2.equals('')">
 				sc_idx = #{param2} and 
 			</if>
 		
-			<if test = "!param3.equals('')">
+			<if test = "param3 != null and !param3.equals('')">
 				mb_id LIKE CONCAT('%',#{param3}, '%') and 
 			</if>
 		</trim>

@@ -31,13 +31,21 @@ public class ProblemDTO {
 	private int cnt;
 	
 	/*임시 정답률 테스트*/
-	private int answerRate;
+	private int answerPercent;
+	private int saveCnt;
 	
-	public int getAnswerRate() {
-		return answerRate;
+	
+	public int getAnswerPercent() {
+		return answerPercent;
 	}
-	public void setAnswerRate(int answerRate) {
-		this.answerRate = answerRate;
+	public void setAnswerPercent(int answerPercent) {
+		this.answerPercent = answerPercent;
+	}
+	public int getSaveCnt() {
+		return saveCnt;
+	}
+	public void setSaveCnt(int saveCnt) {
+		this.saveCnt = saveCnt;
 	}
 	public int getTt_idx() {
 		return tt_idx;

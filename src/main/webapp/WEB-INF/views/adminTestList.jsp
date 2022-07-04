@@ -2,30 +2,33 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 <p>총 시험 수 : <b>${listCnt}</b> 건</p>
-<form action="cbtFormList.do" method="get" id="form"> 
-	  <select name="su_idx" id="su_idx"> 
-		    <option value="">과목선택</option>
-			    <c:forEach items="${subjectList}" var="subjectList">
-			    	<option value="${subjectList.su_idx}"  ${idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
-			    </c:forEach>
-	  </select>
-
-	  <select name="tt_status" id="tt_status">
-		    <option value="">제출상태</option>
-		    <option value="제출완료" ${status == '제출완료' ? 'selected="selected"' : ''}>제출완료</option>
-		    <option value="시간초과 제출" ${status == '시간초과 제출' ? 'selected="selected"' : ''}>시간초과 제출</option>
-	  </select>
-
-
-	   <button style="float:right" type="submit" >검색</button>
-	   <input style="float:right" type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
-	    <!-- 페이징  -->
-	   <input type="hidden" name="pageNum" value="1"/>
- </form>
+<div align="right">
+	<form action="cbtFormList.do" method="get" id="form"> 
+		  <select name="su_idx" id="su_idx"> 
+			    <option value="">과목선택</option>
+				    <c:forEach items="${subjectList}" var="subjectList">
+				    	<option value="${subjectList.su_idx}"  ${idx == subjectList.su_idx ? 'selected="selected"' : ''}>${subjectList.su_name}</option>
+				    </c:forEach>
+		  </select>
+	
+		  <select name="tt_status" id="tt_status">
+			    <option value="">제출상태</option>
+			    <option value="제출완료" ${status == '제출완료' ? 'selected="selected"' : ''}>제출완료</option>
+			    <option value="시간초과 제출" ${status == '시간초과 제출' ? 'selected="selected"' : ''}>시간초과 제출</option>
+		  </select>
+	
+	
+		   <input  type="text" name="mb_id" id="mb_id" placeholder="아이디를 입력해주세요." value="${id}" required/>
+		   <button  type="submit" >검색</button>
+		    <!-- 페이징  -->
+		   <input type="hidden" name="pageNum" value="1"/>
+	 </form>
+</div>
   
   
   <table>
 	  <colgroup>
+	  		<col width="60"></col>
 			<col width="*"></col>
 			<col width="80"></col>
 			<col width="120"></col>
@@ -35,6 +38,7 @@
 		</colgroup>
     <thead>
         <tr>
+        	<th>번호</th>
             <th>과목명</th>
             <th>회차</th>
             <th>회원 아이디</th>
@@ -49,6 +53,7 @@
 	     <c:when test="${testdto.size() >0}">
 		 	<c:forEach items="${testdto}" var="testdto">
 		        <tr>
+		        	<td align="center">${testdto.tt_idx}</td>
 		            <td><a href="cbtTestDetail.do?tt_idx=${testdto.tt_idx}">${testdto.su_name}</a></td>
 		            <td align="center">${testdto.tt_times}회차</td>
 		            <td align="center">${testdto.mb_id}</td>
@@ -118,6 +123,8 @@
 		        }
 		        
 		});
+		
+		
 		
 		
 	</script>

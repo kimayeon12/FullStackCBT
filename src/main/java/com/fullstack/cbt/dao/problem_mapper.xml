@@ -17,7 +17,7 @@
 			,pc_answer3,pc_answer4,pc_explan,pc_difficulty
 			) VALUES
 		(#{su_idx}, #{sc_idx}, #{pc_problem},#{pc_answer},#{pc_answer1},#{pc_answer2}
-		,#{pc_answer3},#{pc_answer4},#{pc_explan},#{pc_difficulty})
+		,#{pc_answer3},#{pc_answer4},#{pc_explan},#{pc_difficulty}) 
 	</insert>
 	
 	<select id="problemList" resultType="com.fullstack.cbt.dto.ProblemDTO">	
@@ -74,7 +74,7 @@
 			,pc_answer4 = #{pc_answer4}
 			,pc_explan = #{pc_explan}
 			,pc_difficulty = #{pc_difficulty}
-		WHERE pc_idx = #{pc_idx}			
+		WHERE pc_idx = #{pc_idx} 			
 	</update>
 	
 	
@@ -147,7 +147,7 @@
 			</if>
 		
 			<if test = "!param3.equals('')">
-				mb_id LIKE CONCAT('%',#{param3}, '%') and 
+				pc_problem LIKE CONCAT('%',#{param3}, '%') and 
 			</if>
 		</trim>
 	</sql>
@@ -171,7 +171,7 @@
 			</if>
 		
 			<if test = "param3 != null and !param3.equals('')">
-				mb_id LIKE CONCAT('%',#{param3}, '%') and 
+				pc_problem LIKE CONCAT('%',#{param3}, '%') and 
 			</if>
 		</trim>
 	</sql>

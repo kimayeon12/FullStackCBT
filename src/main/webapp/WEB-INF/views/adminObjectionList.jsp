@@ -2,26 +2,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 	<h3>이의제기 관리</h3>
-	<div>총 이의제기 수:<b> ${listCnt}</b> </div>
+	<div>총 이의제기 수:<b> ${listCnt}</b> </div>		
 	<form action="objectionSelectList.do" method="get" id="detailForm">
-		<select name="oj_status" id="oj_status">
+	<button style="float:right" type="submit" >검색</button>
+	<input style="float:right" type="text" name="pc_problem" id="pc_problem" placeholder="문제를 입력해주세요." value="" required/>
+		<select style="float:right" name="oj_status" id="oj_status">
 			<option value="" ${oj_status == '' ? 'selected="selected"' : ''}>처리상태</option>
 			<option value="처리대기" ${oj_status == '처리대기' ? 'selected="selected"' : ''}>처리대기</option>
 			<option value="처리중" ${oj_status == '처리중' ? 'selected="selected"' : ''}>처리중</option>
 			<option value="처리완료" ${oj_status == '처리완료' ? 'selected="selected"' : ''}>처리완료</option>
 		</select>
-		<%-- <select name="oj_searchOption" id="oj_searchOption">
-			<option value="all"${oj_searchOption == 'all' ? 'selected="selected"' : ''}>전체</option>
-			<option value="problem"${oj_searchOption == 'problem' ? 'selected="selected"' : ''}>문제</option>
-			<option value="userId"${oj_searchOption == 'userId' ? 'selected="selected"' : ''}>사용자아이디</option>			
-		</select> --%>
-		
-		<button style="float:right" type="submit" >검색</button>
-		<input style="float:right" type="text" name="pc_problem" id="pc_problem" placeholder="문제를 입력해주세요." value="" required/>
 		<!-- 페이징 부분 -->
 		<input type="hidden" name="pageNum" value="1"/>
 	</form>
 	<table>
+		<colgroup>
+	  		<col width="*"></col>
+			<col width="140"></col>
+			<col width="140"></col>
+			<col width="140"></col>
+		</colgroup>
 		<thead>
 			<tr>
 				<th>문제</th>
@@ -31,9 +31,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${objectionList}" var="objectionList">
+			<c:forEach items="${objectionList}" var="objectionList" varStatus="i">
 				<tr>
-					<td><a href="/adminObjectionDetail.go?oj_idx=${objectionList.oj_idx}">${objectionList.pc_problem}</a></td>
+					<td><a href="/adminObjectionDetail.go?oj_idx=${objectionList.oj_idx}">${listCnt - (pageNum-1)*10 - i.index}</a></td>
 					<td align="center">${objectionList.mb_id}</td>
 					<td align="center">${fn:substring(objectionList.oj_date,0,10)}</td>
 					<td align="center">

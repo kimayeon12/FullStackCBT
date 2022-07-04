@@ -68,20 +68,23 @@ public class ProblemController {
 	public String problemWrite(Model model, HttpSession session
 			,@RequestParam HashMap<String, Object> params) {
 		
-		String su_idx = (String) params.get("su_idx");
 		
+		
+		String su_idx = (String) params.get("su_idx");
 		//로그인 없이 접근한 유저 보내줄 페이지
 		String page = "login";
 		//관리자 아이디 확인
 		String adminId = (String) session.getAttribute("isAdmin");
 		//권한 유효성 검사
+		//params.put("adminId", adminId);
+		
 		if(session.getAttribute("loginId") != null) {
 			if(adminId == null) {
 				model.addAttribute("msg","관리자 전용 서비스 입니다.");
 				page = "main";				
 			}else{
 				logger.info("문제 등록 요청");
-				logger.info("param: {}", params);
+				logger.info("param: {}", params, session);
 				service.problemWrite(params);
 				page = "redirect:/problemList.do";
 				}
@@ -127,7 +130,8 @@ public class ProblemController {
 					/********** 페이징 처리하면서 리스트 불러오기 **********/
 					ArrayList<ProblemDTO> problemList = service.getListPaging(cri);
 					model.addAttribute("problemList", problemList);
-					
+					int pageNum=cri.getPageNum();//게시판 1번 부터 번호정렬 
+					model.addAttribute("pageNum",pageNum);//게시판 1번 부터 번호정렬
 					
 					int total = service.getTotal();
 					logger.info("전체 게시글 수 : " + total);
@@ -158,18 +162,18 @@ public class ProblemController {
 	
 	
 	@RequestMapping(value = "/problemDetailList.do")
-	public String problemDetailListdo(Model model, Criteria cri, @RequestParam String su_idx, String sc_idx, String pc_idx
+	public String problemDetailListdo(Model model, Criteria cri, @RequestParam String su_idx, String sc_idx, String pc_problem
 			,String mb_id, int pageNum) {	
 		
 		logger.info("과목번호 : " + su_idx);
 		logger.info("제출상태 : " + sc_idx);
-		logger.info("아이디 : " + mb_id);
+		logger.info("문제 : " + pc_problem);
 		logger.info("pageNum :" + pageNum);
 		
 		// 사용자가 선택 후 값을 고정해주기 위해 model에 저장 
 		model.addAttribute("su_idx", su_idx);
 		model.addAttribute("sc_idx", sc_idx);
-		model.addAttribute("mb_id", mb_id);
+		model.addAttribute("pc_problem", pc_problem);
 		
 		//등록된 과목 가져오기
 		ArrayList<SubjectDTO> subjectList = service.subjectList();			
@@ -190,10 +194,13 @@ public class ProblemController {
 		
 		/********** 페이징 처리하면서 셀렉트 리스트 불러오기 **********/
 		int skip = (pageNum -1) * 10;
-		ArrayList<ProblemDTO> problemDetailPagingList = service.selectedListPaging(su_idx,sc_idx,mb_id,skip);
+		ArrayList<ProblemDTO> problemDetailPagingList = service.selectedListPaging(su_idx,sc_idx,pc_problem,skip);
 		model.addAttribute("problemList", problemDetailPagingList);
+		int pageNum1=cri.getPageNum();//게시판 1번 부터 번호정렬 
+		model.addAttribute("pageNum",pageNum1);//게시판 1번 부터 번호정렬
 		
-		int selectedTotal = service.selectedTotal(su_idx,sc_idx,mb_id);
+		
+		int selectedTotal = service.selectedTotal(su_idx,sc_idx,pc_problem);
 		model.addAttribute("listCnt", selectedTotal);
 		logger.info("선택된 게시글 수 : " + selectedTotal);
 		

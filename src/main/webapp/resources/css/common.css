@@ -102,6 +102,9 @@ p > b{
     max-width:120px;
 }
 
+ol#questionBox {
+	width:90%;
+}
 ol > li, .problem > span{
 	font-family:'Batangche';
 	font-size:15px;

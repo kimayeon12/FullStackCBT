@@ -36,7 +36,7 @@
 		 	</c:forEach>
 	     </c:when>
 	     <c:otherwise>
-	     	<tr>
+	     	<tr align="center">
 	     		<td colspan="6">최근 데이터가 없습니다</td>
 	     	</tr>
 	     </c:otherwise>
@@ -72,7 +72,7 @@
 		 	</c:forEach>
 	     </c:when>
 	     <c:otherwise>
-	     	<tr>
+	     	<tr align="center">
 	     		<td colspan="4">최근 데이터가 없습니다</td>
 	     	</tr>
 	     </c:otherwise>
@@ -115,7 +115,7 @@
 		 	</c:forEach>
 	     </c:when>
 	     <c:otherwise>
-	     	<tr>
+	     	<tr align="center">
 	     		<td colspan="4">최근 데이터가 없습니다</td>
 	     	</tr>
 	     </c:otherwise>

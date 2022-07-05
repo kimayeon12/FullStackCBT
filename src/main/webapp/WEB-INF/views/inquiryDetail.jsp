@@ -3,12 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../../resources/inc/header.jsp" %>
 		<h1>1:1게시판 - 상세</h1>
-		<p>
-		<c:choose>
-				<c:when test="${dto.ib_status eq 3}">처리중</c:when>					
-				<c:when test="${dto.ib_status eq 4}">답변완료</c:when>					
-				<c:otherwise>답변대기</c:otherwise>					
-		</c:choose></p>
+
 		<form name="form1" method="post">
 		<table class="dto">
 			

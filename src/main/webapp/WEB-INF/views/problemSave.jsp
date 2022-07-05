@@ -2,9 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 <!--  폼 1개로 합친  버전  -->
+<h1>문제보관</h1>
 <p> 보관중인 문제 수 : <b>${listCnt}</b>건</p>
 <form action="problemSaveList.do" method="get" id="form">
-	  <select name="su_idx" style="float:right"> 
+	  <select name="su_idx" style="width:100%;"> 
 	        <option value="">과목명</option>
 		        <c:forEach items="${subjectList}" var="subjectList">
 		        	<option value="${subjectList.su_idx}" ${su_idx == subjectList.su_idx? 'selected="selected"' : ''}>${subjectList.su_name}</option>
@@ -16,10 +17,10 @@
 			    <c:forEach items="${saveList}" var="saveList">
 				    <table>
 					    <colgroup>
-							<col width="80"></col>
-							<col width="120"></col>
-							<col width="80"></col>
-							<col width="120"></col>
+							<col width="20%"></col>
+							<col width="30%"></col>
+							<col width="20%"></col>
+							<col width="30%"></col>
 						</colgroup>
 				        <tr align="center">
 				            <th>과목명</th>
@@ -30,8 +31,8 @@
 				    </table>
 				    
 				    <div class="problem"> <!--문제,4지선다,정답 영역-->
-				    	 ${saveList.pc_problem}
-							정답 : 
+				    	 <span>${saveList.pc_problem}</span>
+							정답 : <em>
 							<c:choose>
 							<c:when test="${saveList.pc_answer eq 1}">➀</c:when>
 							<c:when test="${saveList.pc_answer eq 2}">➁</c:when>
@@ -39,6 +40,7 @@
 							<c:when test="${saveList.pc_answer eq 4}">➃</c:when>
 							<c:otherwise>${saveList.pc_answer}</c:otherwise>
 							</c:choose>
+							</em>
 							<br/>
 						➀ ${saveList.pc_answer1}<br/>
 						➁ ${saveList.pc_answer2}<br/>
@@ -46,15 +48,21 @@
 						➃ ${saveList.pc_answer4}<br/>
 				    </div>
 				    
-				   <div class="explan">${fn:replace(testDetail.pc_explan,newLine, '<br />')}</div>
-				    <input type="checkbox" name="chkArr" value="${saveList.ps_idx}" />문제보관삭제
+				   <div class="explan">
+				   		<c:choose>
+				   			<c:when test="${saveList.pc_explan eq ''}"><p align="center">문제에 대한 해설을 준비 중입니다.</p></c:when>
+				   			<c:otherwise>${fn:replace(saveList.pc_explan,newLine, '<br />')}</c:otherwise>
+				   		</c:choose>
+				   </div>
+				   <input type="checkbox" name="chkArr" value="${saveList.ps_idx}" />문제보관삭제
+				   <div style="height:60px;"></div>
 			    </c:forEach>
-		   		<button type="submit">선택삭제</button>
+		   		<button type="submit" style="cursor:pointer;">선택삭제</button>
 	    </c:when>
 	  	<c:otherwise>
 	  		<p>
 		    	보관한 문제가 없습니다. <br/>
-		    	<a href="myTestList.do">'내가 응시한 시험'</a>에서 문제 보관함 기능을 사용해보세요.
+		    	<a href="myTestList.do" style="color:#0000ff;">'내가 응시한 시험'</a>에서 문제 보관함 기능을 사용해보세요.
 	    	</p>
 	  	</c:otherwise>
 	    </c:choose>
@@ -116,6 +124,7 @@ $("button").on("click",function(){
         }
     } else {
         alert("선택한 문제가 없습니다.");
+        return false;
     }
 
    });

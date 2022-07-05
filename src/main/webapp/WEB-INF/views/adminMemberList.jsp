@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<h1>회원관리 리스트</h1>
+<h1>회원관리 - 목록</h1>
 <p>총 회원 수:<b> ${listCnt}</b>건</p>
  <div align="right">
 	<form action="memberList.do" method="get" id="form">

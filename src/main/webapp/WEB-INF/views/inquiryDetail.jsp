@@ -2,39 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../../resources/inc/header.jsp" %>
-
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="resources/css/common.css" type="text/css">
-<style>
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-}
-	
-th, td{
-		padding: 5px 10px;
-}
-	
-table{
-		width: 80%;
-}
-	
-input[type='text']{
-		width: 100%;
-}
-	
-textarea{
-		width: 100%;
-		height: 150px;
-		resize: none;
-}
-</style>
-</head>
-<body>
-		<h3>1:1게시판</h3>
+		<h1>1:1게시판 - 상세</h1>
 		<p>
 		<c:choose>
 				<c:when test="${dto.ib_status eq 3}">처리중</c:when>					
@@ -81,9 +49,9 @@ textarea{
 				</tr>
 			</table>
 				<input type="hidden" name="idx" value="${ib_idx}">
-				<input type="button" value ="목록" onclick="location.href='inquiryList.go'"/>
-				<input type="button" value ="수정" onclick="location.href='inquryUpdate.go?ib_idx=${dto.ib_idx}'"/>
-				<input type="button" value="삭제" onclick="del(${dto.ib_idx})" />
+				<input type="button" value="목록" onclick="location.href='inquiryList.go'"/>
+				<input type="button" value="삭제" onclick="del(${dto.ib_idx})" style="float:right; margin-left:5px;"/>
+				<input type="button" value="수정" onclick="location.href='inquryUpdate.go?ib_idx=${dto.ib_idx}'" style="float:right; margin-right:5px;"/>
 		</form>		
 	</body>
 <%@ include file="../../resources/inc/footer.jsp" %>

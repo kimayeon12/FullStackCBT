@@ -1,37 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<html>
-<head>
-<meta charset="UTF-8">
-
-<style>
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-}
-	
-th, td{
-		padding: 5px 10px;
-}
-	
-table{
-		width: 80%;
-}
-	
-input[type='text']{
-		width: 100%;
-}
-	
-textarea{
-		width: 100%;
-		height: 150px;
-		resize: none;
-}
-</style>
-</head>
-<body>
-	<h3>1:1게시판</h3>
+	<h1>1:1게시판 관리 - 상세/수정</h1>
 	<form action="adminUpdate.do" method="post" onsubmit="return inquiryDetail()">
 		<input type="hidden" name="ib_answer_date" value="${dto.ib_answer_date}"/>
         <table class="dto">
@@ -95,8 +65,10 @@ textarea{
             </table>
         
 
-		<input type="submit" value ="저장"/>
-	    <input type="button" value ="목록" id="saveButton" onclick="location.href='adminInquiryList.go'"/>
+			<div align="center">
+				<input type="submit" value ="저장"/>
+		    	<input type="button" value ="목록" id="saveButton" onclick="location.href='adminInquiryList.go'"/>
+		    </div>
 	</form>
 </body>
 <%@ include file="../../resources/inc/footer.jsp" %>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<% pageContext.setAttribute("newLine", "\n"); %>
 <%@ include file="../../resources/inc/header.jsp" %>
  <h1 align="center">${testInfo.su_name} ${testInfo.tt_times}회차 시험</h1>
   <table>
@@ -39,9 +38,15 @@
 		<p>${testDetail.ta_choice_no eq 3 ? '➌' : '➂'} ${testDetail.pc_answer3}</p>
 		<p>${testDetail.ta_choice_no eq 4 ? '➍' : '➃'} ${testDetail.pc_answer4}</p>
 	</div>
-	<div class="explan">${fn:replace(testDetail.pc_explan,newLine, '<br />')}</div>
+	<div class="explan">
+   		<c:choose>
+   			<c:when test="${testDetail.pc_explan eq ''}"><p align="center">문제에 대한 해설을 준비 중입니다.</p></c:when>
+   			<c:otherwise>${fn:replace(testDetail.pc_explan,newLine, '<br />')}</c:otherwise>
+   		</c:choose>
+	</div>
 	<input type="checkbox" class="isSave" value="${testDetail.pc_idx}" <c:if test="${testDetail.cnt > 0}">checked</c:if>/>문제보관
 	<button onclick="location.href='/objection.do?pc_idx=${testDetail.pc_idx}&tt_idx=${testDetail.tt_idx}'">이의제기</button>
+	<div style="height:60px;"></div>
 </c:forEach>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>

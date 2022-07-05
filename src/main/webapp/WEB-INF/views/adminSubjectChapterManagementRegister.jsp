@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<h2>과목 단원 관리 - 등록</h2>
+<h1>과목단원 관리 - 등록</h1>
 	<table class="tg">
         <thead>
             <tr>
@@ -27,9 +27,10 @@
     	</tbody>
 	</table>
 			<br>
+        <div align="center">
             <input type="button" value="등록" onclick="subChapRegister()"/>
             <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.go'"/>
-</body>
+        </div>
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 	var overChk = false;

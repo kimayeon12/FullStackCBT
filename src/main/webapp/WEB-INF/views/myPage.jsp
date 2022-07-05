@@ -48,7 +48,7 @@ th,td {
                </tr>
            </table>
        </form>
-       
+       <br/>
     <h1>회원탈퇴</h1>
     <hr>
     <h2>탈퇴안내</h2>
@@ -77,13 +77,7 @@ th,td {
             비밀번호 <input type="password" name="pw" id="pass"/>
         </div>
         <br>
-	    <table> 
-	        <tr>
-	            <th colspan="2">
-	                <input type="submit" value="탈퇴"/>
-	            </th>
-	        </tr>
-	    </table>
+	    <input type="submit" value="탈퇴"/>
     </form>
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>

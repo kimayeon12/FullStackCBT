@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
 
-<h2>과목 단원 관리 - 수정</h2>
+<h1>과목단원 관리 - 수정</h1>
 	<form action ="subjectChapterUpdate.do" method="post" onsubmit="return subjectChapUpdate()">
         <table class="tg">
             <thead>
@@ -27,10 +27,11 @@
            	</tbody>
 		</table>
         <br>
-        <input type="submit" value="수정"/>
-        <input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.do'"/>
+	    <div align="center">
+        	<input type="submit" value="수정"/>
+        	<input type="button" value="목록" onclick="location.href='adminSubjectChapterManagement.do'"/>
+        </div>
 	</form>  
-</body>
 <%@ include file="../../resources/inc/footer.jsp" %>
 
 <script>

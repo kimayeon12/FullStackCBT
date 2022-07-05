@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-    <h2>과목 관리 - 수정</h2>
+    <h1>과목관리 - 수정</h1>
         <form action="subjectUpdate.do" method="post" onsubmit="return subjectUpdate()">
 	        <table>
 	            <thead>
@@ -25,8 +25,10 @@
 	            </tbody>
 	        </table>
 	        <br>
-	        <input type="submit" value="수정"/>
-	        <input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>
+	        <div align="center">
+	        	<input type="submit" value="수정"/>
+	        	<input type="button" value="목록" onclick="location.href='adminSubjectManagement.do'"/>
+	        </div>
 		</form>
 </body>
 <%@ include file="../../resources/inc/footer.jsp" %>

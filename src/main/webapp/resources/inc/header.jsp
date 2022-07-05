@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
 <!doctype html>
 <html>
     <head>
@@ -13,10 +14,10 @@
     <body>
         <div id="wrap">
             <nav>
-				<p id="logo"><a href="javascript:;">풀스택(Full-Stack) CBT</a></p>
+				<p id="logo"><img src="resources/images/logo.jpg" alt="CBT" /></p>
                 <c:if test="${sessionScope.isAdmin.equals('true')}">
 				<ul id="adminMenu">
-                    <li><a href="adminMain.do">메인</a></li>
+                    <li><a href="adminMain.do">관리자 메인</a></li>
                     <li><a href="cbtList.do">CBT 시험관리</a></li>
                     <li><a href="problemList.do">문제 출제 관리</a></li>
                     <li><a href="adminSubjectManagement.do">과목 관리</a></li>
@@ -37,5 +38,5 @@
 			</nav>
             <div id="container">
 				<c:if test="${sessionScope.loginId != null}">
-                <aside><strong>${sessionScope.loginName}(${sessionScope.loginId})</strong>님 <a href="myPage.do">내정보</a> | <a href="logout.do">로그아웃</a> <c:if test="${sessionScope.isAdmin.equals('true')}"><a href="adminMain.do" target="_blank">관리자페이지</a></c:if><c:if test="${!sessionScope.isAdmin.equals('true')}"><a href="main.go" target="_blank">사용자페이지</a></c:if></aside>
+                <aside><strong>${sessionScope.loginName}(${sessionScope.loginId})</strong>님 <a href="myPage.do">내정보</a> <span>|</span> <a href="logout.do">로그아웃</a><%--  <c:if test="${sessionScope.isAdmin.equals('true')}"><a href="adminMain.do" target="_blank">관리자페이지</a></c:if><c:if test="${!sessionScope.isAdmin.equals('true')}"><a href="main.go" target="_blank">사용자페이지</a></c:if> --%></aside>
 				</c:if>

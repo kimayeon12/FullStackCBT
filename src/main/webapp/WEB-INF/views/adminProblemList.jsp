@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-	<div>문제 출제 관리</div>
-	<p>총 시험 수 : <b>${listCnt}</b> 건</p>
+	<h1>문제출제 관리 - 목록</h1>
+	<p>총 문제 수 : <b>${listCnt}</b> 건</p>
 		<form action="problemDetailList.do" method="get" id="subjectForm">
 
 			<button style="float:right" type="submit" >검색</button>

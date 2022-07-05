@@ -20,8 +20,8 @@
 </c:forEach>
 </ol>
 	<div align="center">
-		<input type="button" value="이전문제" id="btnPrev"/>
-		<input type="button" value="다음문제" id="btnNext"/>
+		<input type="button" value="◀ 이전문제" id="btnPrev"/>
+		<input type="button" value="다음문제 ▶" id="btnNext"/>
 	</div>
 	<p id="noProblem">풀지 않은 문제 : <em>10</em>개</p>
 	<div id="answerBox">

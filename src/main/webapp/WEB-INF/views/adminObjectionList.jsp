@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-	<h3>이의제기 관리</h3>
-	<div>총 이의제기 수:<b> ${listCnt}</b> </div>		
+	<h1>이의제기 관리 - 목록</h1>
+	<p>총 이의제기 수:<b> ${listCnt}</b>건</p>
 	<form action="objectionSelectList.do" method="get" id="detailForm">
 	<button style="float:right" type="submit" >검색</button>
 	<input style="float:right" type="text" name="pc_problem" id="pc_problem" placeholder="문제를 입력해주세요." value="" required/>

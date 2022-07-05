@@ -1,38 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-<h1>회원관리 수정</h1>
+<h1>회원관리 - 상세/수정</h1>
 <form action="adminMemberUpdate.do" method="post" onsubmit="return chkContent()">
 	<table>
+		<colgroup>
+			<col width="150"></col>
+			<col width="*"></col>
+		</colgroup>
 		<tr>
 			<th>아이디</th>
-				<td>${memberList.mb_id}</td>
+			<td>${memberList.mb_id}</td>
 		</tr>
 		<tr>
 			<th>이름</th>
-				<td>${memberList.mb_name}</td>
+			<td>${memberList.mb_name}</td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-				<td>${memberList.mb_email}</td>
+			<td>${memberList.mb_email}</td>
 		</tr>
 		<tr>
 			<th>회원권한</th>
-				<td >
-					<select name="mg_grade_after">
-			       		<option value="일반회원" ${memberList.mb_grade eq '일반회원'? 'selected="selected"' : ''}>일반회원</option>
-			       		<option value="탈퇴회원" ${memberList.mb_grade eq '탈퇴회원'? 'selected="selected"' : ''}>탈퇴회원</option>
-			       		<option value="관리자" ${memberList.mb_grade eq '관리자'? 'selected="selected"' : ''}>관리자</option>
-			       		<option value="최고관리자" id="superAdmin" ${memberList.mb_grade eq '최고관리자'? 'selected="selected"' : ''}>최고관리자</option>
-		       		</select>
-			       		 <input type="hidden" name="mb_id" value="${memberList.mb_id}"/>
-			       		 <input type="hidden" name="mg_grade_before" value="${memberList.mb_grade}"/>
-				       	<textarea name="mg_content" cols="110" rows="4"  placeholder="변경사유를 입력해주세요."></textarea>
-		       	</td>
+			<td >
+				<select name="mg_grade_after">
+		       		<option value="일반회원" ${memberList.mb_grade eq '일반회원'? 'selected="selected"' : ''}>일반회원</option>
+		       		<option value="탈퇴회원" ${memberList.mb_grade eq '탈퇴회원'? 'selected="selected"' : ''}>탈퇴회원</option>
+		       		<option value="관리자" ${memberList.mb_grade eq '관리자'? 'selected="selected"' : ''}>관리자</option>
+		       		<option value="최고관리자" id="superAdmin" ${memberList.mb_grade eq '최고관리자'? 'selected="selected"' : ''}>최고관리자</option>
+	       		</select>
+		       		 <input type="hidden" name="mb_id" value="${memberList.mb_id}"/>
+		       		 <input type="hidden" name="mg_grade_before" value="${memberList.mb_grade}"/>
+			       	<textarea name="mg_content" cols="110" rows="4"  placeholder="변경사유를 입력해주세요."></textarea>
+		    </td>
 		</tr>
 		<tr>
 			<th>가입일시</th>
-				<td>${fn:substring(memberList.mb_date,0,19)}</td>
+			<td>${fn:substring(memberList.mb_date,0,19)}</td>
 		</tr>
 		<tr>
 			<th colspan="2">
@@ -52,7 +56,7 @@
 		<col width="100"></col>
 		<col width="150"></col>
 		<col width="*"></col>
-		<col width="120"></col>
+		<col width="200"></col>
 	</colgroup>
 	<thead>
 			<tr>
@@ -71,7 +75,7 @@
 					<td align="center">${fn:substring(gradeUpdate.mg_grade_before,0,19)}</td>
 					<td align="center">${fn:substring(gradeUpdate.mg_grade_after,0,19)}</td>
 					<td align="center">${gradeUpdate.mg_id}</td>
-					<td align="center">${gradeUpdate.mg_content}</td>
+					<td>${gradeUpdate.mg_content}</td>
 					<td align="center">${fn:substring(gradeUpdate.mg_date,0,19)}</td>
 				</tr>
 			</c:forEach>

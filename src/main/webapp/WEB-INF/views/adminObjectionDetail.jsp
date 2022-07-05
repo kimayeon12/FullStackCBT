@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
-	<h2>이의제기 관리</h2>
+	<h1>이의제기 관리 - 상세/수정</h1>
   		<form action="objectionUpdate.do" method="get">
   		<table>
     		<thead>

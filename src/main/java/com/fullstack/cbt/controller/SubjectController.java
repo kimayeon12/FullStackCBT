@@ -89,7 +89,6 @@ public class SubjectController {
 		logger.info("과목 등록 요청 : "+subject);
 		logger.info("노출 여부 : "+check);
 		int chk = 0;
-		
 		if(check == null) {
 			chk = 1;
 		}

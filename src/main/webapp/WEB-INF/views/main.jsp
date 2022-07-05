@@ -7,5 +7,5 @@
 	<h2><a href="testStart.do" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #000; background-color: #000; color:#fff;">CBT 시험 보러 가기</a></h2>
 </div>
 <%@ include file="../../resources/inc/footer.jsp" %>
-	<script></script>
+	
 </html>

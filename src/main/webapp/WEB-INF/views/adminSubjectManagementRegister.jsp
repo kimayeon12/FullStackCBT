@@ -63,9 +63,8 @@
 	
 	function subRegister() {
 		console.log('과목명 등록');
-		var subject = $('#subject').val;
-		var check = $('#check').val;
-		
+		var subject = $('#subject').val();
+		var check = $('#check').val();
 		if(overChk){
 			
 			console.log("과목명 등록 요청");
@@ -93,7 +92,7 @@
 				}
 			});
 				
-			} else if($subject.val()=="") {
+			} else if(subject==0) {
 				alert("과목명을 입력해 주세요");
 				$("#subject").focus();
 			}

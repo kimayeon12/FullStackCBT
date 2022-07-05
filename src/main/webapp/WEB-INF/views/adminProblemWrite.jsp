@@ -93,10 +93,6 @@ $("select[name='su_idx']").on("change", function(){
 			
 			if(data.subjectChapList != null) {
 				drawSubjectChapList(data.subjectChapList);							
-			}else{
-				alert("세부과목을 등록해 주세요");
-				//세부 과목 등록 페이지로 변경
-				location.href='/adminSubjectChapterManagement.do';
 			}
 		},
 		error:function(error){
@@ -107,7 +103,7 @@ $("select[name='su_idx']").on("change", function(){
 });
 
 function drawSubjectChapList(subjectChapList){
-	var content = '';
+	var content = '<option value="">과목단원명</option>';
 	console.log(subjectChapList);
 	
 	subjectChapList.forEach(function(subjectChapList){

@@ -28,8 +28,8 @@
 	<p style="color:Red">이의제기는 묻고 답하는 공간이 아닙니다.<br/>
 	문의 사항은 1:1 게시판을 이용해 주세요.</p>
 	<input type="hidden" name="tt_idx" value="${tt_idx}"/>
-	<input type="submit" value="제출"/>
 	<input type="button" value="취소" onclick="location.href='myTestView.do?tt_idx=${tt_idx}'">
+	<input type="submit" value="제출"/>
 </form>
 
 <%@ include file="../../resources/inc/footer.jsp" %>

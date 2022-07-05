@@ -195,6 +195,7 @@ public class InquiryController {
 	//관리자1대1 게시판  수정
 	@RequestMapping(value = "/adminUpdate.do")
 	public String adUpdate(Model model, @RequestParam HashMap<String, String> params,HttpSession session){
+		int ib_idx = Integer.parseInt(params.get("ib_idx"));
 		String isAdmin = (String) session.getAttribute("isAdmin");
 		
 		if(session.getAttribute("loginId") != null) {
@@ -213,7 +214,7 @@ public class InquiryController {
 			return "login";
 		}
 		
-		return "redirect:adminInquiryList.go";
+		 return"redirect:/adminInquiryDetail?ib_idx="+ib_idx;
 	}
 	
 	

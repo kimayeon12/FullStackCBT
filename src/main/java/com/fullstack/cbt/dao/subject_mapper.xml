@@ -9,7 +9,7 @@
 					(SELECT COUNT(sc_idx) FROM cbt_subject_chapter WHERE su_idx = cbt_subject.su_idx) as chapCnt,
 					(SELECT COUNT(tt_times) FROM cbt_test WHERE su_idx = cbt_subject.su_idx) as ttCnt,
 					(SELECT COUNT(distinct mb_id) FROM cbt_test WHERE su_idx = cbt_subject.su_idx) as testerCnt
-						FROM cbt_subject ORDER BY su_idx ASC
+						FROM cbt_subject ORDER BY su_idx desc
 	</select>
 	
 	<select id="suboverlay" parameterType="String" resultType="String">

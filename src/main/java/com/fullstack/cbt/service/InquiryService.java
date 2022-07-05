@@ -63,7 +63,11 @@ public class InquiryService {
 		return "redirect:inquiryList.go";
 	}
 	private void fileSave(MultipartFile[] files, int ib_idx) {
+		int i = 0;
+		
 		for (MultipartFile file : files) {
+			i++;
+			
 			String ba_org_name= file.getOriginalFilename();//파일명 추출
 			if(!ba_org_name.equals("")) {
 				logger.info("업로드 진행");
@@ -71,7 +75,7 @@ public class InquiryService {
 				String ba_ext = ba_org_name
 						.substring(ba_org_name.lastIndexOf(".")).toLowerCase();			
 				// 새 이름 만들기
-				String ba_new_name = System.currentTimeMillis()+ba_ext;
+				String ba_new_name = i+System.currentTimeMillis()+ba_ext;
 				
 				logger.info(ba_org_name+" => "+ba_new_name);
 								

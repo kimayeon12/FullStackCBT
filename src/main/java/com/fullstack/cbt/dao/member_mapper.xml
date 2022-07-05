@@ -14,7 +14,7 @@
 	,mb_name
 	,mb_pw
 	,mb_email)
-	VALUES(#{mb_id},#{mb_name},(#{mb_pw}),#{mb_email})	
+	VALUES(#{mb_id},#{mb_name},PASSWORD(#{mb_pw}),#{mb_email})  	
 </insert>
 <select id="overlayId" parameterType="String" resultType="String">
 	SELECT mb_id 

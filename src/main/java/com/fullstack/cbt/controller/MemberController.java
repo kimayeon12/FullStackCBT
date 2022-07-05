@@ -140,15 +140,18 @@ public class MemberController {
         logger.info(mb_name+"/"+mb_email);
         String id = service.findId(mb_name, mb_email);
         String msg = "일치하는 정보를 찾을 수 없습니다.";
+        String page= "findId";
         
         if(id != null) {
             msg = "아이디는 "+id+" 입니다.";
+            page= "login";
         }
         
         model.addAttribute("msg", msg);
+        
 		
 	 
-	 	return "findId";
+	 	return page;
 		
 	}
 		

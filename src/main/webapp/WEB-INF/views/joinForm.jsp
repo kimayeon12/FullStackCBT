@@ -25,7 +25,7 @@
 			            <th>비밀번호</th>
 			            <td>
 			            	<input type="password" name="mb_pw" id="pw"  maxlength="20"/>
-			            	영문,숫자,특수조합으로 8~20자로 작성하시오.
+			            	영문,숫자,특수조합으로 8~20자로 작성하세요.
 			            </td>
 			        </tr>
 			             <tr>
@@ -63,7 +63,7 @@
 	function overlayId(){
 		 var id = $("#id").val();
 		 console.log('아이디 중복체크:'+id);
-		 var expId=/^[a-z]+[a-z0-9]{4,20}$/g;
+		 var expId=/^[a-z]+[a-z0-9]{5,20}$/g;
 		 
 		 if(expId.test($("#id").val())){
 			 
@@ -89,7 +89,7 @@
 			});
 			
 		}else{
-			alert("아이디는 영문 숫자 조합으로 4~20자로 작성해주세요.");
+            alert("아이디는 영문 또는 영문숫자 조합으로 5~20자로 작성해주세요.");
 			id.focus();
 			return false;	
 		}
@@ -103,8 +103,11 @@
 		console.log("이메일중복체크:"+$email);
 		if($email.val()==""){
 			alert("이메일을 입력해 주세요.");
+			$email.focus();
 		}else if(!expEmail.test($email.val())){
 			alert("이메일 형식이 아닙니다.");
+			$email.val('');
+			$email.focus();
 			}else{
 				$.ajax({
 					type:'get',

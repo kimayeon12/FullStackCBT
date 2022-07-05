@@ -14,10 +14,10 @@
 	<insert id="problemWrite" parameterType="hashmap">
 		INSERT INTO cbt_problem_create(
 			su_idx, sc_idx, pc_problem,pc_answer,pc_answer1,pc_answer2
-			,pc_answer3,pc_answer4,pc_explan,pc_difficulty
+			,pc_answer3,pc_answer4,pc_explan,pc_difficulty, mb_id
 			) VALUES
 		(#{su_idx}, #{sc_idx}, #{pc_problem},#{pc_answer},#{pc_answer1},#{pc_answer2}
-		,#{pc_answer3},#{pc_answer4},#{pc_explan},#{pc_difficulty}) 
+		,#{pc_answer3},#{pc_answer4},#{pc_explan},#{pc_difficulty},#{mb_id}) 
 	</insert>
 	
 	<select id="problemList" resultType="com.fullstack.cbt.dto.ProblemDTO">	

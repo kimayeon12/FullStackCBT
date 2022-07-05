@@ -35,9 +35,11 @@ public class ProblemService {
 		return dao.subjectChapList(su_idx);
 	}
 
-	public void problemWrite(HashMap<String, Object> params) {
+	public void problemWrite(HashMap<String, String> params, HttpSession session) {
 		logger.info("문제등록 서비스 요청");
-		//String mb_id = (String)session.getAttribute("loginId");
+		String mb_id = (String)session.getAttribute("loginId");
+		
+		params.put("mb_id", mb_id);
 		int success = dao.problemWrite(params);
 		logger.info("문제 등록 성공 여부 : "+ success);		
 	}

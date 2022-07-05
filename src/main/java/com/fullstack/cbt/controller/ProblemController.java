@@ -66,11 +66,10 @@ public class ProblemController {
 	
 	@RequestMapping(value = "/problemWrite.do")
 	public String problemWrite(Model model, HttpSession session
-			,@RequestParam HashMap<String, Object> params) {
-		
-		
+			,@RequestParam HashMap<String, String> params) {
 		
 		String su_idx = (String) params.get("su_idx");
+		
 		//로그인 없이 접근한 유저 보내줄 페이지
 		String page = "login";
 		//관리자 아이디 확인
@@ -85,7 +84,7 @@ public class ProblemController {
 			}else{
 				logger.info("문제 등록 요청");
 				logger.info("param: {}", params, session);
-				service.problemWrite(params);
+				service.problemWrite(params, session);
 				page = "redirect:/problemList.do";
 				}
 			}else {

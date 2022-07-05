@@ -3,6 +3,8 @@ package com.fullstack.cbt.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import com.fullstack.cbt.controller.Criteria;
 import com.fullstack.cbt.dto.ProblemDTO;
 import com.fullstack.cbt.dto.SubjectChapterDTO;
@@ -15,7 +17,7 @@ public interface ProblemDAO {
 
 	ArrayList<SubjectChapterDTO> subjectChapList(String su_idx);
 
-	int problemWrite(HashMap<String, Object> params);
+	int problemWrite(HashMap<String, String> params);
 
 	ArrayList<ProblemDTO> problemList();
 

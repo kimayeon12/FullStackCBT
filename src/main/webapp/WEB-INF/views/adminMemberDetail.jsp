@@ -99,7 +99,7 @@
 
 	if(mb_grade != "최고관리자"){ 
 		$("#superAdmin").attr("disabled" , true);
-	} else {
+	}else {
 		$("#superAdmin").attr("disabled" , false);
 	}
 </script>

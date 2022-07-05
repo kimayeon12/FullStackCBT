@@ -142,7 +142,7 @@ th,td {
 	        }
 	        
 	        if($currentPw.val()!=$("#currentPw")){
-		           alert("비밀번호가 일치하지 않습니다.");
+		           alert("현재 비밀번호가 일치하지 않습니다.");
 		           $currentPw.focus();
 		           $currentPw.val('');
 		           return false;
@@ -198,6 +198,8 @@ th,td {
 		}
 		
 		function memberDelete() {
+			var $pass=$("#pass");
+			var $currentPw = $("#currentPw");
 			
 			if($('input[name="mg_content"]').is(":checked") == false) {
 				alert("탈퇴 사유를 체크해 주세요.");
@@ -215,6 +217,14 @@ th,td {
 				$("#pass").focus();
 				return false;
 			}
+			
+			if($pass.val() !=$currentPw.val()){
+				alert("비밀번호가 일치하지 않습니다.");
+				$pass.val('');
+				$pass.focus();
+				return false;
+			}
+			
 						
 			if(!confirm("정말 회원탈퇴 하시겠습니까?")) {
 				

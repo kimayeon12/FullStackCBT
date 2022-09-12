@@ -65,6 +65,7 @@
 		,pc_problem
 		FROM cbt_test_answer NATURAL JOIN cbt_problem_create 
 		WHERE tt_idx=#{param1}
+		order by ta_problem_no
 	</select>
 	
 	<!-- 시험관리 리스트  페이징  -->
